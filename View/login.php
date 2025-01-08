@@ -3,13 +3,18 @@ require_once 'head.php';
 require_once '../Controller/controllerLogin.php';
 ?>
 
-<link rel="stylesheet" href="src/assets/css/main.css">
+<link rel="stylesheet" href="src/assets/css/sesion.css">
+<link rel="stylesheet" href="src/assets/css/global.css">
+
 
 </head>
 
 
 <body>
  
+<div id="preloader">
+    <div class="spinner"></div>
+</div>
 
 <form action="" method="post">
 
@@ -37,7 +42,10 @@ require_once '../Controller/controllerLogin.php';
   <div class="wave"></div>
   <div class="wave"></div>
   <div class="wave"></div>
-</div>  
+</div> 
 
-</body>
-</html>
+<?php
+
+require_once 'footer.php';
+
+?>

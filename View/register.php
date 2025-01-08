@@ -3,12 +3,20 @@ require_once 'head.php';
 require_once '../Controller/controllerRegister.php';
 ?>
 
-<link rel="stylesheet" href="src/assets/css/main.css">
+<link rel="stylesheet" href="src/assets/css/sesion.css">
+<link rel="stylesheet" href="src/assets/css/global.css">
+
 
 </head>
 
 
 <body>
+
+<div id="preloader">
+    <div class="spinner"></div>
+</div>
+
+
 <div class="e-card playing">
   <div class="image"></div>
   
@@ -43,5 +51,8 @@ require_once '../Controller/controllerRegister.php';
 
 </form>   
 
-</body>
-</html>
+<?php
+
+require_once 'footer.php';
+
+?>
