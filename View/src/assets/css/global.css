@@ -1,8 +1,11 @@
 :root {
   --red: #dc3545;
   --primary: #7e4ef8;
-  --white: #eee;
-  --blue-white: #b5bfd9;
+  --secondary: #a282f5;
+  --white: #fff;
+  --blue-white: #bfaddb;
+  --violet-white: #adb8db;
+  --cian-white: #adccdb;
   --gray: #a9a9a9;
   --soft-gray: #f3f3f3;
   --gray-dark: #5f5f5f;
@@ -32,7 +35,13 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
+  color: var(--soft-dark);
+}
 
+a{
+  text-decoration: none;
+  font-size: 0.84em;
+  line-height: 1;
 }
 
 #preloader {
@@ -55,6 +64,14 @@ body {
     border-top: 8px solid transparent;
     border-radius: 50%;
     animation: spin 1s linear infinite;
+  }
+
+  .separator {
+    border: none;
+    border-top: 2px solid #7e4ef8; /* Color de la línea */
+    margin: 20px 0; /* Espaciado arriba y abajo */
+    width: 55%; /* Ancho completo */
+    opacity: 0.8; /* Transparencia */
   }
   
   @keyframes spin {

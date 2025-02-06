@@ -5,6 +5,8 @@ require_once '../Controller/controllerRegister.php';
 
 <link rel="stylesheet" href="src/assets/css/sesion.css">
 <link rel="stylesheet" href="src/assets/css/global.css">
+<link rel="stylesheet" href="src/assets/css/icon.css">
+
 
 
 </head>
@@ -27,7 +29,10 @@ require_once '../Controller/controllerRegister.php';
 
 <form action="" method="post">
 
-    <h1 class="title"> TaskForge+ </h1>
+    <div class="title-container">
+        <span class="logo--otter icon"> </span> 
+        <h1 class="title">  OtterTask+ </h1>
+    </div>
 
     <div class="input-container">
         <input placeholder="" type="text" class="input" id="username" name="username" required>

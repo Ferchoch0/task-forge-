@@ -10,7 +10,7 @@ body{
     position: relative;
     width: 60%;
     height: 100vh;
-    overflow: hidden;
+    overflow: hidden;  
   }
   
   .wave {
@@ -82,13 +82,39 @@ form{
     padding: 20px;
 }
   
-  .title {
-    color: #7e4ef8;
-    font-family: sans-serif;
-    font-size: 50px;
-    font-weight: 900;
-    margin-bottom: 20px;
+  .title-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+   
   }
+
+    .title {
+      position: relative;
+      color: #7e4ef8;
+      font-family: sans-serif;
+      font-size: 50px;
+      font-weight: 900;
+      margin-bottom: 20px;
+    }
+
+    .title::before {
+      content: "";
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      width: 50%;
+      height: 10px;
+      background-color: var(--primary);
+      border-radius: 80%;
+      transform: translateX(-50%);
+    }
+
+    .title-container .icon{
+      width: 100px;
+      height: 100px;
+    }
 
   .input-container {
     height: 50px;
@@ -213,3 +239,4 @@ form{
    a:active {
     transform: scale(0.95);
    }
+
