@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_id'] = $id;
             $_SESSION['email'] = $email;
             $_SESSION['username'] = $username;
-            header("Location: ../index.php");
+            header("Location: ../View/profile.php");
         } else {
             echo "<script>alert('Contraseña incorrecta');</script>";
         }

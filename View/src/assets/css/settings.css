@@ -1,9 +1,13 @@
 .settings{
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    justify-content: end;
     width: 100%;
-    padding-top: 8rem;
+}
+
+.settings-container{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
 }
 
  .settings-menu{

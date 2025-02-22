@@ -1,6 +1,5 @@
 <?php
 require_once 'head.php';
-require_once '../Controller/controllerRegister.php';
 ?>
 
 <link rel="stylesheet" href="src/assets/css/sesion.css">
@@ -16,8 +15,7 @@ require_once '../Controller/controllerRegister.php';
 
 <div id="preloader">
     <div class="spinner"></div>
-</div>
-
+  </div>
 
 <div class="e-card playing">
   <div class="image"></div>
@@ -27,12 +25,21 @@ require_once '../Controller/controllerRegister.php';
   <div class="wave"></div>
 </div>   
 
-<form action="" method="post">
+<form action="../Controller/registerController.php" method="post">
 
     <div class="title-container">
         <span class="logo--otter icon"> </span> 
         <h1 class="title">  OtterTask+ </h1>
     </div>
+
+      <!-- Mensaje de error -->
+      <?php
+    session_start();
+    if (isset($_SESSION['error'])) {
+        echo "<div class='error-message'>" . $_SESSION['error'] . "</div>";
+        unset($_SESSION['error']);
+    }
+    ?>
 
     <div class="input-container">
         <input placeholder="" type="text" class="input" id="username" name="username" required>

@@ -1,6 +1,5 @@
 <?php
 require_once 'head.php';
-require_once '../Controller/controllerLogin.php';
 ?>
 
 <link rel="stylesheet" href="src/assets/css/sesion.css">
@@ -17,7 +16,7 @@ require_once '../Controller/controllerLogin.php';
     <div class="spinner"></div>
 </div>
 
-<form action="" method="post">
+<form action="../Controller/loginController.php" method="post">
 
     <div class="title-container">
         <span class="logo--otter icon"> </span> 

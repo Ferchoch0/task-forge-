@@ -1,10 +1,20 @@
 <?php
 session_start();
 
+require_once 'Model/userModel.php';
+require_once 'Model/connection.php';
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: View/login.php");
     exit();
 }
+
+
+if (!$userModel->isEmailVerified($userId)) {
+  header("Location: View/logout.php");
+  exit();
+}
+
 
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Anon';
 

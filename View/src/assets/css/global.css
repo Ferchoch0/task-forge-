@@ -9,7 +9,9 @@
   --gray: #a9a9a9;
   --soft-gray: #f3f3f3;
   --gray-dark: #5f5f5f;
-  --danger: #dc3545;
+  --danger: #FFB3B3;
+  --warning: #FFF2B3;
+  --success: #6feb8b;
   --dark: #0c0c0c;
   --soft-dark:#333;
   --transparent: transparent;
@@ -82,3 +84,126 @@ a{
       transform: rotate(360deg);
     }
   }
+
+  .error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+}
+
+.error-message {
+  color: #86eb97;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+
+
+.dashboard-container{
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  width: 100%;
+}
+
+.dashboard-container--ajust{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+}
+
+nav{
+  position: fixed;
+  width: 10%;
+  height: 100vh;
+  background-color: var(--soft-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  color: var(--white);
+}
+
+  .navbar-container{
+      margin-top: 1rem;
+      display: flex;
+      align-items: start;
+      justify-content: start;
+  }
+
+      .navbar-user--info{
+          display: flex;
+          flex-direction: column;
+      }
+
+          .navbar-user--info > * {
+              margin: 0;
+              padding: 0;
+          }
+
+          .navbar-user--info h1{
+              font-size: 1.5rem;
+          }
+
+          .navbar-user--info h3{
+              font-size: 0.75rem;
+              color: var(--gray);
+          }
+
+          .navbar-menu{
+              height: 100%;
+              display: flex;
+              flex-direction: column;
+              align-items: start;
+              justify-content: space-between;
+          }
+
+              .navbar-menu a{
+                  color: var(--white);
+                  text-decoration: none;
+                  font-size: 15px;
+                  font-weight: 1000;
+                  transition: 0.2s;
+                  padding: 0;
+                  margin: 0;
+                  text-transform: uppercase;
+              }
+
+                  .navbar-menu a:hover{
+                      color: var(--primary);
+                      cursor: pointer;
+                  }
+
+                  .navbar-menu a.active{
+                      color: var(--primary);
+                  }
+            
+            .navbar-logout{
+                margin-bottom: 1rem;
+            }
+
+                .navbar-logout a{
+                    color: var(--white);
+                    text-decoration: none;
+                    font-size: 15px;
+                    font-weight: 1000;
+                    transition: 0.2s;
+                    padding: 0;
+                    margin: 0;
+                    text-transform: uppercase;
+                }
+
+                    .navbar-logout a:hover{
+                        color: var(--red);
+                        cursor: pointer;
+                    }
+
+                    .navbar-logout a.active{
+                        color: var(--red);
+                    }
+                    

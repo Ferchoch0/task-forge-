@@ -18,7 +18,7 @@ class UserModel {
     }
 
     public function registerUser($username, $email, $password) {
-        $stmt = $this->conn->prepare("INSERT INTO users (username, email, password, cod_verification, verified) VALUES (?, ?, ?, ?, 0)");
+        $stmt = $this->conn->prepare("INSERT INTO users (username, email, password, verification_code, verified) VALUES (?, ?, ?, ?, 0)");
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         $verificationCode = rand(100000, 999999);
         $stmt->bind_param("ssss", $username, $email, $hashedPassword, $verificationCode);
@@ -27,35 +27,46 @@ class UserModel {
         return $result ? $verificationCode : false;
     }
 
-    public function verifyCode($email, $code) {
-        $stmt = $this->conn->prepare("SELECT user_id FROM users WHERE email = ? AND verification_code = ?");
-        $stmt->bind_param("ss", $email, $code);
+    public function verifyUser($userId, $verificationCode) {
+        $stmt = $this->conn->prepare("SELECT COUNT(*) FROM users WHERE user_id = ? AND verification_code = ?");
+        $stmt->bind_param("is", $userId, $verificationCode);
         $stmt->execute();
-        $stmt->bind_result($userId);
+        $stmt->bind_result($count);
         $stmt->fetch();
         $stmt->close();
 
-        if ($userId) {
-            // Marcar como verificado
-            $stmt = $this->conn->prepare("UPDATE users SET is_verified = 1 WHERE user_id = ?");
+        if ($count > 0) {
+            $stmt = $this->conn->prepare("UPDATE users SET verified = 1 WHERE user_id = ?");
             $stmt->bind_param("i", $userId);
             $stmt->execute();
             $stmt->close();
             return true;
+        } else {
+            return false;
         }
-
-        return false; // Código incorrecto
     }
 
-    public function isEmailVerified($email) {
-        $stmt = $this->conn->prepare("SELECT is_verified FROM users WHERE email = ?");
-        $stmt->bind_param("s", $email);
+
+    public function isEmailVerified($userId) {
+        $stmt = $this->conn->prepare("SELECT verified FROM users WHERE user_id = ?");
+        $stmt->bind_param("i", $userId);
         $stmt->execute();
-        $stmt->bind_result($isVerified);
+        $stmt->bind_result($verified);
         $stmt->fetch();
         $stmt->close();
-        return $isVerified == 1;
+        return $verified == 1;
     }
+    
+    public function getUserIdByEmail($email) {
+        $stmt = $this->conn->prepare("SELECT user_id FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->bind_result($userId);
+        $stmt->fetch();
+        $stmt->close();
+        return $userId;
+    }
+
 
     public function getUserProfileImage($userId) {
         $stmt = $this->conn->prepare("SELECT profile_image FROM users WHERE user_id = ?");

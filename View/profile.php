@@ -1,18 +1,26 @@
 <?php
 session_start();
+require_once 'head.php';
+require_once '../Model/userModel.php';
+require_once '../Model/connection.php';
 
 if (!isset($_SESSION['user_id'])) {
   header("Location: login.php");
   exit();
 }
 
-require_once 'head.php';
-require_once '../Model/userModel.php';
-require_once '../Model/connection.php';
+$userModel = new UserModel($conn);
+$userId = $_SESSION['user_id'];
+
+if (!$userModel->isEmailVerified($userId)) {
+  header("Location: logout.php");
+  exit();
+}
+
+
 
 
 $username = $_SESSION['username'];
-$userId = $_SESSION['user_id'];
 $imagePath = "../View/src/img/uploads/default-profile.png";
 
 $userModel = new UserModel($conn);
@@ -26,9 +34,9 @@ if ($imageFromDB) {
 
 
 <link rel="stylesheet" href="src/assets/css/global.css">
-<link rel="stylesheet" href="src/assets/css/main.css">
-<link rel="stylesheet" href="src/assets/css/profile.css">
 <link rel="stylesheet" href="src/assets/css/icon.css">
+<link rel="stylesheet" href="src/assets/css/profile.css">
+
 
 
 
@@ -37,45 +45,13 @@ if ($imageFromDB) {
 
 
 <body>
-  <div id="preloader">
-    <div class="spinner"></div>
-  </div>
 
-  <nav>
-
-    <span class="logo--otter icon"></span>
-
-    <div class="navbar-container">      
-      <div class="input">
-        <button class="value-toggle">
-          <span class="user--plus icon"></span>
-          <div class="navbar-user--info">
-            <h3>Buenos Dias, </h3>
-            <h1>  <?php echo htmlspecialchars($username); ?> </h1>
-          </div>
-        </button>
-        
-        <div class="value-menu">
-          <a href="#" class="value">
-            <span class="profile--user"></span> Perfil
-          </a>
-            
-          <a href="../View/settings.php" class="value">
-            <span class="ajust--user"></span> Ajustes
-          </a>
-
-          <a href="../View/logout.php" class="value">
-            <span class="sesion--xmark"></span> Cerrar sesión
-          </a>
-        </div>
-      </div>
-      
-    </div>
-  </nav>
+  <?php require_once 'nav.php'; ?>
 
   
     <!-- Resto del contenido del dashboard -->
-  <div>
+  <div class="dashboard-container">
+    <div class="dashboard-container--ajust">
     <article class="background">
 
       <!-- <span class="logo--otter icon--background"></span> -->
@@ -120,7 +96,8 @@ if ($imageFromDB) {
       </section>
 
     </article>
-</div>
+    </div>
+  </div>
     
 <?php
 

@@ -1,7 +1,7 @@
 .profile{
     position: absolute;
     top: 45%;
-    left: 3%;
+    left: 15%;
     transform: translateY(-50%);
     background-color: var(--white);
     width: 15%;
@@ -12,6 +12,7 @@
     border-radius: 24px;
     margin-top: 1rem;
     padding: 0.5rem;
+    z-index: 99;
 }
 
     .profile-container{

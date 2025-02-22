@@ -27,9 +27,9 @@ if ($imageFromDB) {
 
 
 <link rel="stylesheet" href="src/assets/css/global.css">
-<link rel="stylesheet" href="src/assets/css/main.css">
-<link rel="stylesheet" href="src/assets/css/settings.css">
 <link rel="stylesheet" href="src/assets/css/icon.css">
+<link rel="stylesheet" href="src/assets/css/settings.css">
+
 
 
 
@@ -38,44 +38,13 @@ if ($imageFromDB) {
 
 
 <body>
-  <div id="preloader">
-    <div class="spinner"></div>
-  </div>
 
-  <nav>
+<?php require_once 'nav.php'; ?>
 
-    <span class="logo--otter icon"></span>
-
-    <div class="navbar-container">      
-      <div class="input">
-        <button class="value-toggle">
-          <span class="user--plus icon"></span>
-          <div class="navbar-user--info">
-            <h3>Buenos Dias, </h3>
-            <h1>  <?php echo htmlspecialchars($username); ?> </h1>
-          </div>
-        </button>
-        
-        <div class="value-menu">
-          <a href="../View/profile.php" class="value">
-            <span class="profile--user"></span> Perfil
-          </a>
-            
-          <a href="../View/settings.php" class="value">
-            <span class="ajust--user"></span> Ajustes
-          </a>
-
-          <a href="../View/logout.php" class="value">
-          <span class="sesion--xmark"></span> Cerrar sesión
-          </a>
-        </div>
-      </div>
-      
-    </div>
-  </nav>
 
     <!-- Resto del contenido del dashboard -->
     <div class="settings">
+    <div class="settings-container">
         <article class="settings-menu">
               <h1>Ajustes</h1>
             
@@ -113,7 +82,7 @@ if ($imageFromDB) {
 
                 </div>
 
-                <form action="../Controller/controllerProfile.php" method="POST" enctype="multipart/form-data">
+                <form action="../Controller/profileController.php" method="POST" enctype="multipart/form-data">
                   <input type="file" class="settings-options-upload" id="profileImage" name="profileImage" accept="image/*" required>
                   <div class="settings-options-btncontainer">
                     <button type="submit" class="settings-options-save">
@@ -149,7 +118,7 @@ if ($imageFromDB) {
                   <p class="settings-options--btntext">Cerrar Sesion</p>
                 </a>
 
-              <form action="../Controller/controllerProfile.php" method="POST">
+              <form action="../Controller/profileController.php" method="POST">
                 <button type="submit" name="deleteAccount" class="settings-options-save">
                   <span class="settings-options--icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="35" height="25" viewBox="0 0 128 512"><path fill="#181818" d="M96 64c0-17.7-14.3-32-32-32S32 46.3 32 64v256c0 17.7 14.3 32 32 32s32-14.3 32-32zM64 480a40 40 0 1 0 0-80a40 40 0 1 0 0 80"/></svg>
@@ -163,6 +132,9 @@ if ($imageFromDB) {
             </section>
         </article>
     </div>
+
+    </div>
+
 
 
 
