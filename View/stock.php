@@ -41,6 +41,9 @@ foreach ($products as $product) {
 
 
 
+
+
+
 ?>
 
 
@@ -58,7 +61,6 @@ foreach ($products as $product) {
 <body>
 
   <?php require_once 'nav.php'; ?>
-
 
   <div class="dashboard-container">
     <div class="dashboard-container--ajust">
@@ -92,7 +94,7 @@ foreach ($products as $product) {
                         <span>Agregar producto</span>
                     </button>
                     <div class="stock-menu--search">
-                        <input type="text" class="stock-menu--search-input" placeholder="Buscar producto">
+                        <input type="text" class="stock-menu--search-input" id="searchInput" placeholder="Buscar producto" onkeyup="filterTable()">
                         <button class="stock-menu--search-button">
                             <span class="search icon"></span>
                         </button>
@@ -110,7 +112,8 @@ foreach ($products as $product) {
                             <th>Producto</th>
                             <th>Stock</th>
                             <th>Stock Mínimo</th>
-                            <th>Precio</th>
+                            <th>Costo</th>
+                            <th>Precio Recomendado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -121,16 +124,27 @@ foreach ($products as $product) {
         foreach ($products as $product) {
             $lowStockClass = ($product['stock'] <= $product['stock_min'] && $product['stock'] != 0) ? 'low-stock' : '';
             $nullStockCount = ($product['stock'] == 0) ? 'null-stock' : '';
+            $cost = $product['price'];
+            $margin = 0.30;
+            $iva = 0.21;
+
+            $salePrice = $cost * (1 + $margin) * (1 + $iva);
 
             echo "<tr class='$lowStockClass $nullStockCount'>
                      <td>{$product['products']}</td>
                 <td>{$product['stock']} {$product['type_amount']}</td>
                 <td>{$product['stock_min']} {$product['type_amount']}</td>
                 <td>$" . number_format($product['price'], 2) . "</td>
+                <td>$" . number_format($salePrice, 2) . "</td>
                 <td>
-                    <button class='stock-table--button delete-button' data-id='{$product['stock_id']}'>
+                    <div class='table--buttons'>
+                    <button class='table--button delete-button' data-id='{$product['stock_id']}'>
                         <span class='delete'></span>
                     </button>
+                    <button class='table--button edit-button' data-id='{$product['stock_id']}' data-name='{$product['products']}' data-stock='{$product['stock']}' data-min-stock='{$product['stock_min']}' data-type-amount='{$product['type_amount']}' data-price='{$product['price']}'>
+                        <span class='edit'></span>
+                    </button>
+                    </div>
                 </td>
               </tr>"; 
         }
@@ -145,21 +159,26 @@ foreach ($products as $product) {
     
   </div>
 
+
+<!-- Agregar Productos -->
+  
   <div id="addProductModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Agregar Producto</h2>
         <form id="addProductForm">
             <input type="hidden" name="action" value="add">
-            <input type="text" id="productName" name="productName" placeholder="Nombre del producto" required> <p></p>
-            <input type="number" id="productStock" name="productStock" placeholder="Stock" required>
-            <input type="number" id="productMinStock" name="productMinStock" placeholder="Stock Mínimo" required>
+            <input type="text" id="productName" name="productName" placeholder="Nombre del producto" required>
+            <div class="form-group-stock">
+                <input type="number" id="productStock" name="productStock" placeholder="Stock" required>
+                <input type="number" id="productMinStock" name="productMinStock" placeholder="Stock Mínimo" required>
+            </div>
             <select id="productTypeAmount" name="productTypeAmount" required>
                 <option value="" disabled selected>Tipo de unidad</option>
                 <option value="kg.">Kilogramos</option>
                 <option value="u.">Unidades</option>
-            </select> <p></p>
-            <input type="number" step="0.01" id="productPrice" name="productPrice" placeholder="Precio (sin signo)" required> <p></p>
+            </select>
+            <input type="number" step="0.01" id="productPrice" name="productPrice" placeholder="Costo (sin signo)" required>
 
 
             <button type="submit">Guardar</button>
@@ -167,49 +186,34 @@ foreach ($products as $product) {
     </div>
 </div>
 
-<script>
-        document.getElementById("stockWariningBtn").addEventListener("click", function() {
-            const rows = document.querySelectorAll(".stock-table tbody tr");
-            const isActive = this.classList.toggle("active");
+<!-- Editar Productos -->
 
-            if (isActive) {
-                rows.forEach(row => {
-                    if (!row.classList.contains("low-stock")) {
-                        row.style.display = "none";
-                    } else {
-                        row.style.display = "";
-                    }
-                });
-                // Desactivar el otro botón y restablecer su filtro
-                document.getElementById("stockAlertBtn").classList.remove("active");
-            } else {
-                rows.forEach(row => {
-                    row.style.display = "";
-                });
-            }
-        });
+<div id="editProductModal" class="modal">
+    <div class="modal-content">
+        <span class="close close-edit">&times;</span>
+        <h2>Editar Producto</h2>
+        <form id="editProductForm">
+            <input type="hidden" name="action" value="edit">
+            <input type="hidden" id="editProductId" name="editProductId">
+            <input type="text" id="editProductName" name="editProductName" placeholder="Nombre del producto" required>
+            <div class="form-group-stock">
+                <input type="number" id="editProductStock" name="editProductStock" placeholder="Stock" required>
+                <input type="number" id="editProductMinStock" name="editProductMinStock" placeholder="Stock Mínimo" required>
+            </div>
+            <select id="editProductTypeAmount" name="editProductTypeAmount" required>
+                <option value="" disabled selected>Tipo de unidad</option>
+                <option value="kg.">Kilogramos</option>
+                <option value="u.">Unidades</option>
+            </select>
+            <input type="number" step="0.01" id="editProductPrice" name="editProductPrice" placeholder="Costo (sin signo)" required>
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
 
-        document.getElementById("stockAlertBtn").addEventListener("click", function() {
-            const rows = document.querySelectorAll(".stock-table tbody tr");
-            const isActive = this.classList.toggle("active");
+</body>
 
-            if (isActive) {
-                rows.forEach(row => {
-                    if (!row.classList.contains("null-stock")) {
-                        row.style.display = "none";
-                    } else {
-                        row.style.display = "";
-                    }
-                });
-                // Desactivar el otro botón y restablecer su filtro
-                document.getElementById("stockWariningBtn").classList.remove("active");
-            } else {
-                rows.forEach(row => {
-                    row.style.display = "";
-                });
-            }
-        });
-    </script>
+<script src="../View/src/assets/js/stockLoading.js"></script>
 
 <?php
 

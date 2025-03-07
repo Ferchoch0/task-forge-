@@ -13,16 +13,16 @@ $userId = $_SESSION['user_id'];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stockId = $_POST['product_id'];
-    $amount = intval($_POST['amount']);
-    $priceStock = floatval($_POST['priceSell']);
+    $products = $_POST['products'];
     $payment = $_POST['payment'];
 
-    if ($stockModel->addSale($userId, $stockId, $amount, $priceStock, $payment)) {
-        header("Location: ../View/sell.php?success=1");
-    } else {
-        header("Location: ../View/sell.php?error=stock");
+    foreach ($products as $product) {
+        list($productId, $amount, $price) = explode('|', $product);
+        $stockModel->addSale($userId, $productId, $amount, $price, $payment);
     }
-    exit();
-}
+    echo json_encode(['success' => true]);
+} else {
+    echo json_encode(['success' => false]);
+}   
 ?>
 

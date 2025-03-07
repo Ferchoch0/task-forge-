@@ -34,6 +34,7 @@ $username = $_SESSION['username'];
 <link rel="stylesheet" href="src/assets/css/global.css">
 <link rel="stylesheet" href="src/assets/css/icon.css">
 <link rel="stylesheet" href="src/assets/css/stock.css">
+<link rel="stylesheet" href="src/assets/css/buyAndSell.css">
 
 
 
@@ -43,6 +44,13 @@ $username = $_SESSION['username'];
 
 
 <body>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+ <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
 
   <?php require_once 'nav.php'; ?>
   <div class="dashboard-container">
@@ -107,18 +115,44 @@ $username = $_SESSION['username'];
         <form id="addSellForm" action="sellController.php" method="POST">
             <input type="hidden" name="action" value="add">
             <label for="product">Producto:</label> <p></p>
-            <select name="product_id" class="product" id="product">
-                <?php
-                $products = $stockModel->getUserProducts($userId); // Obtener productos del usuario
-                foreach ($products as $product) {
-                    echo "<option value='{$product['stock_id']}'>{$product['products']}</option>";
-                }
-                ?>
-            </select> <p></p>
+            <div class="form-group">
+                <select name="product_id" class="product" id="product">
+                    <?php
+                        $products = $stockModel->getUserProducts($userId); // Obtener productos del usuario
+                        foreach ($products as $product) {
+                            echo "<option value='{$product['stock_id']}' data-price='{$product['price']}'> {$product['products']} </option>";
+                        }
+                    ?>
+                </select> <p></p>
 
-            <input type="number" name="amount" placeholder="Cantidad" id="amount" required min="1"><p></p>
+                <input type="number" name="amount" placeholder="Cantidad" id="amount" required min="1"><p></p>
 
-            <input type="text"  id="priceSell" name="priceSell" placeholder="Precio" required><p></p>
+                <input type="text"  id="priceSell" name="priceSell" placeholder="Precio" readonly><p></p>
+
+                <button type="button" id="addProductBtn">cargar archivo</button>
+            </div>
+
+            <table  class="change-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio total</th>
+                    </tr>
+                </thead>
+                <tbody  id="changeTableBody">
+                         <!-- Los productos cargados aparecerán aquí -->
+                </tbody>
+                <tbody>
+                    <tr>
+                        <td class="change-table--footer">Total</td>
+                        <td  class="change-table--footer" id="totalAmount"></td>
+                        <td  class="change-table--footer" id="totalSell"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div>
 
             <label for="payment">Metodo de pago:</label> <p></p>
             <select name="payment" id="payment" class="product">
@@ -126,12 +160,48 @@ $username = $_SESSION['username'];
                 <option value="Tarjeta">Tarjeta</option>
                 <option value="Transferencia">Transferencia</option>
             </select> <p></p>
+            
+                <input type="checkbox" name="invoice" id="invoice" value="">
+                <label for="invoice">Factura</label>
+            </div>
 
+            <div id="invoiceGroup"  class="invoice-group">
+                <select name="typeInvoice" id="typeInvoice" class="product">
+                    <option value="A">Tipo A</option>
+                    <option value="B">Tipo B</option>
+                    <option value="C">Tipo C</option>
+                </select>
+                <input type="text" name="client" placeholder="Cliente">    
+                <input type="text" name="cuit" placeholder="Cuit">
+                <input type="text" name="address" placeholder="Dirección Fiscal">
+                <input type="text" name="businessName" placeholder="Razon Social">
+            </div>
             <button type="submit">Registrar Venta</button>
         </form>
     </div>
 </div>
 
+</body>
+
+<script src="../View/src/assets/js/sellLoading.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const productSelect = document.getElementById("product");
+    const priceInput = document.getElementById("priceSell");
+
+    // Función para actualizar el precio
+    function updatePrice() {
+        const selectedOption = productSelect.options[productSelect.selectedIndex];
+        const price = selectedOption.getAttribute("data-price");
+        priceInput.value = price ? price : "";
+    }
+
+    // Llamar a la función al cargar y cuando cambie el producto
+    updatePrice();
+    productSelect.addEventListener("change", updatePrice);
+});
+</script>
 
 
 <?php

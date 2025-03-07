@@ -162,6 +162,8 @@ $username = $_SESSION['username'];
     </div>
    </div>
 
+</body>
+
 
 <?php
 

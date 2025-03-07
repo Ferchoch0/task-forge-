@@ -98,6 +98,7 @@ if ($imageFromDB) {
     </article>
     </div>
   </div>
+</body>
     
 <?php
 

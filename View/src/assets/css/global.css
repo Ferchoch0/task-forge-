@@ -206,4 +206,33 @@ nav{
                     .navbar-logout a.active{
                         color: var(--red);
                     }
-                    
+    
+  .table--buttons{
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+      align-items: center;
+      gap: 30px;
+    }          
+          
+    .table--button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 25px;
+        height: 25px;
+        background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+    }
+            .table--button:hover{
+                background-color: var(--secondary);
+            }
+
+            .table--button:active{
+                background-color: var(--primary);
+            }

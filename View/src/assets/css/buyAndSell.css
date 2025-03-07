@@ -1,0 +1,54 @@
+.little{
+    align-items: center;
+    width: 50%;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: row !important;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.invoice-group{
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: row !important;
+    gap: 10px;
+}
+
+.show{
+    display: grid;
+    transform: translateY(0);
+    pointer-events: auto; 
+  }
+
+
+
+
+.change-table{
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+    overflow: hidden;
+}   
+    
+    .change-table th, td {
+        padding: 10px;
+        border: none;
+    }
+    
+    .change-table th {
+        background-color: var(--gray);
+        color: white;
+    }
+
+    .change-table--footer{
+        border-bottom: 1px solid #ddd;
+    }
+
+
+

@@ -37,4 +37,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['CONTENT_TYPE']) && 
         echo "Acción no válida o falta ID para eliminar.";
     }
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editProductId'] ,$_POST['editProductName'], $_POST['editProductStock'], $_POST['editProductMinStock'], $_POST['editProductTypeAmount'])) {
+    $editProductName = $_POST['editProductName'];
+    $editProductStock = $_POST['editProductStock'];
+    $editProductMinStock = $_POST['editProductMinStock'];
+    $editProductTypeAmount = $_POST['editProductTypeAmount'];
+    $editProductPrice = $_POST['editProductPrice'];
+    $editProductId = $_POST['editProductId'];
+
+    // Instanciar el modelo y editar el producto
+    $stockModel = new StockModel($conn);
+    if ($stockModel->editProduct($editProductName, $editProductStock, $editProductMinStock, $editProductTypeAmount, $editProductPrice, $editProductId)) {
+        echo "Producto editado correctamente.";
+    } else {
+        echo "Error al editar el producto.";
+    }
+}
+
+
+
 ?>

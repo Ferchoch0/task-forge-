@@ -47,6 +47,8 @@ require_once 'head.php';
   <div class="wave"></div>
   <div class="wave"></div>
 </div> 
+</body>
+
 
 <?php
 

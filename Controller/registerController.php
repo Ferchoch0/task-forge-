@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Habilitar STARTTLS
                 $mail->Port = 587; // Puerto SMTP para STARTTLS
 
-                $mail->setFrom('no-reply@tuweb.com', 'Tu Nombre');
+                $mail->setFrom('no-reply@tuweb.com', 'OtterTask');
                 $mail->addAddress($email, $username);
 
                 // Contenido del correo

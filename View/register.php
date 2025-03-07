@@ -33,7 +33,7 @@ require_once 'head.php';
     </div>
 
       <!-- Mensaje de error -->
-      <?php
+    <?php
     session_start();
     if (isset($_SESSION['error'])) {
         echo "<div class='error-message'>" . $_SESSION['error'] . "</div>";
@@ -62,6 +62,8 @@ require_once 'head.php';
     <a href="../View/login.php">¿Ya tenes cuenta? Ingresa aca!</a>
 
 </form>   
+
+</body>
 
 <?php
 

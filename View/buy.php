@@ -131,6 +131,9 @@ $username = $_SESSION['username'];
     </div>
 </div>
 
+</body>
+
+<script src="../View/src/assets/js/buyLoading.js"></script>
 
 
 <?php

@@ -60,6 +60,12 @@ if ($imageFromDB) {
                   <div class="settings-menu--radio-design"></div>
                   <div class="settings-menu--text">Configuración</div>
                 </label>
+
+                <label class="settings-menu--label">
+                  <input value="value-3" name="value-radio" id="value-3" class="settings-menu--radio-input" type="radio">
+                  <div class="settings-menu--radio-design"></div>
+                  <div class="settings-menu--text">Utilidades</div>
+                </label>
         </article>
 
         <article class="settings-options">
@@ -130,12 +136,43 @@ if ($imageFromDB) {
               
               <hr class="separator">
             </section>
+
+
+            <section class="settings-options--config" id="content-utils">
+              <div class="settings-options-title">
+                <h1>Utilidades</h1>
+              </div>
+
+              <hr class="separator">
+
+              <div class="settings-options--utils-content">
+                <input type="text" class="settings-options-input" id="increase" placeholder="Aumento al Costo" required>
+                <input type="text" class="settings-options-input" id="cash-discount" placeholder="Descuento al Precio en Efectivo" required>
+                
+                <div class="settings-options--stock">
+                  <input type="checkbox" class="stock-options-checkbox" id="check--location">
+                  <label for="check--location" class="stock-options-label">¿Activar locacion de Stock?</label>
+
+                  <input type="checkbox" class="stock-options-checkbox" id="check--expiration">
+                  <label for="check--expiration" class="stock-options-label">¿Activar Stock con Caducidad?</label>
+
+                  <input type="checkbox" class="stock-options-checkbox" id="check--stock-min">
+                  <label for="check--stock-min" class="stock-options-label">¿Activar Stock minimo? (Alertas)</label>
+                </div>
+                
+
+              </div>
+              
+              <hr class="separator">
+            </section>
         </article>
     </div>
 
     </div>
 
 
+    </body>
+    <script src="../View/src/assets/js/settingsMenu.js"></script>
 
 
     <?php

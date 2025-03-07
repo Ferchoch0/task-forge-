@@ -31,6 +31,13 @@ public function deleteProduct($stockId) {
     return $stmt->execute();
 }
 
+public function editProduct($name, $stock, $min_stock, $type_amount, $price, $stockId) {
+    $sql = "UPDATE stock SET products = ?, stock = ?, stock_min = ?, type_amount = ?, price = ? WHERE stock_id = ?";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("siisii", $name, $stock, $min_stock, $type_amount, $price, $stockId);
+    return $stmt->execute();
+}
+
 public function getUserSells($userId) {
     $sql = "SELECT sell.sell_id, stock.products, sell.amount, stock.type_amount, sell.price_sell, sell.payment, sell.fech 
             FROM sell
@@ -61,6 +68,8 @@ public function addSale($userId, $stockId, $amount, $priceSell, $payment) {
     $this->conn->commit(); // Confirmar transacción
     return true;
 }
+
+
 
 public function getUserBuys($userId) {
     $sql = "SELECT buy.buy_id, stock.products, buy.amount, stock.type_amount, buy.price_buy, buy.payment, buy.fech 
