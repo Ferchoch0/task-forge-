@@ -162,25 +162,16 @@ $username = $_SESSION['username'];
 
             <div id="invoiceGroup"  class="invoice-group">
 
-                <select name="buiness_name" class="product" id="buiness_name">
+                <select name="business_name" class="product" id="business_name">
                     <?php
                         $invoices = $clientModel->getUserInvoice($userId); // Obtener productos del usuario
                         foreach($invoices as $invoice) {
-                            echo "<option value='{$invoice['invoice_id']}'> {$invoice['buiness_name']} </option>";
+                            echo "<option value='{$invoice['invoice_id']}'> {$invoice['business_name']} </option>";
                         }
                     ?>
                 </select>
 
-                <button type="button" id="addNewBuiness" class="invoice-menu--button">+</button>
-                <!-- <select name="typeInvoice" id="typeInvoice" class="product">
-                    <option value="A">Tipo A</option>
-                    <option value="B">Tipo B</option>
-                    <option value="C">Tipo C</option>
-                </select>
-                <input type="text" name="client" placeholder="Cliente">    
-                <input type="text" name="cuit" placeholder="Cuit">
-                <input type="text" name="address" placeholder="Dirección Fiscal">
-                <input type="text" name="businessName" placeholder="Razon Social"> -->
+                <button type="button" id="addNewBusiness" class="invoice-menu--button">+</button>
             </div>
 
             <label for="payment">Metodo de pago:</label> <p></p>
@@ -207,7 +198,7 @@ $username = $_SESSION['username'];
                 </select>
                 <input type="text" name="cuit" id="cuit" placeholder="Cuit">
                 <input type="text" name="address" id="address" placeholder="Dirección Fiscal">
-                <input type="text" name="buinessName" id="buinessName" placeholder="Razon Social">
+                <input type="text" name="businessName" id="businessName" placeholder="Razon Social">
                 <input type="text" name="contact" id="contact" placeholder="Contacto">
             <button type="submit">Registrar Venta</button>
         </form>

@@ -9,7 +9,7 @@ class ClientModel{
 
 
     public function getUserInvoice($userId) {
-        $stmt = $this->conn->prepare("SELECT * FROM invoice WHERE user_id = ? ORDER BY buiness_name ASC"  );
+        $stmt = $this->conn->prepare("SELECT * FROM invoice WHERE user_id = ? ORDER BY business_name ASC"  );
         $stmt->bind_param("i", $userId);
         $stmt->execute();
         $result = $stmt->get_result();

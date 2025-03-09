@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.append("typeInvoice", document.getElementById("typeInvoice").value);
         formData.append("cuit", document.getElementById("cuit").value);
         formData.append("address", document.getElementById("address").value);
-        formData.append("buinessName", document.getElementById("buinessName").value);
+        formData.append("businessName", document.getElementById("businessName").value);
         formData.append("contact", document.getElementById("contact").value);
 
 
