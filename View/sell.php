@@ -3,6 +3,7 @@ session_start();
 require_once 'head.php';
 require_once '../Model/userModel.php';
 require_once '../Model/stockModel.php';
+require_once '../Model/clientModel.php';
 require_once '../Model/connection.php';
 
 
@@ -14,6 +15,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $stockModel = new StockModel($conn);
 $userModel = new UserModel($conn);
+$clientModel = new ClientModel($conn);
 $userId = $_SESSION['user_id'];
 
 if (!$userModel->isEmailVerified($userId)) {
@@ -153,20 +155,24 @@ $username = $_SESSION['username'];
             </table>
 
             <div>
-
-            <label for="payment">Metodo de pago:</label> <p></p>
-            <select name="payment" id="payment" class="product">
-                <option value="Efectivo">Efectivo</option>
-                <option value="Tarjeta">Tarjeta</option>
-                <option value="Transferencia">Transferencia</option>
-            </select> <p></p>
             
                 <input type="checkbox" name="invoice" id="invoice" value="">
                 <label for="invoice">Factura</label>
             </div>
 
             <div id="invoiceGroup"  class="invoice-group">
-                <select name="typeInvoice" id="typeInvoice" class="product">
+
+                <select name="buiness_name" class="product" id="buiness_name">
+                    <?php
+                        $invoices = $clientModel->getUserInvoice($userId); // Obtener productos del usuario
+                        foreach($invoices as $invoice) {
+                            echo "<option value='{$invoice['invoice_id']}'> {$invoice['buiness_name']} </option>";
+                        }
+                    ?>
+                </select>
+
+                <button type="button" id="addNewBuiness" class="invoice-menu--button">+</button>
+                <!-- <select name="typeInvoice" id="typeInvoice" class="product">
                     <option value="A">Tipo A</option>
                     <option value="B">Tipo B</option>
                     <option value="C">Tipo C</option>
@@ -174,8 +180,35 @@ $username = $_SESSION['username'];
                 <input type="text" name="client" placeholder="Cliente">    
                 <input type="text" name="cuit" placeholder="Cuit">
                 <input type="text" name="address" placeholder="Dirección Fiscal">
-                <input type="text" name="businessName" placeholder="Razon Social">
+                <input type="text" name="businessName" placeholder="Razon Social"> -->
             </div>
+
+            <label for="payment">Metodo de pago:</label> <p></p>
+            <select name="payment" id="payment" class="product">
+                <option value="Efectivo">Efectivo</option>
+                <option value="Tarjeta">Tarjeta</option>
+                <option value="Transferencia">Transferencia</option>
+            </select>
+            <button type="submit">Registrar Venta</button>
+        </form>
+    </div>
+</div>
+
+<div id="addInvoiceModal" class="modal"> 
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Agregar Factura</h2>
+        <form id="addInvoiceForm" action="invoiceController.php" method="POST">
+                <input type="hidden" name="action" value="add">
+                <select name="typeInvoice" id="typeInvoice" class="product">
+                    <option value="A">Tipo A</option>
+                    <option value="B">Tipo B</option>
+                    <option value="C">Tipo C</option>
+                </select>
+                <input type="text" name="cuit" id="cuit" placeholder="Cuit">
+                <input type="text" name="address" id="address" placeholder="Dirección Fiscal">
+                <input type="text" name="buinessName" id="buinessName" placeholder="Razon Social">
+                <input type="text" name="contact" id="contact" placeholder="Contacto">
             <button type="submit">Registrar Venta</button>
         </form>
     </div>
@@ -184,6 +217,8 @@ $username = $_SESSION['username'];
 </body>
 
 <script src="../View/src/assets/js/sellLoading.js"></script>
+<script src="../View/src/assets/js/invoiceLoading.js"></script>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {

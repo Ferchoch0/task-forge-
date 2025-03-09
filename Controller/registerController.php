@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $mail = new PHPMailer(true);
 
+
             try {
                 // Configuración del servidor
                 $mail->isSMTP();
@@ -49,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $mail->Password = getenv('SMTP_PASSWORD');
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Habilitar STARTTLS
                 $mail->Port = 587; // Puerto SMTP para STARTTLS
+
 
                 $mail->setFrom('no-reply@tuweb.com', 'OtterTask');
                 $mail->addAddress($email, $username);
