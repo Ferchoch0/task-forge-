@@ -13,18 +13,21 @@ $userId = $_SESSION['user_id'];
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $typeInvoice = $_POST['typeInvoice'];
     $cuit = $_POST['cuit'];
     $address = $_POST['address'];
     $businessName = $_POST['businessName'];
     $contact = $_POST['contact'];
+    $typeInvoice = $_POST['typeInvoice'];
+
 
     // Instanciar el modelo y agregar el producto
-    if ($clientModel->addInvoice($typeInvoice, $cuit, $address, $businessName, $contact, $userId)) {
+    if ($clientModel->addInvoice($cuit, $address, $businessName, $contact, $userId, $typeInvoice)) {
         echo "Producto agregado correctamente.";
     } else {
         echo "Error al agregar producto.";
     }
+
+    exit();
 }
 
 

@@ -39,24 +39,32 @@ public function editProduct($name, $stock, $min_stock, $type_amount, $price, $st
 }
 
 public function getUserSells($userId) {
-    $sql = "SELECT sell.sell_id, stock.products, sell.amount, stock.type_amount, sell.price_sell, sell.payment, sell.fech 
+    $sql = "SELECT sell.sell_id, stock.products, sell.amount, stock.type_amount, sell.price_sell, sell.payment, invoice.invoice_type, sell.fech
             FROM sell
             INNER JOIN stock ON sell.stock_id = stock.stock_id
+            LEFT JOIN invoice ON sell.invoice_id = invoice.invoice_id
             WHERE sell.user_id = ? ORDER BY sell.fech DESC";
     
     $stmt = $this->conn->prepare($sql);
+    if ($stmt === false) {
+        die('Prepare failed: ' . htmlspecialchars($this->conn->error));
+    }
+    
     $stmt->bind_param("i", $userId);
     $stmt->execute();
     
     $result = $stmt->get_result();
+    if ($result === false) {
+        die('Get result failed: ' . htmlspecialchars($stmt->error));
+    }
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
-public function addSale($userId, $stockId, $amount, $priceSell, $payment) {
+public function addSale($userId, $stockId, $amount, $priceSell, $payment, $invoiceId) {
     $this->conn->begin_transaction(); // Iniciar transacción
 
-    $stmt = $this->conn->prepare("INSERT INTO sell (stock_id, amount, price_sell, payment, fech, user_id) VALUES (?, ?, ?, ?, NOW(), ?)");
-    $stmt->bind_param("iidsi", $stockId, $amount, $priceSell, $payment, $userId);
+    $stmt = $this->conn->prepare("INSERT INTO sell (stock_id, amount, price_sell, payment, fech, user_id, invoice_id) VALUES (?, ?, ?, ?, NOW(), ?, ?)");
+    $stmt->bind_param("iidsii", $stockId, $amount, $priceSell, $payment, $userId, $invoiceId);
     $stmt->execute();
     $stmt->close();
 

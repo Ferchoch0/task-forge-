@@ -1,8 +1,3 @@
 
 <script src="../View/src/assets/js/preLoad.js"></script>
-
-
-
-
-
-</html>
+<script src="../View/src/assets/js/menuLoading.js"></script>

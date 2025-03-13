@@ -37,6 +37,8 @@ $username = $_SESSION['username'];
 <link rel="stylesheet" href="src/assets/css/icon.css">
 <link rel="stylesheet" href="src/assets/css/stock.css">
 <link rel="stylesheet" href="src/assets/css/buyAndSell.css">
+<link rel="stylesheet" href="src/assets/css/invoice.css">
+
 
 
 
@@ -63,7 +65,7 @@ $username = $_SESSION['username'];
 
             <section class="stock-menu">
                 <div class="stock-menu--options">
-                    <button class="stock-menu--button">
+                    <button class="menu--button">
                         <span class="add icon"></span>
                         <span>Agregar venta</span>
                     </button>
@@ -82,6 +84,7 @@ $username = $_SESSION['username'];
                             <th>Precio/u</th>
                             <th>Metodo</th>
                             <th>Precio total</th>
+                            <th>Factura</th>
                             <th>Fecha</th>
                         </tr>
                     </thead>
@@ -89,17 +92,19 @@ $username = $_SESSION['username'];
     <?php
     if ($sells) {
         foreach ($sells as $sell) {
+            $invoice = $sell['invoice_type'] ? $sell['invoice_type'] : "No"; 
             echo "<tr>";
             echo "<td>{$sell['products']}</td>";
             echo "<td>{$sell['amount']} {$sell['type_amount']}</td>";
             echo "<td>$" . number_format($sell['price_sell'], 2) . "</td>";
             echo "<td>{$sell['payment']}</td>";
             echo "<td>$" .  number_format($sell['amount'] * $sell['price_sell'], 2) . "</td>";
+            echo "<td>{$invoice}</td>";
             echo "<td>{$sell['fech']}</td>";
             echo "</tr>"; 
         }
     } else {
-        echo "<tr><td colspan='5'>No hay productos registrados</td></tr>";
+        echo "<tr><td colspan='6'>No hay productos registrados</td></tr>";
     }
     ?>
 </tbody>
@@ -110,7 +115,7 @@ $username = $_SESSION['username'];
     
   </div>
 
-<div id="addSellModal" class="modal"> 
+<div id="addModal" class="modal"> 
     <div class="modal-content little">
         <span class="close">&times;</span>
         <h2>Agregar Venta</h2>
@@ -154,9 +159,8 @@ $username = $_SESSION['username'];
                 </tbody>
             </table>
 
-            <div>
-            
-                <input type="checkbox" name="invoice" id="invoice" value="">
+            <div class="invoice-group--checkbox">
+                <input type="checkbox" name="invoice" id="invoice" value="off" class="invoice-checkbox">
                 <label for="invoice">Factura</label>
             </div>
 
@@ -164,14 +168,14 @@ $username = $_SESSION['username'];
 
                 <select name="business_name" class="product" id="business_name">
                     <?php
-                        $invoices = $clientModel->getUserInvoice($userId); // Obtener productos del usuario
+                        $invoices = $clientModel->getUserInvoice($userId); // Obtener facturas del usuario
                         foreach($invoices as $invoice) {
                             echo "<option value='{$invoice['invoice_id']}'> {$invoice['business_name']} </option>";
                         }
                     ?>
                 </select>
 
-                <button type="button" id="addNewBusiness" class="invoice-menu--button">+</button>
+                <button type="button" id="addNewBusiness" class="submenu--button">+</button>
             </div>
 
             <label for="payment">Metodo de pago:</label> <p></p>
@@ -185,9 +189,9 @@ $username = $_SESSION['username'];
     </div>
 </div>
 
-<div id="addInvoiceModal" class="modal"> 
+<div id="addSubModal-1" class="modal"> 
     <div class="modal-content">
-        <span class="close">&times;</span>
+        <span class="close--sub">&times;</span>
         <h2>Agregar Factura</h2>
         <form id="addInvoiceForm" action="invoiceController.php" method="POST">
                 <input type="hidden" name="action" value="add">
@@ -200,7 +204,7 @@ $username = $_SESSION['username'];
                 <input type="text" name="address" id="address" placeholder="Dirección Fiscal">
                 <input type="text" name="businessName" id="businessName" placeholder="Razon Social">
                 <input type="text" name="contact" id="contact" placeholder="Contacto">
-            <button type="submit">Registrar Venta</button>
+            <button type="submit">Registrar Factura</button>
         </form>
     </div>
 </div>

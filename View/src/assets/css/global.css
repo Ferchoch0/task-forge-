@@ -236,3 +236,112 @@ nav{
             .table--button:active{
                 background-color: var(--primary);
             }
+
+
+  .modal, .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease 0s;
+  }
+          
+          .modal-content {
+              background-color: white;
+              margin: 15% auto;
+              padding: 20px;
+              border: 1px solid #888;
+              width: 25%;
+              border-radius: 10px;
+          }
+          
+          .modal-content input{
+              width: 200px;
+              padding: 10px;
+              border-radius: 10px;
+              border: 1px solid #ddd;
+          }
+          
+              .modal-content form{
+                  display: flex;
+                  flex-direction: column;
+                  gap: 10px;
+              }
+          
+              .form-group-stock{
+                  display: flex;
+                  flex-direction: row !important;
+                  gap: 10px;
+              }
+          
+          
+          .select2-container {
+              width: 200px !important;
+          }
+          
+          .select2-selection {
+              padding: 8px !important;
+              border-radius: 10px !important;
+              border: 1px solid #ddd !important;
+              height: auto !important;
+          }
+          
+          .select2-container--default .select2-selection--single .select2-selection__rendered {
+              padding: 0 !important;
+              font-size: inherit !important;
+              margin: 0 !important;
+              line-height: normal !important;
+          }
+          
+          
+          .modal-content button{
+              padding: 10px;
+              border-radius: 10px;
+              background-color: var(--primary);
+              color: white;
+              border: none;
+              cursor: pointer;
+              transition: 0.3s;
+          }
+          
+          .modal-content button:hover{
+              transform: scale(1.1);
+          }
+          
+          .modal-content select{
+              width: 450px;
+              padding: 10px;
+              border-radius: 10px;
+              border: 1px solid #ddd;}
+          
+              .modal-content .product{
+                  width: 220px;
+              }
+          
+          .close, .close--sub {
+              float: right;
+              font-size: 28px;
+              cursor: pointer;
+          }
+
+          .menu--button, .submenu--button{
+            padding: 10px;
+                border-radius: 10px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+    
+            .menu--button:hover, .submenu--button:hover{
+                transform: scale(1.1);
+            }
+          

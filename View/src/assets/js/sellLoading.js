@@ -1,19 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const modal = document.getElementById("addSellModal");
-    const openModalBtn = document.querySelector(".stock-menu--button");
-    const closeModalBtn = document.querySelector(".close");
 
     const productSelect = document.getElementById("product");
     const priceInput = document.getElementById("priceSell");
-
-    openModalBtn.addEventListener("click", () => modal.style.display = "flex");
-    closeModalBtn.addEventListener("click", () => modal.style.display = "none");
-
-    window.addEventListener("click", (event) => {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    });
 
     function updatePrice() {
         const selectedOption = productSelect.options[productSelect.selectedIndex];
@@ -64,6 +52,26 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+
+    const invoiceCheck = document.getElementById("invoice");
+    const invoiceGroup = document.getElementById("invoiceGroup");
+
+    function toggleInvoiceGroup() {
+        if (invoiceCheck.checked) {
+            invoiceGroup.classList.add("show");
+            invoiceCheck.value = "on";
+        } else {
+            invoiceGroup.classList.remove("show");
+            invoiceCheck.value = "off";
+        }
+    }
+
+    // Llamar a la función al cargar la página
+    toggleInvoiceGroup();
+
+    // Agregar evento change al checkbox
+    invoiceCheck.addEventListener("change", toggleInvoiceGroup);
+
     $('#addSellForm').submit(function(e) {
         e.preventDefault();
         const formData = new FormData(this);
@@ -83,21 +91,4 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-
-    const invoiceCheck = document.getElementById("invoice");
-    const invoiceGroup = document.getElementById("invoiceGroup");
-
-    function toggleInvoiceGroup() {
-        if (invoiceCheck.checked) {
-            invoiceGroup.classList.add("show");
-        } else {
-            invoiceGroup.classList.remove("show");
-        }
-    }
-
-    // Llamar a la función al cargar la página
-    toggleInvoiceGroup();
-
-    // Agregar evento change al checkbox
-    invoiceCheck.addEventListener("change", toggleInvoiceGroup);
 });

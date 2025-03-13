@@ -53,7 +53,7 @@ $username = $_SESSION['username'];
 
             <section class="stock-menu">
                 <div class="stock-menu--options">
-                    <button class="stock-menu--button">
+                    <button class="menu--button">
                         <span class="add icon"></span>
                         <span>Agregar Compra</span>
                     </button>
@@ -99,7 +99,7 @@ $username = $_SESSION['username'];
     
   </div>
 
-<div id="addBuyModal" class="modal"> 
+<div id="addModal" class="modal"> 
     <div class="modal-content little">
         <span class="close">&times;</span>
         <h2>Agregar Compra de Stock</h2>

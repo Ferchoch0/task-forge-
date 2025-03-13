@@ -89,7 +89,7 @@ foreach ($products as $product) {
 
             <section class="stock-menu">
                 <div class="stock-menu--options">
-                    <button class="stock-menu--button">
+                    <button class="menu--button">
                         <span class="add icon"></span>
                         <span>Agregar producto</span>
                     </button>
@@ -162,7 +162,7 @@ foreach ($products as $product) {
 
 <!-- Agregar Productos -->
   
-  <div id="addProductModal" class="modal">
+  <div id="addModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Agregar Producto</h2>
@@ -190,7 +190,7 @@ foreach ($products as $product) {
 
 <div id="editProductModal" class="modal">
     <div class="modal-content">
-        <span class="close close-edit">&times;</span>
+        <span class="close-edit close">&times;</span>
         <h2>Editar Producto</h2>
         <form id="editProductForm">
             <input type="hidden" name="action" value="edit">

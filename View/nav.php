@@ -20,9 +20,9 @@
           <a href="../View/sell.php" class="narbar-menu--option">Ventas</a>
           <a href="../View/buy.php" class="narbar-menu--option">Compras</a>
           <a href="../View/client.php" class="narbar-menu--option">Clientes</a>
-          <a href="../View/invoice.php" class="narbar-menu--option">Gastos</a>
+          <a class="narbar-menu--option">Gastos</a>
           <a class="narbar-menu--option">Proveedores</a>
-          <a class="narbar-menu--option">Facturas</a>
+          <a href="../View/invoice.php" class="narbar-menu--option">Facturas</a>
           <a class="narbar-menu--option">Balance</a>
           <a class="narbar-menu--option">Deudas</a>
           <a href="../View/cash.php" class="narbar-menu--option">Caja</a>          

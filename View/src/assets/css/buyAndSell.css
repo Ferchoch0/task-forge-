@@ -11,19 +11,6 @@
     justify-content: center;
 }
 
-.invoice-group{
-    display: none;
-    grid-template-columns: 1fr 1fr;
-    flex-direction: row !important;
-    gap: 10px;
-}
-
-.show{
-    display: grid;
-    transform: translateY(0);
-    pointer-events: auto; 
-  }
-
 
 
 

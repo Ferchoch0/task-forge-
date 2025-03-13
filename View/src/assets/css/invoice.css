@@ -1,0 +1,33 @@
+.invoice-group--checkbox {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px !important;
+    justify-content: start !important;
+    margin: 0 !important;
+    padding: 0 !important; /* Asegúrate de que no haya relleno */
+    box-sizing: border-box !important;
+}
+
+.invoice-checkbox {
+    width: 20px !important;
+    height: 20px !important;
+    margin: 0 !important;
+    padding: 0 !important; /* Asegúrate de que no haya relleno */
+    box-sizing: border-box !important;
+}
+
+.invoice-group{
+    display: none;
+    flex-direction: row !important;
+    gap: 10px;
+    width: 30%;    
+    align-items: center;
+    justify-content: center;
+
+}
+
+.show{
+    display: flex;
+    transform: translateY(0);
+    pointer-events: auto; 
+  }

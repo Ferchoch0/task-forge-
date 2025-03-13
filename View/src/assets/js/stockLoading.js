@@ -1,17 +1,4 @@
   document.addEventListener("DOMContentLoaded", function () {
-     // CARGA DE PRODUCTOS
-    const modal = document.getElementById("addProductModal");
-    const openModalBtn = document.querySelector(".stock-menu--button");
-    const closeModalBtn = document.querySelector(".close");
-
-    openModalBtn.addEventListener("click", () => modal.style.display = "block");
-    closeModalBtn.addEventListener("click", () => modal.style.display = "none");
-
-    window.addEventListener("click", (event) => {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    });
 
     document.getElementById("addProductForm").addEventListener("submit", function (e) {
         e.preventDefault();
@@ -38,70 +25,77 @@
 
      // EDICION DE PRODUCTOS
     
-    const editModal = document.getElementById("editProductModal");
-    const openEditModalBtn = document.querySelectorAll(".edit-button");
-    const closeEditModalBtn = document.querySelector(".close-edit");
-
-    openEditModalBtn.forEach(button => {
-        button.addEventListener('click', (e) => {
-            const productId = e.target.closest('button').getAttribute('data-id');
-            const productName = e.target.closest('button').getAttribute('data-name');
-            const productStock = e.target.closest('button').getAttribute('data-stock');
-            const productMinStock = e.target.closest('button').getAttribute('data-min-stock');
-            const productTypeAmount = e.target.closest('button').getAttribute('data-type-amount');
-            const productPrice = e.target.closest('button').getAttribute('data-price');
-
-            console.log("Product Name:", productName);
-            console.log("Product Stock:", productStock);
-
-
-            document.getElementById("editProductId").value = productId;
-            document.getElementById("editProductName").value = productName;
-            document.getElementById("editProductStock").value = productStock;
-            document.getElementById("editProductMinStock").value = productMinStock;
-            document.getElementById("editProductTypeAmount").value = productTypeAmount;
-            document.getElementById("editProductPrice").value = productPrice;
-
-            editModal.style.display = "block";
-        });
-    });
-
-
-    closeEditModalBtn.addEventListener("click", () => editModal.style.display = "none");
-
-    window.addEventListener("click", (event) => {
-        if (event.target === editModal) {
-            editModal.style.display = "none";
-        }
-    });
-
-   
-
-    document.getElementById("editProductForm").addEventListener("submit", function (e) {
-        e.preventDefault();
-
-
-
-        const formData = new FormData();
-        formData.append("action", "edit");
-        formData.append("editProductId", document.getElementById("editProductId").value);
-        formData.append("editProductName", document.getElementById("editProductName").value);
-        formData.append("editProductStock", document.getElementById("editProductStock").value);
-        formData.append("editProductMinStock", document.getElementById("editProductMinStock").value);
-        formData.append("editProductTypeAmount", document.getElementById("editProductTypeAmount").value);
-        formData.append("editProductPrice", document.getElementById("editProductPrice").value);
-
-        fetch("../Controller/stockController.php", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            editModal.style.display = "none";
-            location.reload();
-        });
-    });
-
+     const editModal = document.getElementById("editProductModal");
+     const openEditModalBtns = document.querySelectorAll(".edit-button");
+     const closeEditModalBtn = document.querySelector(".close-edit");
+ 
+     openEditModalBtns.forEach(button => {
+         button.addEventListener('click', (e) => {
+             const productId = e.target.closest('button').getAttribute('data-id');
+             const productName = e.target.closest('button').getAttribute('data-name');
+             const productStock = e.target.closest('button').getAttribute('data-stock');
+             const productMinStock = e.target.closest('button').getAttribute('data-min-stock');
+             const productTypeAmount = e.target.closest('button').getAttribute('data-type-amount');
+             const productPrice = e.target.closest('button').getAttribute('data-price');
+ 
+             document.getElementById("editProductId").value = productId;
+             document.getElementById("editProductName").value = productName;
+             document.getElementById("editProductStock").value = productStock;
+             document.getElementById("editProductMinStock").value = productMinStock;
+             document.getElementById("editProductTypeAmount").value = productTypeAmount;
+             document.getElementById("editProductPrice").value = productPrice;
+ 
+             editModal.style.display = "flex";
+             setTimeout(() => {
+                 editModal.style.opacity = "1";
+             }, 10); // Pequeño retraso para permitir que la transición ocurra
+         });
+     });
+ 
+     if (closeEditModalBtn) {
+         closeEditModalBtn.addEventListener("click", () => {
+             editModal.style.opacity = "0";
+             setTimeout(() => {
+                 editModal.style.display = "none";
+             }, 300); // Tiempo de la transición
+         });
+     }
+ 
+     window.addEventListener("click", (event) => {
+         if (event.target === editModal) {
+             editModal.style.opacity = "0";
+             setTimeout(() => {
+                 editModal.style.display = "none";
+             }, 300); // Tiempo de la transición
+         }
+     });
+ 
+     // Enviar formulario de edición
+     document.getElementById("editProductForm").addEventListener("submit", function (e) {
+         e.preventDefault();
+ 
+         const formData = new FormData();
+         formData.append("action", "edit");
+         formData.append("editProductId", document.getElementById("editProductId").value);
+         formData.append("editProductName", document.getElementById("editProductName").value);
+         formData.append("editProductStock", document.getElementById("editProductStock").value);
+         formData.append("editProductMinStock", document.getElementById("editProductMinStock").value);
+         formData.append("editProductTypeAmount", document.getElementById("editProductTypeAmount").value);
+         formData.append("editProductPrice", document.getElementById("editProductPrice").value);
+ 
+         fetch("../Controller/stockController.php", {
+             method: "POST",
+             body: formData
+         })
+         .then(response => response.text())
+         .then(data => {
+             editModal.style.opacity = "0";
+             setTimeout(() => {
+                 editModal.style.display = "none";
+                 location.reload();
+             }, 300); // Tiempo de la transición
+         });
+     });
 
     // ELIMINACION DE PRODUCTOS
 
