@@ -8,9 +8,12 @@ document.addEventListener("DOMContentLoaded", function () {
             body: formData,
         })
         .then(response => response.text())
-        .then(data => {
+        if (data.success) {
+            alert('Venta registrada con éxito');
             location.reload();
-        });
+        } else {
+            alert('Error al registrar la venta');
+        }
     });
 
     const chargeModal = document.getElementById("chargeModal");

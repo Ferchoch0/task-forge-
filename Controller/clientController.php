@@ -13,11 +13,14 @@ $userId = $_SESSION['user_id'];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Agregar cliente
-    if (isset($_POST['name']) && isset($_POST['debt_total'])) {
+    if (isset($_POST['name']) && isset($_POST['cuit']) && isset($_POST['address']) && isset($_POST['contact']) && isset($_POST['typeInvoice']) {
         $name = $_POST['name'];
-        $debt_total = $_POST['debt_total'];
+        $cuit = $_POST['cuit'];
+        $address = $_POST['address'];
+        $contact = $_POST['contact'];
+        $typeInvoice = $_POST['typeInvoice'];
 
-        if ($clientModel->addClient($name, $debt_total, $userId)) {
+        if ($clientModel->addClient($name, $cuit, $contact, $invoiceType, $address, $userId)) {
             header("Location: ../View/client.php?success=1");
         } else {
             header("Location: ../View/client.php?error=client");

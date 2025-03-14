@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $products = $_POST['products'];
     $payment = $_POST['payment'];
     if (isset($_POST['invoice']) && $_POST['invoice'] === 'on') {
-        $invoice = $_POST['business_name'];
+        $invoice = $_POST['name'];
     } else {
         $invoice = NULL;
     }

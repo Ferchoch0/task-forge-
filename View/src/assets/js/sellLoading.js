@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Agregar evento change al checkbox
     invoiceCheck.addEventListener("change", toggleInvoiceGroup);
 
-    $('#addSellForm').submit(function(e) {
+    document.getElementById("addSellForm").addEventListener("submit", function(e) {
         e.preventDefault();
         const formData = new FormData(this);
         formData.append("action", "add");

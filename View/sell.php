@@ -53,7 +53,7 @@ $username = $_SESSION['username'];
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
- <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
 
   <?php require_once 'nav.php'; ?>
@@ -119,7 +119,7 @@ $username = $_SESSION['username'];
     <div class="modal-content little">
         <span class="close">&times;</span>
         <h2>Agregar Venta</h2>
-        <form id="addSellForm" action="sellController.php" method="POST">
+        <form id="addSellForm" method="POST">
             <input type="hidden" name="action" value="add">
             <label for="product">Producto:</label> <p></p>
             <div class="form-group">
@@ -166,11 +166,11 @@ $username = $_SESSION['username'];
 
             <div id="invoiceGroup"  class="invoice-group">
 
-                <select name="business_name" class="product" id="business_name">
+                <select name="name" class="product" id="name">
                     <?php
-                        $invoices = $clientModel->getUserInvoice($userId); // Obtener facturas del usuario
-                        foreach($invoices as $invoice) {
-                            echo "<option value='{$invoice['invoice_id']}'> {$invoice['business_name']} </option>";
+                        $clients = $clientModel->getUserClient($userId); // Obtener facturas del usuario
+                        foreach($clients as $client) {
+                            echo "<option value='{$client['client_id']}'> {$client['name']} </option>";
                         }
                     ?>
                 </select>
@@ -193,8 +193,9 @@ $username = $_SESSION['username'];
     <div class="modal-content">
         <span class="close--sub">&times;</span>
         <h2>Agregar Factura</h2>
-        <form id="addInvoiceForm" action="invoiceController.php" method="POST">
+        <form id="addClientForm" method="POST">
                 <input type="hidden" name="action" value="add">
+                <input type="text" name="name" id="name" placeholder="Razon Social">
                 <select name="typeInvoice" id="typeInvoice" class="product">
                     <option value="A">Tipo A</option>
                     <option value="B">Tipo B</option>
@@ -202,7 +203,6 @@ $username = $_SESSION['username'];
                 </select>
                 <input type="text" name="cuit" id="cuit" placeholder="Cuit">
                 <input type="text" name="address" id="address" placeholder="Dirección Fiscal">
-                <input type="text" name="businessName" id="businessName" placeholder="Razon Social">
                 <input type="text" name="contact" id="contact" placeholder="Contacto">
             <button type="submit">Registrar Factura</button>
         </form>
@@ -212,7 +212,6 @@ $username = $_SESSION['username'];
 </body>
 
 <script src="../View/src/assets/js/sellLoading.js"></script>
-<script src="../View/src/assets/js/invoiceLoading.js"></script>
 
 
 <script>

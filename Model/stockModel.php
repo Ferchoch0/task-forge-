@@ -39,10 +39,10 @@ public function editProduct($name, $stock, $min_stock, $type_amount, $price, $st
 }
 
 public function getUserSells($userId) {
-    $sql = "SELECT sell.sell_id, stock.products, sell.amount, stock.type_amount, sell.price_sell, sell.payment, invoice.invoice_type, sell.fech
+    $sql = "SELECT sell.sell_id, stock.products, sell.amount, stock.type_amount, sell.price_sell, sell.payment, clients.invoice_type, sell.fech
             FROM sell
             INNER JOIN stock ON sell.stock_id = stock.stock_id
-            LEFT JOIN invoice ON sell.invoice_id = invoice.invoice_id
+            LEFT JOIN clients ON sell.client_id = clients.client_id
             WHERE sell.user_id = ? ORDER BY sell.fech DESC";
     
     $stmt = $this->conn->prepare($sql);

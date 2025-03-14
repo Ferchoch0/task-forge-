@@ -19,9 +19,9 @@ class ClientModel{
     
 
     
-    public function addInvoice($cuit, $address, $businessName, $contact, $userId, $typeInvoice) {
-        $stmt = $this->conn->prepare("INSERT INTO invoice (cuit, address, business_name, contact, user_id, invoice_type) VALUES ( ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("issiis", $cuit, $address, $businessName, $contact, $userId, $typeInvoice);
+    public function addInvoice($fech, $clientId, $userId) {
+        $stmt = $this->conn->prepare("INSERT INTO invoice (fech, client_id, user_id) VALUES (NOW(), ?, ?)");
+        $stmt->bind_param("iii", $clientId, $userId);
         $stmt->execute();
         $stmt->close();
 
@@ -36,9 +36,9 @@ class ClientModel{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function addClient($name, $debtTotal, $userId){
-        $stmt = $this->conn->prepare("INSERT INTO clients (name, debt_total, user_id) VALUES ( ?, ?, ?)");
-        $stmt->bind_param("sii", $name, $debtTotal, $userId);
+    public function addClient($name, $cuit, $contact, $invoiceType, $address, $userId){
+        $stmt = $this->conn->prepare("INSERT INTO clients (name, cuit, contact, invoice_type, address, user_id) VALUES ( ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("siissi", $name, $cuit, $contact, $invoiceType, $address, $userId);
         $stmt->execute();
         $stmt->close();
     }
