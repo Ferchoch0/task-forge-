@@ -2,16 +2,15 @@
 session_start();
 require_once 'head.php';
 require_once '../Model/userModel.php';
-require_once '../Model/stockModel.php';
+require_once '../Model/balanceModel.php';
 require_once '../Model/connection.php';
-
 
 
 if (!isset($_SESSION['user_id'])) {
   header("Location: login.php");
   exit();
 }
-$stockModel = new StockModel($conn);
+$balanceModel = new BalanceModel($conn);
 $userModel = new UserModel($conn);
 $userId = $_SESSION['user_id'];
 
@@ -20,7 +19,7 @@ if (!$userModel->isEmailVerified($userId)) {
   exit();
 }
 
-$transactions = $stockModel->getUserTransaction($userId);
+$transactions = $balanceModel->getUserTransaction($userId);
 $username = $_SESSION['username'];
 
 
@@ -53,7 +52,7 @@ $username = $_SESSION['username'];
 
                 <div class="cash-menu--options">
 
-                <button class="success stock-menu--button">
+                <button  id="downloadPDF" class="submit-button success">
                         <span class="remove icon"></span>
                         <span>Cerrar Caja</span>
                 </button>
@@ -70,58 +69,56 @@ $username = $_SESSION['username'];
                     </thead>
 
                     <tbody>
-                      <?php
-                            if ($transactions) {
-                                foreach ($transactions as $transaction) {
-                                    $type = $transaction['source'] === 'buy' ? 'Retiro' : 'Ingreso';
-                                    echo "<tr>";
-                                    echo "<td>{$transaction['products']}</td>";
-                                    echo "<td>{$type}</td>";
-                                    echo "<td> $" . number_format(($transaction['amount'] * $transaction['price']), 2) . "</td>";
-                                    echo "<td>{$transaction['payment']}</td>";
-                                    echo "<td>{$transaction['date']}</td>";
-                                    echo "</tr>";
-                                }
-                            } else {
-                                echo "<tr><td colspan='4'>No hay transacciones registradas</td></tr>";
-                            }
-                      ?>
-                    </tbody>
-                  
-
                     <?php
-                      $totalEfectivo = 0;
-                      $totalTarjeta = 0;
-                      $totalTransferencia = 0;
-                      $totalGeneral = 0;
-
+                     $totalEfectivo = 0;
+                     $totalTarjeta = 0;
+                     $totalTransferencia = 0;
+                     $totalGeneral = 0;
+         
                       if ($transactions) {
                         foreach ($transactions as $transaction) {
-                          $subtotal = $transaction['amount'] * $transaction['price'];
-                          if ($transaction['source'] === 'buy') {
-                            if ($transaction['payment'] === 'Efectivo') {
-                              $totalEfectivo -= $subtotal;
-                            } elseif ($transaction['payment'] === 'Tarjeta') {
-                              $totalTarjeta -= $subtotal;
-                            } elseif ($transaction['payment'] === 'Transferencia') {
-                              $totalTransferencia -= $subtotal;
+                          if ($transaction['payment'] === 'deuda') {
+                            continue;
                           }
-                          $totalGeneral -= $subtotal;
-                        } elseif($transaction['source'] === 'sell') {
+
+                          if ($transaction['source'] === 'buy') {
+                            $type = 'Compra';
+                            $amount = $transaction['amount'] * $transaction['price'];
+                          } elseif ($transaction['source'] === 'sell') {
+                            $type = 'Venta';
+                            $amount = $transaction['amount'] * $transaction['price'];
+                          } elseif ($transaction['source'] === 'cash') {
+                            $type = ($transaction['mov_type'] == 1) ? 'Ingreso' : 'Retiro';
+                            $amount = $transaction['price'];
+                          } else {
+                            $type = 'Desconocido';
+                            $amount = 0;
+                          }
+
                           if ($transaction['payment'] === 'Efectivo') {
-                            $totalEfectivo += $subtotal;
-                          } elseif ($transaction['payment'] === 'Tarjeta') {
-                            $totalTarjeta += $subtotal;
-                          } elseif ($transaction['payment'] === 'Transferencia') {
-                            $totalTransferencia += $subtotal;
+                            $totalEfectivo += ($type === 'Ingreso') ? $amount : -$amount;
+                        } elseif ($transaction['payment'] === 'Tarjeta') {
+                            $totalTarjeta += ($type === 'Ingreso') ? $amount : -$amount;
+                        } elseif ($transaction['payment'] === 'Transferencia') {
+                            $totalTransferencia += ($type === 'Ingreso') ? $amount : -$amount;
                         }
-                        $totalGeneral += $subtotal;
+    
+                        $totalGeneral += ($type === 'Ingreso') ? $amount : -$amount;
+
+                          echo "<tr>";
+                          echo "<td>{$transaction['products']}</td>";
+                          echo "<td>{$type}</td>";
+                          echo "<td>$" . number_format($amount, 2) . "</td>";
+                          echo "<td>{$transaction['payment']}</td>";
+                          echo "<td>{$transaction['date']}</td>";
+                          echo "</tr>";
                         }
-                            
-                           
-                        }
+                      } else {
+                        echo "<tr><td colspan='5'>No hay transacciones registradas</td></tr>";
                       }
                     ?>
+                    </tbody>
+
 
                     <thead class="cash-menu--total">
                       <tr>
@@ -146,11 +143,11 @@ $username = $_SESSION['username'];
                   </div>
 
                   <div class="cash-menu--balance"> 
-                    <button class="stock-menu--button">
+                    <button class="cash--menu" data-type="1">
                         <span class="add icon"></span>
                         <span>Agregar Dinero</span>
                     </button>
-                    <button class="stock-menu--button">
+                    <button class="cash--menu" data-type="0">
                         <span class="remove icon"></span>
                         <span>Retirar Dinero</span>
                     </button>
@@ -162,7 +159,52 @@ $username = $_SESSION['username'];
     </div>
    </div>
 
+   <div id="cashModal" class="modal"> 
+    <div class="modal-content little">
+        <span class="close close-cash">&times;</span>
+        <p class="modal-title">Agregar Movimiento</p>
+        <form id="addCashForm" method="POST">
+            <input type="hidden" name="action" value="add">
+            <input type="hidden" name="typeMov" id="typeMov"> 
+            <label class="label-sub-title">
+              <span class="modal-sub-title">Descripcion</span>
+              <div class="modal-field-container">
+                <input type="text" class="modal-field" name="description" id="description" placeholder="Ingresar una Descripcion" autocomplete="off" required>
+              </div>   
+            </label>
+
+            <label class="label-sub-title">
+              <span class="modal-sub-title">Cantidad</span>
+              <div class="modal-field-container">
+                <input type="number" class="modal-field" name="amount" id="amount" placeholder="Ingresar Cantidad" autocomplete="off" required min="1">
+              </div>   
+            </label>
+
+            <label class="label-sub-title">
+              <span class="modal-sub-title">Tipo de Movimiento</span>
+              <div class="modal-field-container">
+                <select name="payment" class="modal-field" id="payment" class="product">
+                  <option value="" disabled selected>Seleccionar</option>
+                  <option value="Efectivo">Efectivo</option>
+                  <option value="Tarjeta">Tarjeta</option>
+                  <option value="Transferencia">Transferencia</option>
+                </select>
+              </div>   
+            </label>            
+
+            <span class="model-separator"></span>
+
+            <div class="modal-submit">
+              <button type="submit" class="submit-button">Registrar Movimiento</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 </body>
+
+<script src="../View/src/assets/js/cashLoading.js"></script>
+
 
 
 <?php

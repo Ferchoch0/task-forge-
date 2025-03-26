@@ -63,7 +63,7 @@ public function getUserSells($userId) {
 public function addSale($userId, $stockId, $amount, $priceSell, $payment, $invoiceId) {
     $this->conn->begin_transaction(); // Iniciar transacción
 
-    $stmt = $this->conn->prepare("INSERT INTO sell (stock_id, amount, price_sell, payment, fech, user_id, invoice_id) VALUES (?, ?, ?, ?, NOW(), ?, ?)");
+    $stmt = $this->conn->prepare("INSERT INTO sell (stock_id, amount, price_sell, payment, fech, user_id, client_id) VALUES (?, ?, ?, ?, NOW(), ?, ?)");
     $stmt->bind_param("iidsii", $stockId, $amount, $priceSell, $payment, $userId, $invoiceId);
     $stmt->execute();
     $stmt->close();
@@ -80,9 +80,10 @@ public function addSale($userId, $stockId, $amount, $priceSell, $payment, $invoi
 
 
 public function getUserBuys($userId) {
-    $sql = "SELECT buy.buy_id, stock.products, buy.amount, stock.type_amount, buy.price_buy, buy.payment, buy.fech 
+    $sql = "SELECT buy.buy_id, stock.products, buy.amount, stock.type_amount, buy.price_buy, buy.payment, supplier.name ,buy.fech 
             FROM buy
             INNER JOIN stock ON buy.stock_id = stock.stock_id
+            LEFT JOIN supplier ON buy.supplier_id = supplier.supplier_id
             WHERE buy.user_id = ? ORDER BY buy.fech DESC";
     
     $stmt = $this->conn->prepare($sql);
@@ -93,11 +94,11 @@ public function getUserBuys($userId) {
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
-public function addBuy($userId, $stockId, $amount, $priceBuy, $payment) {
+public function addBuy($userId, $stockId, $amount, $priceBuy, $payment, $supplierId) {
     $this->conn->begin_transaction(); // Iniciar transacción
 
-    $stmt = $this->conn->prepare("INSERT INTO buy (stock_id, amount, price_buy, payment, fech, user_id) VALUES (?, ?, ?, ?, NOW(), ?)");
-    $stmt->bind_param("iidsi", $stockId, $amount, $priceBuy, $payment, $userId);
+    $stmt = $this->conn->prepare("INSERT INTO buy (stock_id, amount, price_buy, payment, fech, user_id, supplier_id) VALUES (?, ?, ?, ?, NOW(), ?, ?)");
+    $stmt->bind_param("iidsii", $stockId, $amount, $priceBuy, $payment, $userId, $supplierId);
     $stmt->execute();
     $stmt->close();
 
@@ -110,27 +111,44 @@ public function addBuy($userId, $stockId, $amount, $priceBuy, $payment) {
     return true;
 }
 
+public function addQuantityStock($stockId) {
+    $this->conn->begin_transaction();
 
-
-public function getUserTransaction($userId) {
-    $sql = "SELECT 'sell' AS source, sell.sell_id, stock.products, sell.amount,  sell.price_sell AS price, sell.payment, sell.fech AS date
-            FROM sell
-            INNER JOIN stock ON sell.stock_id = stock.stock_id
-            WHERE sell.user_id = ?
-            UNION
-            SELECT 'buy' AS source, buy.buy_id, stock.products, buy.amount,  buy.price_buy AS price, buy.payment, buy.fech AS date
-            FROM buy
-            INNER JOIN stock ON buy.stock_id = stock.stock_id
-            WHERE buy.user_id = ?
-            ORDER BY date DESC
-        ";
-    
-    $stmt = $this->conn->prepare($sql);
-    $stmt->bind_param("ii", $userId, $userId);
+    $stmt = $this->conn->prepare("UPDATE stock SET quantity = quantity + 1 WHERE stock_id = ?");
+    $stmt->bind_param("i", $stockId);
     $stmt->execute();
-    
+    $stmt->close();
+
+    $this->conn->commit();
+    return true;
+}
+
+public function addQuantityClient($clientId) {
+    $this->conn->begin_transaction();
+
+    $stmt = $this->conn->prepare("UPDATE clients SET quantity = quantity + 1 WHERE client_id = ?");
+    $stmt->bind_param("i", $clientId);
+    $stmt->execute();
+    $stmt->close();
+
+
+    $this->conn->commit();
+    return true;
+}
+
+public function getUserSupplier($userId) {
+    $stmt = $this->conn->prepare("SELECT * FROM supplier WHERE user_id = ? ORDER BY name ASC");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
     $result = $stmt->get_result();
+    $stmt->close();
     return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+public function addSupplier($name, $contact, $userId) {
+    $stmt = $this->conn->prepare("INSERT INTO supplier (name, contact, user_id) VALUES (?, ?, ?)");
+    $stmt->bind_param("sii", $name, $contact, $userId);
+    return $stmt->execute();
 }
 
 }

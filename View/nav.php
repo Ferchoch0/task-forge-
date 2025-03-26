@@ -1,11 +1,23 @@
-  <div id="preloader">
+<?php
+$current_page = basename($_SERVER['PHP_SELF']); // Obtiene el nombre del archivo actual
+?> 
+ 
+ <div id="preloader">
     <div class="spinner"></div>
   </div>
+
+<?php
+  $margin = 0.30;
+  $iva = 0.21;
+?>
 
   <nav>
 
 
-    <section class="navbar-container">      
+    <section class="navbar-container">   
+      <div class="navbar-logo">
+        <span class="logo--otter"></span>
+      </div>   
           <div class="navbar-user--info">
             <h3>Buenos Dias, </h3>
             <h1>  <?php echo htmlspecialchars($username); ?> </h1>
@@ -16,25 +28,23 @@
 
 
         <section class="navbar-menu">
-          <a href="../View/stock.php" class="narbar-menu--option">Stock</a>
-          <a href="../View/sell.php" class="narbar-menu--option">Ventas</a>
-          <a href="../View/buy.php" class="narbar-menu--option">Compras</a>
-          <a href="../View/client.php" class="narbar-menu--option">Clientes</a>
-          <a class="narbar-menu--option">Gastos</a>
-          <a class="narbar-menu--option">Proveedores</a>
-          <a href="../View/invoice.php" class="narbar-menu--option">Facturas</a>
-          <a class="narbar-menu--option">Balance</a>
-          <a class="narbar-menu--option">Deudas</a>
-          <a href="../View/cash.php" class="narbar-menu--option">Caja</a>          
-          <a class="narbar-menu--option">Mi negocio</a>
-          <a href="../View/profile.php" class="narbar-menu--option">Mi Cuenta</a>
-          <a href="../View/settings.php" class="narbar-menu--option">Configuración</a>
+          <a href="../View/balance.php" class="<?= ($current_page == 'balance.php') ? 'nav-active' : '' ?> narbar-menu--option"><span class="nav-icon balance-nav"></span>Balance</a>
+          <a href="../View/stock.php" class="<?= ($current_page == 'stock.php') ? 'nav-active' : '' ?> narbar-menu--option"><span class="nav-icon stock-nav"></span>Stock</a>
+          <a href="../View/sell.php" class="<?= ($current_page == 'sell.php') ? 'nav-active' : '' ?> narbar-menu--option"><span class="nav-icon sell-nav"></span>Ventas</a>
+          <a href="../View/buy.php" class="<?= ($current_page == 'buy.php') ? 'nav-active' : '' ?> narbar-menu--option"><span class="nav-icon buy-nav"></span>Compras</a>
+          <a href="../View/client.php" class="<?= ($current_page == 'client.php') ? 'nav-active' : '' ?> narbar-menu--option"><span class="nav-icon client-nav"></span>Clientes</a>
+          <a href="../View/supplier.php" class="<?= ($current_page == 'supplier.php') ? 'nav-active' : '' ?> narbar-menu--option"><span class="nav-icon supplier-nav"></span>Proveedores</a>
+          <a href="../View/invoice.php" class="<?= ($current_page == 'invoice.php') ? 'nav-active' : '' ?> narbar-menu--option"><span class="nav-icon invoice-nav"></span>Facturas</a>
+          <a href="../View/cash.php" class="<?= ($current_page == 'cash.php') ? 'nav-active' : '' ?> narbar-menu--option"><span class="nav-icon cash-nav"></span>Caja</a>          
+          <a class="<?= ($current_page == 'business.php') ? 'nav-active' : '' ?> narbar-menu--option"><span class="nav-icon mybusiness-nav"></span>Mi negocio</a>
+          <a href="../View/profile.php" class="<?= ($current_page == 'profile.php') ? 'nav-active' : '' ?> narbar-menu--option"><span class="nav-icon mysesion-nav"></span>Mi Cuenta</a>
+          <a href="../View/settings.php" class="<?= ($current_page == 'settings.php') ? 'nav-active' : '' ?> narbar-menu--option"><span class="nav-icon settings-nav"></span>Settings</a>
         </section>
     
     <div class="separator"></div>
 
     <section class="navbar-logout">
-      <a href="../View/logout.php" class="navbar-logout--button">Cerrar Sesión</a>
+      <a href="../View/logout.php" class="navbar-logout--button"><span class="nav-icon close-sesion"></span>Cerrar Sesión</a>
     </section>
 
 

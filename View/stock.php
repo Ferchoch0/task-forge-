@@ -125,8 +125,7 @@ foreach ($products as $product) {
             $lowStockClass = ($product['stock'] <= $product['stock_min'] && $product['stock'] != 0) ? 'low-stock' : '';
             $nullStockCount = ($product['stock'] == 0) ? 'null-stock' : '';
             $cost = $product['price'];
-            $margin = 0.30;
-            $iva = 0.21;
+            
 
             $salePrice = $cost * (1 + $margin) * (1 + $iva);
 
@@ -165,23 +164,55 @@ foreach ($products as $product) {
   <div id="addModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
-        <h2>Agregar Producto</h2>
+        <p class="modal-title">Agregar Producto</p>
         <form id="addProductForm">
             <input type="hidden" name="action" value="add">
-            <input type="text" id="productName" name="productName" placeholder="Nombre del producto" required>
-            <div class="form-group-stock">
-                <input type="number" id="productStock" name="productStock" placeholder="Stock" required>
-                <input type="number" id="productMinStock" name="productMinStock" placeholder="Stock Mínimo" required>
+            <label class="label-sub-title">
+                <span class="modal-sub-title">Nombre de Producto</span>
+                <div class="modal-field-container">
+                    <input type="text" class="modal-field" id="productName" name="productName" placeholder="Ingresar Nombre" autocomplete="off" required>
+                </div>   
+            </label>
+
+            <div class="form-group-aligned">
+                <label class="label-sub-title">
+                    <span class="modal-sub-title">Stock</span>
+                    <div class="modal-field-container">
+                        <input type="number" class="modal-field" id="productStock" name="productStock" placeholder="Ingresa Cantidad" autocomplete="off" required>
+                    </div>
+                </label>
+                <label class="label-sub-title">
+                    <span class="modal-sub-title">Stock Minimo</span>
+                    <div class="modal-field-container">
+                        <input type="number" class="modal-field" id="productMinStock" name="productMinStock" placeholder="Ingresa Cantidad" autocomplete="off" required>
+                    </div>
+                </label>
             </div>
-            <select id="productTypeAmount" name="productTypeAmount" required>
-                <option value="" disabled selected>Tipo de unidad</option>
-                <option value="kg.">Kilogramos</option>
-                <option value="u.">Unidades</option>
-            </select>
-            <input type="number" step="0.01" id="productPrice" name="productPrice" placeholder="Costo (sin signo)" required>
 
+            <label class="label-sub-title">
+                    <span class="modal-sub-title">Tipo de unidad</span>
+                    <div class="modal-field-container">
+                        <select id="productTypeAmount" class="modal-field" name="productTypeAmount" required>
+                            <option value="" disabled selected>Seleccionar</option>
+                            <option value="u.">Unidades</option>
+                            <option value="kg.">Kilogramos</option>
+                        </select>
+                    </div>
+                </label>
 
-            <button type="submit">Guardar</button>
+            <label class="label-sub-title">
+                    <span class="modal-sub-title">Costo del Producto</span>
+                    <div class="modal-field-container">
+                        <span class="field-signed">$</span>
+                        <input type="number" class="modal-field" step="0.01" id="productPrice" name="productPrice" placeholder="Costo (sin signo)" autocomplete="off" required>
+                    </div>
+            </label>
+
+            <span class="model-separator"></span>
+
+            <div class="modal-submit">
+                <button type="submit" class="submit-button">Guardar Producto</button>
+            </div>
         </form>
     </div>
 </div>
@@ -191,22 +222,58 @@ foreach ($products as $product) {
 <div id="editProductModal" class="modal">
     <div class="modal-content">
         <span class="close-edit close">&times;</span>
-        <h2>Editar Producto</h2>
+        <p class="model-title">Editar Producto</p>
         <form id="editProductForm">
             <input type="hidden" name="action" value="edit">
             <input type="hidden" id="editProductId" name="editProductId">
-            <input type="text" id="editProductName" name="editProductName" placeholder="Nombre del producto" required>
-            <div class="form-group-stock">
-                <input type="number" id="editProductStock" name="editProductStock" placeholder="Stock" required>
-                <input type="number" id="editProductMinStock" name="editProductMinStock" placeholder="Stock Mínimo" required>
+
+            <label class="label-sub-title">
+                <span class="modal-sub-title">Nombre de Producto</span>
+                <div class="modal-field-container">
+                    <input type="text" class="modal-field" id="editProductName" name="editProductName" placeholder="Nombre del producto" required>
+                </div>   
+            </label>
+
+
+            <div class="form-group-aligned">
+                <label class="label-sub-title">
+                    <span class="modal-sub-title">Cantidad Actual</span>
+                    <div class="modal-field-container">
+                        <input type="number" class="modal-field" id="editProductStock" name="editProductStock" placeholder="Stock" required>
+                    </div>   
+                </label>
+                <label class="label-sub-title">
+                    <span class="modal-sub-title">Cantidad Minima</span>
+                    <div class="modal-field-container">
+                        <input type="number" class="modal-field" id="editProductMinStock" name="editProductMinStock" placeholder="Stock Mínimo" required>
+                    </div>   
+                </label>
             </div>
-            <select id="editProductTypeAmount" name="editProductTypeAmount" required>
-                <option value="" disabled selected>Tipo de unidad</option>
-                <option value="kg.">Kilogramos</option>
-                <option value="u.">Unidades</option>
-            </select>
-            <input type="number" step="0.01" id="editProductPrice" name="editProductPrice" placeholder="Costo (sin signo)" required>
-            <button type="submit">Guardar Cambios</button>
+
+            <label class="label-sub-title">
+                    <span class="modal-sub-title">Tipo de Unidad Actual</span>
+                    <div class="modal-field-container">
+                        <select id="editProductTypeAmount" class="modal-field" name="editProductTypeAmount" required>
+                            <option value="" disabled selected>Seleccionar</option>
+                            <option value="kg.">Kilogramos</option>
+                            <option value="u.">Unidades</option>
+                        </select>
+                    </div>   
+            </label>
+           
+            <label class="label-sub-title">
+                <span class="modal-sub-title">Costo Actual</span>
+                <div class="modal-field-container">
+                    <span class="field-signed">$</span>
+                    <input type="number" class="modal-field" step="0.01" id="editProductPrice" name="editProductPrice" placeholder="Costo (sin signo)" required>
+                </div>   
+            </label>
+
+            <span class="model-separator"></span>
+            
+            <div class="modal-submit">
+                <button type="submit" class="submit-button">Guardar Cambios</button>
+            </div>
         </form>
     </div>
 </div>

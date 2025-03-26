@@ -21,6 +21,7 @@ if (!$userModel->isEmailVerified($userId)) {
 
 
 $username = $_SESSION['username'];
+$mail = $_SESSION['email'];
 $imagePath = "../View/src/img/uploads/default-profile.png";
 
 $userModel = new UserModel($conn);
@@ -61,10 +62,7 @@ if ($imageFromDB) {
         <section class="profile-container">
         <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="Foto de perfil" class="profile-img" width="150">
           <h1>  <?php echo htmlspecialchars($username); ?>  </h1>
-          <h3>
-              <a>grupos</a>
-              <a>contactos</a>
-          </h3>
+          <h3>  <?php echo htmlspecialchars($mail); ?>  </h3>
         </section>
       
     </article>
@@ -75,24 +73,6 @@ if ($imageFromDB) {
         <div class="feed-menu--ajust">
           <button class="feed-menu--btn">Nuevo</button>
         </div>
-      </section>
-
-      <section class="feed-groups">
-        <h2 class="feed-groups--title">Grupos</h2>
-          <div class="feed-groups--group">
-            <h3>titulo</h3>
-            <h6>descripcion</h6>
-          </div>
-
-          <div class="feed-groups--group">
-            <h3>titulo</h3>
-            <h6>descripcion</h6>
-          </div>
-
-          <div class="feed-groups--group">
-            <h3>titulo</h3>
-            <h6>descripcion</h6>
-          </div>
       </section>
 
     </article>

@@ -3,6 +3,7 @@ session_start();
 require_once 'head.php';
 require_once '../Model/userModel.php';
 require_once '../Model/clientModel.php';
+require_once '../Model/invoiceModel.php';
 require_once '../Model/connection.php';
 
 
@@ -13,6 +14,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $clientModel = new clientModel($conn);
+$invoiceModel = new InvoiceModel($conn);
 $userModel = new UserModel($conn);
 $userId = $_SESSION['user_id'];
 
@@ -23,7 +25,7 @@ if (!$userModel->isEmailVerified($userId)) {
 
 
 
-$invoices = $clientModel->getUserInvoice($userId);
+$invoices = $invoiceModel->getUserInvoice($userId);
 $username = $_SESSION['username'];
 
 
@@ -51,18 +53,6 @@ $username = $_SESSION['username'];
 
             <h1>Facturas</h1>
 
-            <section class="stock-menu">
-                <div class="stock-menu--options">
-                    <button type="button" id="addNewBusiness" class="menu--button">
-                        <span class="add icon"></span>
-                        <span>Agregar Factura</span>
-                    </button>
-                </div>
-                
-            </section>
-
-
-
             <section>
                 <table class="stock-table">
                     <thead>
@@ -72,6 +62,7 @@ $username = $_SESSION['username'];
                             <th>Razon Social</th>
                             <th>Contacto</th>
                             <th>Tipo</th>
+                            <th>Fecha</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -81,13 +72,14 @@ $username = $_SESSION['username'];
             echo "<tr>";
             echo "<td>{$invoice['cuit']}</td>";
             echo "<td>{$invoice['address']}</td>" ;
-            echo "<td>{$invoice['business_name']}</td>" ;
+            echo "<td>{$invoice['name']}</td>" ;
             echo "<td>{$invoice['contact']}</td>" ;
             echo "<td>{$invoice['invoice_type']}</td>";
+            echo "<td>{$invoice['fech']}</td>";
             echo "</tr>"; 
         }
     } else {
-        echo "<tr><td colspan='5'>No hay productos registrados</td></tr>";
+        echo "<tr><td colspan='6'>No hay productos registrados</td></tr>";
     }
     ?>
 </tbody>
@@ -97,25 +89,6 @@ $username = $_SESSION['username'];
     
   </div>
 
-  <div id="addModal" class="modal"> 
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Agregar Factura</h2>
-        <form id="addInvoiceForm" action="invoiceController.php" method="POST">
-                <input type="hidden" name="action" value="add">
-                <select name="typeInvoice" id="typeInvoice" class="product">
-                    <option value="A">Tipo A</option>
-                    <option value="B">Tipo B</option>
-                    <option value="C">Tipo C</option>
-                </select>
-                <input type="text" name="cuit" id="cuit" placeholder="Cuit">
-                <input type="text" name="address" id="address" placeholder="Dirección Fiscal">
-                <input type="text" name="businessName" id="businessName" placeholder="Razon Social">
-                <input type="text" name="contact" id="contact" placeholder="Contacto">
-            <button type="submit">Registrar Venta</button>
-        </form>
-    </div>
-</div>
 
 </body>
 

@@ -48,6 +48,18 @@
     gap: 15px;
 }
 
+.transaccion-type{
+    background-color: var(--secondary);
+}
+
+    .transaccion-success{
+        background-color: var(--success);
+    }
+    
+    .transaccion-danger{
+        background-color: var(--danger);
+    }
+
 
 
 

@@ -2,14 +2,8 @@
 
     document.getElementById("addProductForm").addEventListener("submit", function (e) {
         e.preventDefault();
-        const formData = new FormData();
+        const formData = new FormData(this);
         formData.append("action", "add");
-        formData.append("productName", document.getElementById("productName").value);
-        formData.append("productStock", document.getElementById("productStock").value);
-        formData.append("productMinStock", document.getElementById("productMinStock").value);
-        formData.append("productTypeAmount", document.getElementById("productTypeAmount").value);
-        formData.append("productPrice", document.getElementById("productPrice").value);
-
 
         fetch("../Controller/stockController.php", {
             method: "POST",
@@ -74,14 +68,9 @@
      document.getElementById("editProductForm").addEventListener("submit", function (e) {
          e.preventDefault();
  
-         const formData = new FormData();
+         const formData = new FormData(this);
          formData.append("action", "edit");
-         formData.append("editProductId", document.getElementById("editProductId").value);
-         formData.append("editProductName", document.getElementById("editProductName").value);
-         formData.append("editProductStock", document.getElementById("editProductStock").value);
-         formData.append("editProductMinStock", document.getElementById("editProductMinStock").value);
-         formData.append("editProductTypeAmount", document.getElementById("editProductTypeAmount").value);
-         formData.append("editProductPrice", document.getElementById("editProductPrice").value);
+        
  
          fetch("../Controller/stockController.php", {
              method: "POST",

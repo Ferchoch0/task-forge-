@@ -1,6 +1,5 @@
 .stock-container{
     width: 80%;
-    height: 100vh;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -83,7 +82,9 @@
         .success{
             background-color: var(--success);
             color: var(--soft-dark);
+            width: 25% !important;
         }
+
 
 
 

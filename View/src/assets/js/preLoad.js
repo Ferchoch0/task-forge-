@@ -6,9 +6,7 @@ window.addEventListener("load", () => {
     
         setTimeout(() => {
           preloader.style.display = "none";
-    
-          const content = document.getElementById("content");
-          content.style.display = "block";
+          
         }, 450);
       }, 500);
   });

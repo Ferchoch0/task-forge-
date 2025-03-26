@@ -4,8 +4,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const priceInput = document.getElementById("priceSell");
 
     function updatePrice() {
+        console.log("Ejecutando updatePrice...");
+        const margin = 0.3;
+        const iva = 0.21;
         const selectedOption = productSelect.options[productSelect.selectedIndex];
-        const price = selectedOption.getAttribute("data-price");
+        const cost = parseFloat(selectedOption.getAttribute("data-price"));
+        const price =  Math.ceil(cost * (1 + margin) * (1 + iva));
         priceInput.value = price ? price : "";
     }
 
@@ -16,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     updatePrice();
+
     $('#product').on('select2:select', updatePrice); 
 
 
@@ -55,14 +60,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const invoiceCheck = document.getElementById("invoice");
     const invoiceGroup = document.getElementById("invoiceGroup");
+    const paymentMethod = document.getElementById("payment");
 
     function toggleInvoiceGroup() {
         if (invoiceCheck.checked) {
             invoiceGroup.classList.add("show");
             invoiceCheck.value = "on";
+            paymentMethod.querySelector("option[value='deuda']").disabled = false;
         } else {
             invoiceGroup.classList.remove("show");
             invoiceCheck.value = "off";
+            paymentMethod.querySelector("option[value='deuda']").disabled = true;
         }
     }
 
@@ -84,7 +92,6 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             if (data.success) {
                 alert('Venta registrada con éxito');
-                modal.style.display = "none";
                 location.reload();
             } else {
                 alert('Error al registrar la venta');

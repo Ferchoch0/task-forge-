@@ -18,11 +18,6 @@
 
 .invoice-group{
     display: none;
-    flex-direction: row !important;
-    gap: 10px;
-    width: 30%;    
-    align-items: center;
-    justify-content: center;
 
 }
 

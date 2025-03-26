@@ -7,35 +7,25 @@
     display: flex;
     flex-direction: row !important;
     gap: 10px;
-    align-items: center;
+    align-items: end;
     justify-content: center;
 }
 
+.check-group{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: end;
+    justify-content: start;
+}
 
-
-
-.change-table{
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 18px;
-    text-align: left;
-    overflow: hidden;
-}   
-    
-    .change-table th, td {
-        padding: 10px;
-        border: none;
-    }
-    
-    .change-table th {
-        background-color: var(--gray);
-        color: white;
-    }
-
-    .change-table--footer{
-        border-bottom: 1px solid #ddd;
-    }
+.container-group{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    align-items: end;
+    justify-content: start;
+}
 
 
 
