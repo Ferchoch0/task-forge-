@@ -51,6 +51,10 @@ foreach ($products as $product) {
 <link rel="stylesheet" href="src/assets/css/icon.css">
 <link rel="stylesheet" href="src/assets/css/stock.css">
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css">
+<script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
+
+
 
 
 
@@ -106,53 +110,22 @@ foreach ($products as $product) {
 
 
             <section>
-                <table class="stock-table">
-                    <thead>
-                        <tr>
-                            <th>Producto</th>
-                            <th>Stock</th>
-                            <th>Stock Mínimo</th>
-                            <th>Costo</th>
-                            <th>Precio Recomendado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-    <?php
-
-    if ($products) {
-        foreach ($products as $product) {
-            $lowStockClass = ($product['stock'] <= $product['stock_min'] && $product['stock'] != 0) ? 'low-stock' : '';
-            $nullStockCount = ($product['stock'] == 0) ? 'null-stock' : '';
-            $cost = $product['price'];
-            
-
-            $salePrice = $cost * (1 + $margin) * (1 + $iva);
-
-            echo "<tr class='$lowStockClass $nullStockCount'>
-                     <td>{$product['products']}</td>
-                <td>{$product['stock']} {$product['type_amount']}</td>
-                <td>{$product['stock_min']} {$product['type_amount']}</td>
-                <td>$" . number_format($product['price'], 2) . "</td>
-                <td>$" . number_format($salePrice, 2) . "</td>
-                <td>
-                    <div class='table--buttons'>
-                    <button class='table--button delete-button' data-id='{$product['stock_id']}'>
-                        <span class='delete'></span>
-                    </button>
-                    <button class='table--button edit-button' data-id='{$product['stock_id']}' data-name='{$product['products']}' data-stock='{$product['stock']}' data-min-stock='{$product['stock_min']}' data-type-amount='{$product['type_amount']}' data-price='{$product['price']}'>
-                        <span class='edit'></span>
-                    </button>
-                    </div>
-                </td>
-              </tr>"; 
-        }
-    } else {
-        echo "<tr><td colspan='5'>No hay productos registrados</td></tr>";
-    }
-    ?>
-</tbody>
-                </table>
+        <table class="stock-table">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Stock</th>
+              <th>Stock Mínimo</th>
+              <th>Costo</th>
+              <th>Precio Recomendado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- El contenido se cargará dinámicamente con fetch() -->
+          </tbody>
+        </table>
+      </section>
         </article>
     </div>
     
