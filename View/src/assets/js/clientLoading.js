@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    if(document.querySelector('select-client')){
+    if(document.querySelector('.select-client')){
         reloadClient();
     }
 
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function reloadClient(){
-        fetch('../Controller/sellController.php?action=getSupplier')
+        fetch('../Controller/sellController.php?action=getClients')
             .then(response => response.text())
             .then(html => {
                 document.querySelector('.select-client').innerHTML = html;
@@ -53,14 +53,17 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(data => {
-            document.getElementById("addSubModal-1").style.display = "none";
-            document.getElementById("addClientForm").reset()
-            if(document.querySelector('select-client')){
+            
+            if(document.querySelector('.select-client')){
                 reloadClient();
+                document.getElementById("addSubModal-1").style.display = "none";
+                document.getElementById("addClientForm").reset()
             }
 
             if( document.querySelector('.client-table tbody')){
                 reloadTable();
+                document.getElementById("addSubModal-1").style.display = "none";
+                document.getElementById("addClientForm").reset()
             }
 
             if (data.status === "success") {

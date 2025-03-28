@@ -54,7 +54,7 @@ $username = $_SESSION['username'];
 
             <section class="stock-menu">
                 <div class="stock-menu--options">
-                    <button class="menu--button">
+                    <button class="submenu--button">
                         <span class="add icon"></span>
                         <span>Agregar Proveedor</span>
                     </button>
@@ -82,9 +82,9 @@ $username = $_SESSION['username'];
     
   </div>
 
-<div id="addModal" class="modal"> 
+<div id="addSubModal-1" class="modal"> 
     <div class="modal-content little">
-        <span class="close">&times;</span>
+        <span class="close--sub">&times;</span>
         <p class="modal-title">Agregar Proveedor</p>
             <form id="addSupplierForm" method="POST">
                 <input type="hidden" name="action" value="add">

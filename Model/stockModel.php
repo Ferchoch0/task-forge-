@@ -148,7 +148,10 @@ public function getUserSupplier($userId) {
 public function addSupplier($name, $contact, $userId) {
     $stmt = $this->conn->prepare("INSERT INTO supplier (name, contact, user_id) VALUES (?, ?, ?)");
     $stmt->bind_param("sii", $name, $contact, $userId);
-    return $stmt->execute();
+    $stmt->execute();
+    $stmt->close();
+
+    return true;
 }
 
 }

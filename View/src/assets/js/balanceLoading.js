@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    fetch('../Controller/balanceController.php')  // Asegúrate de que el path sea correcto
+    fetch('../Controller/balanceController.php') 
         .then(response => response.json())
         .then(data => {
             console.log("Datos recibidos:", data); // Debugging en la consola

@@ -1,7 +1,5 @@
 <?php
 session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 require_once '../Model/connection.php';
 require_once '../Model/BalanceModel.php';
 
@@ -106,7 +104,6 @@ if (empty($result['hourly']['horas'])) {
         $result['hourly']['ingresos'][] = 0;
     }
 }
-
 
 header('Content-Type: application/json');
 echo json_encode($result);

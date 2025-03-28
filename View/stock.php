@@ -195,7 +195,7 @@ foreach ($products as $product) {
 <div id="editProductModal" class="modal">
     <div class="modal-content">
         <span class="close-edit close">&times;</span>
-        <p class="model-title">Editar Producto</p>
+        <p class="modal-title">Editar Producto</p>
         <form id="editProductForm">
             <input type="hidden" name="action" value="edit">
             <input type="hidden" id="editProductId" name="editProductId">

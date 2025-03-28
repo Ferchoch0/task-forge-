@@ -1,6 +1,6 @@
 <?php
 
-$host = 'localhost';
+$host = 'localhost';    
 $dbname = 'taskforge-db';
 $username = 'root'; 
 $pass = '';

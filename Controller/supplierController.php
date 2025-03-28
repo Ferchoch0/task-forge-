@@ -8,6 +8,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+header('Content-Type: application/json');
 
 
 $stockModel = new StockModel($conn);
@@ -18,9 +19,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $contact = $_POST['contact'];
 
     if ($stockModel->addSupplier($name, $contact, $userId)) {
-        header("Location: ../View/supplier.php?success=1");
+        echo json_encode([
+            "status" => "success",
+            "message" => "Proveedor registrado exitosamente."
+        ]);
     } else {
-        header("Location: ../View/supplier.php?error=stock");
+        echo json_encode([
+            "status" => "error",
+            "message" => "error al cargar Proveedor."
+        ]);
     }
     exit();
 }

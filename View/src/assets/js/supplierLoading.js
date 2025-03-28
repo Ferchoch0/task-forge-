@@ -51,15 +51,20 @@ document.addEventListener("DOMContentLoaded", function () {
             method: "POST",
             body: formData,
         })
-        .then(response => response.text())
+        .then(response => response.json())
         .then(data => {
-            
-            if(document.querySelector('.select- ')){
+            alert(data)
+            if(document.querySelector('.select-supplier')){
                 reloadSupplier();
+                document.getElementById("addSupplierForm").reset();
+                document.getElementById("addSubModal-1").style.display = "none";
+                
             }
 
             if( document.querySelector('.supplier-table tbody')){
                 reloadTable();
+                document.getElementById("addSupplierForm").reset();
+                document.getElementById("addSubModal-1").style.display = "none";
             }
 
             if (data.status === "success") {
