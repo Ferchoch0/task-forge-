@@ -39,7 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const priceInput = document.getElementById("priceSell");
 
     function updatePrice() {
-        console.log("Ejecutando updatePrice...");
         const margin = 0.3;
         const iva = 0.21;
         const selectedOption = productSelect.options[productSelect.selectedIndex];
@@ -118,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("addSellForm").addEventListener("submit", function(e) {
         e.preventDefault();
         const formData = new FormData(this);
-        formData.append("action", "add");
+        formData.append("action", "addSell");
         fetch("../Controller/sellController.php", {
             method: "POST",
             body: formData

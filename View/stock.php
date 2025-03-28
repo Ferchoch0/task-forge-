@@ -139,7 +139,7 @@ foreach ($products as $product) {
         <span class="close">&times;</span>
         <p class="modal-title">Agregar Producto</p>
         <form id="addProductForm">
-            <input type="hidden" name="action" value="add">
+            <input type="hidden" name="action" value="addProduct">
             <label class="label-sub-title">
                 <span class="modal-sub-title">Nombre de Producto</span>
                 <div class="modal-field-container">
@@ -197,7 +197,7 @@ foreach ($products as $product) {
         <span class="close-edit close">&times;</span>
         <p class="modal-title">Editar Producto</p>
         <form id="editProductForm">
-            <input type="hidden" name="action" value="edit">
+            <input type="hidden" name="action" value="editProduct">
             <input type="hidden" id="editProductId" name="editProductId">
 
             <label class="label-sub-title">

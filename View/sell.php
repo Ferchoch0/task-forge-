@@ -108,7 +108,7 @@
             <span class="close">&times;</span>
             <p class="modal-title">Agregar Venta</p>
             <form id="addSellForm" method="POST">
-                <input type="hidden" name="action" value="add">
+                <input type="hidden" name="action" value="addSell">
                 <div class="form-group">
                     <label class="label-sub-title">
                         <span class="modal-sub-title">Producto</span>

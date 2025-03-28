@@ -30,7 +30,7 @@
     document.getElementById("addProductForm").addEventListener("submit", function (e) {
         e.preventDefault();
         const formData = new FormData(this);
-        formData.append("action", "add");
+        formData.append("action", "addProduct");
 
         fetch("../Controller/stockController.php", {
             method: "POST",
@@ -60,7 +60,7 @@ document.getElementById("editProductForm").addEventListener("submit", function (
     e.preventDefault();
 
     const formData = new FormData(this);
-    formData.append("action", "edit");
+    formData.append("action", "editProduct");
    
 
     fetch("../Controller/stockController.php", {
