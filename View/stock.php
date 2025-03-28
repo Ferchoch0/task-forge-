@@ -109,23 +109,23 @@ foreach ($products as $product) {
 
 
 
-            <section>
-        <table class="stock-table">
-          <thead>
-            <tr>
-              <th>Producto</th>
-              <th>Stock</th>
-              <th>Stock Mínimo</th>
-              <th>Costo</th>
-              <th>Precio Recomendado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- El contenido se cargará dinámicamente con fetch() -->
-          </tbody>
-        </table>
-      </section>
+            <section class="stock-table-container">
+                <table class="stock-table">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Stock</th>
+                            <th>Stock Mínimo</th>
+                            <th>Costo</th>
+                            <th>Precio Recomendado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- El contenido se cargará dinámicamente con fetch() -->
+                    </tbody>
+                </table>
+            </section>
         </article>
     </div>
     

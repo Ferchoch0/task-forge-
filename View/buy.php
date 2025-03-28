@@ -36,7 +36,8 @@ $username = $_SESSION['username'];
 <link rel="stylesheet" href="src/assets/css/stock.css">
 <link rel="stylesheet" href="src/assets/css/buyAndSell.css">
 
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css">
+<script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
 
 
 
@@ -71,7 +72,7 @@ $username = $_SESSION['username'];
 
 
 
-            <section>
+            <section class="stock-table-container">
                 <table class="stock-table">
                     <thead>
                         <tr>
@@ -85,25 +86,10 @@ $username = $_SESSION['username'];
                         </tr>
                     </thead>
                     <tbody>
-    <?php
-    if ($buys) {
-        foreach ($buys as $buy) {
-            echo "<tr>";
-            echo "<td>{$buy['products']}</td>";
-            echo "<td>{$buy['amount']} {$buy['type_amount']}</td>" ;
-            echo "<td>$" . number_format($buy['price_buy'], 2) . "</td>";
-            echo "<td>{$buy['payment']}</td>";
-            echo "<td>{$buy['name']}</td>";
-            echo "<td>$" . number_format($buy['amount'] * $buy['price_buy'],2) . "</td>";
-            echo "<td>{$buy['fech']}</td>";
-            echo "</tr>"; 
-        }
-    } else {
-        echo "<tr><td colspan='6'>No hay productos registrados</td></tr>";
-    }
-    ?>
-</tbody>
-                </table>
+  
+                    </tbody>
+                </section>
+            </table>
         </article>
     </div>
     
@@ -176,13 +162,8 @@ $username = $_SESSION['username'];
                 <label class="label-sub-title">
                     <span class="modal-sub-title">Proveedor</span>
                     <div class="modal-field-container small-field">
-                        <select name="supplier" class="modal-field" id="supplier" class="product">
-                            <?php
-                                $suppliers = $stockModel->getUserSupplier($userId);
-                                foreach ($suppliers as $supplier) {
-                                    echo "<option value='{$supplier['supplier_id']}'>{$supplier['name']}</option>";
-                                }
-                            ?>
+                        <select name="supplier" class="modal-field select-supplier" id="supplier" class="product">
+                            
                         </select>
                     </div> 
                 </label>

@@ -43,18 +43,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['CONTENT_TYPE']) && 
 
 
         if ($stockModel->deleteProduct($stockId)) {
-            echo json_decode([
+            echo json_encode([
                 "status" => "success",
                 "message" => "Producto eliminado correctamente."
             ]);
         } else {
-            echo json_decode([
+            echo json_encode([
                 "status" => "error",
                 "message" => "Error al eliminar el producto."
             ]);
         }
     } else {
-        echo json_decode([
+        echo json_encode([
             "status" => "error",
             "message" => "Error en la solicitud."
         ]);

@@ -1,5 +1,40 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+    reloadClient();
+    reloadTable();
+
+    const notyf = new Notyf({
+        duration: 3000,
+        position: {
+          x: 'right',
+          y: 'bottom',
+        },
+        dismissible: true,
+      });
+
+    // RECARGA DE TABLA
+    function reloadTable() {
+        fetch('../Controller/sellController.php?action=getTable')
+            .then(response => response.text())
+            .then(html => {
+                document.querySelector('.stock-table tbody').innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error recargando tabla:', error);
+            });
+    }
+
+    function reloadClient(){
+        fetch('../Controller/sellController.php?action=getClients')
+            .then(response => response.text())
+            .then(html => {
+                document.querySelector('.select-client').innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error recargando tabla:', error);
+            });
+    }
+
     const productSelect = document.getElementById("product");
     const priceInput = document.getElementById("priceSell");
 
@@ -90,11 +125,12 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
-                alert('Venta registrada con éxito');
-                location.reload();
+            reloadTable();
+            
+            if (data.status === "success") {
+                notyf.success(data.message);
             } else {
-                alert('Error al registrar la venta');
+                notyf.error(data.message);
             }
         });
     });

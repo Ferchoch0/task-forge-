@@ -9,6 +9,8 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+header('Content-Type: application/json');
+
 $clientModel = new ClientModel($conn);
 $invoiceModel = new InvoiceModel($conn);
 $userId = $_SESSION['user_id'];
@@ -24,50 +26,111 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $typeInvoice = $_POST['typeInvoice'];
         $address = $_POST['address'];
 
-        if ($clientModel->addClient($name, $cuit, $contact, $typeInvoice, $address, $userId)) {
-            header("Location: ../View/client.php?success=1");
-        } else {
-            header("Location: ../View/client.php?error=client");
-        }
-        exit();
-    }
+        $result = $clientModel->addClient($name, $cuit, $contact, $typeInvoice, $address, $userId);
 
-    // Cobrar cliente
-    if (isset($_POST['chargeClientId']) && isset($_POST['clientDebtTotal']) && isset($_POST['clientDebtPaid'])) {
+        if($result){
+            echo json_encode([
+                "status" => "success",
+                "message" => "Cliente agregado con exito"
+            ]);
+        }else {
+        echo json_encode([
+            "status" => "error",
+            "message" => "Error al agregar Cliente"
+        ]);
+    }    
+    exit();
+
+    } else if (isset($_POST['chargeClientId']) && isset($_POST['clientDebtTotal']) && isset($_POST['clientDebtPaid'])) {
         $chargeClientId = $_POST['chargeClientId'];
         $debtPaid = $_POST['clientDebtPaid'];
         $debtType = 0;
 
         if ($invoiceModel->addDebt($debtType, $debtPaid, $chargeClientId)) {
-            header("Location: ../View/client.php?success=2");
+            echo json_encode([
+                "status" => "success",
+                "message" => "Deuda cobrada con exito"
+            ]);
         } else {
-            header("Location: ../View/client.php?error=client");
+            echo json_encode([
+                "status" => "error",
+                "message" => "Error al cobrar deuda"
+            ]);
         }
         exit();
-    }
-
-    // Eliminar cliente
-    if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
+    } else if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
         $data = json_decode(file_get_contents('php://input'), true);
 
         if (isset($data['action']) && $data['action'] === 'delete' && isset($data['id'])) {
             $clientId = $data['id'];
 
             if ($clientModel->deleteClient($clientId)) {
-                echo "Cliente eliminado correctamente.";
+                echo json_encode([
+                    "status" => "success",
+                    "message" => "Cliente eliminado con exito"
+                ]);
             } else {
-                echo "Hubo un problema al eliminar al cliente.";
+                echo json_encode([
+                    "status" => "error",
+                    "message" => "Error al eliminar cliente"
+                ]);
             }
         exit();
         }
     }
-} elseif ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET['client_id'])) {
-    $clientId = $_GET['client_id'];
-    $debts = $clientModel->getClientDebt($clientId);
+
+} 
+
+if ($_SERVER["REQUEST_METHOD"] === "GET") {
+
+    if (isset($_GET['client_id'])) {
+        $clientId = $_GET['client_id'];
+        $debts = $clientModel->getClientDebt($clientId);
+        
+        // Retornar la deuda en formato JSON
+        echo json_encode($debts);
+        exit();
+    }
+
+    if($_GET['action'] === 'getTable'){
+        $clients = $clientModel->getUserClient($userId);
+
+        if ($clients) {
+            foreach ($clients as $client) {
+                $debts = $clientModel->getClientDebt($client['client_id']);
+                $debt_total = 0;
+                foreach ($debts as $debt) {
+                    if ($debt['debt_type'] === 0) {
+                        $debt_total -= $debt['amount'];
+                    } else {
+                    $debt_total += $debt['amount']; }
     
-    // Retornar la deuda en formato JSON
-    echo json_encode($debts);
-    exit();
+    
+                }
+                echo "<tr>";
+                echo "<td>{$client['name']}</td>";
+                echo "<td>$" . number_format($debt_total, 2) . "</td>";
+                echo "<td>{$client['contact']}</td>";
+                echo "<td>
+                        <div class='table--buttons'>
+                            <button class='table--button delete-button' data-id='{$client['client_id']}'>
+                                <span class='delete'></span>
+                            </button>
+                            <button class='table--button charge-button' data-id='{$client['client_id']}' data-debt='{$debt_total}''>
+                                <span class='edit'></span>
+                            </button>
+                            <button class='table--button history-button' data-id='{$client['client_id']}' data-id='{$debt['client_id']}'>
+                                <span class='history'></span>
+                            </button>
+                        </div>
+                    </td>";
+                echo "</tr>"; 
+            }
+        } else {
+            echo "<tr><td colspan='4'>No hay clientes registrados</td></tr>";
+        }
+    }
+    
 }
 
 

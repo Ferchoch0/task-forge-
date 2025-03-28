@@ -87,18 +87,55 @@
 
 
 
+.stock-table-container {
+    position: relative;
+    max-height: 400px;
+    overflow-y: auto; 
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.stock-table-container::-webkit-scrollbar {
+    width: 8px !important; 
+}
+
+.stock-table-container::-webkit-scrollbar-track {
+    background: #f1f1f1 !important;
+    border-radius: 10px !important;
+}
+
+.stock-table-container::-webkit-scrollbar-thumb {
+    background: var(--primary) !important;
+    border-radius: 10px !important;
+}
+
+.stock-table-container::-webkit-scrollbar-thumb:hover {
+    background: darken(var(--primary), 10%) !important;
+}
+
 
 .stock-table{
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
     font-size: 18px;
     text-align: left;
-    border-radius: 10px;
-    overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.stock-table thead {
+    position: sticky;
+    top: 0;
+    background-color: var(--primary);
+    z-index: 10;
+}
+
+/* Estilos del encabezado */
+.stock-table thead th {
+    padding: 10px;
+    background-color: var(--primary);
+    color: white;
+    text-align: left;
+}
 
 
 .stock-table th, td {

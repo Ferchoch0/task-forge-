@@ -32,6 +32,9 @@ $clients = $clientModel->getUserClient($userId);
 <link rel="stylesheet" href="src/assets/css/stock.css">
 <link rel="stylesheet" href="src/assets/css/cash.css">
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css">
+<script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
+
 
 
 
@@ -50,7 +53,7 @@ $clients = $clientModel->getUserClient($userId);
 
             <section class="stock-menu">
                 <div class="stock-menu--options">
-                    <button class="menu--button">
+                    <button class="submenu--button">
                         <span class="add icon"></span>
                         <span>Agregar Cliente</span>
                     </button>
@@ -60,8 +63,8 @@ $clients = $clientModel->getUserClient($userId);
 
 
 
-            <section>
-                <table class="stock-table">
+            <section class="stock-table-container">
+                <table class="stock-table client-table">
                     <thead>
                         <tr>
                             <th>Nombre</th>
@@ -71,59 +74,25 @@ $clients = $clientModel->getUserClient($userId);
                         </tr>
                     </thead>
                     <tbody>
-    <?php
-    if ($clients) {
-        foreach ($clients as $client) {
-            $debts = $clientModel->getClientDebt($client['client_id']);
-            $debt_total = 0;
-            foreach ($debts as $debt) {
-                if ($debt['debt_type'] === 0) {
-                    $debt_total -= $debt['amount'];
-                } else {
-                $debt_total += $debt['amount']; }
 
-
-            }
-            echo "<tr>";
-            echo "<td>{$client['name']}</td>";
-            echo "<td>$" . number_format($debt_total, 2) . "</td>";
-            echo "<td>{$client['contact']}</td>";
-            echo "<td>
-                    <div class='table--buttons'>
-                        <button class='table--button delete-button' data-id='{$client['client_id']}'>
-                            <span class='delete'></span>
-                        </button>
-                        <button class='table--button charge-button' data-id='{$client['client_id']}' data-debt='{$debt_total}''>
-                            <span class='edit'></span>
-                        </button>
-                        <button class='table--button history-button' data-id='{$client['client_id']}' data-id='{$debt['client_id']}'>
-                            <span class='history'></span>
-                        </button>
-                    </div>
-                </td>";
-            echo "</tr>"; 
-        }
-    } else {
-        echo "<tr><td colspan='4'>No hay productos registrados</td></tr>";
-    }
-    ?>
-</tbody>
+                    </tbody>
                 </table>
+            </section>
         </article>
     </div>
     
   </div>
 
-<div id="addModal" class="modal"> 
+<div id="addSubModal-1" class="modal"> 
     <div class="modal-content little">
-        <span class="close">&times;</span>
-        <p class="modal-title">Agregar Factura</p>
+        <span class="close--sub">&times;</span>
+        <p class="modal-title">Agregar Cliente</p>
         <form id="addClientForm" method="POST">
                     <input type="hidden" name="action" value="add">
                     <label class="label-sub-title">
                         <span class="modal-sub-title">Razon Social</span>
                         <div class="modal-field-container">
-                            <input type="text" class="modal-field" name="name" id="name" placeholder="Ingresar Razon Social">
+                            <input type="text" class="modal-field" name="name" id="name" placeholder="Ingresar Razon Social" autocomplete="off">
                         </div>   
                     </label>
                     
@@ -142,21 +111,21 @@ $clients = $clientModel->getUserClient($userId);
                     <label class="label-sub-title">
                         <span class="modal-sub-title">Cuit</span>
                         <div class="modal-field-container">
-                            <input type="text" class="modal-field" name="cuit" id="cuit" placeholder="Ingresar Cuit">
+                            <input type="text" class="modal-field" name="cuit" id="cuit" placeholder="Ingresar Cuit" autocomplete="off">
                         </div>   
                     </label>
 
                     <label class="label-sub-title">
                         <span class="modal-sub-title">Dir. Fiscal</span>
                         <div class="modal-field-container">
-                            <input type="text" class="modal-field" name="address" id="address" placeholder="Ingresar Dirección Fiscal">
+                            <input type="text" class="modal-field" name="address" id="address" placeholder="Ingresar Dirección Fiscal" autocomplete="off">
                         </div>   
                     </label>
 
                     <label class="label-sub-title">
                         <span class="modal-sub-title">Contacto</span>
                         <div class="modal-field-container">
-                            <input type="text" class="modal-field" name="contact" id="contact" placeholder="Ingresar Contacto">
+                            <input type="text" class="modal-field" name="contact" id="contact" placeholder="Ingresar Contacto" autocomplete="off">
                         </div>   
                     </label>
 

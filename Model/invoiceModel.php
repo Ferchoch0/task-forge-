@@ -35,7 +35,7 @@ public function getUserInvoice($userId) {
         $stmt->bind_param("ii", $clientId, $userId);
         $stmt->execute();
         $stmt->close();
-
+        return true;
     }
 
     public function addDebt($debtType, $debtAmount, $clientId) {
@@ -43,7 +43,7 @@ public function getUserInvoice($userId) {
         $stmt->bind_param("iii", $debtType, $debtAmount, $clientId);
         $stmt->execute();
         $stmt->close();
-
+        return true;
     }
 
 }

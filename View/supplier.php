@@ -23,7 +23,7 @@ if (!$userModel->isEmailVerified($userId)) {
 
 
 
-$suppliers = $stockModel->getUserSupplier($userId);
+
 $username = $_SESSION['username'];
 
 
@@ -35,7 +35,8 @@ $username = $_SESSION['username'];
 <link rel="stylesheet" href="src/assets/css/icon.css">
 <link rel="stylesheet" href="src/assets/css/stock.css">
 
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css">
+<script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
 
 
 
@@ -63,8 +64,8 @@ $username = $_SESSION['username'];
 
 
 
-            <section>
-                <table class="stock-table">
+            <section class="stock-table-container">
+                <table class="stock-table supplier-table">
                     <thead>
                         <tr>
                             <th>Nombre</th>
@@ -72,20 +73,10 @@ $username = $_SESSION['username'];
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                            if ($suppliers) {
-                            foreach ($suppliers as $supplier) {
-                                echo "<tr>";
-                                echo "<td>{$supplier['name']}</td>";
-                                echo "<td>{$supplier['contact']}</td>" ;
-                                echo "</tr>"; 
-                            }
-                            } else {
-                                echo "<tr><td colspan='2'>No hay productos registrados</td></tr>";
-                            }
-                        ?>
+
                     </tbody>
                 </table>
+            </section>
         </article>
     </div>
     

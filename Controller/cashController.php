@@ -33,5 +33,97 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   }
 }
 
+if ($_SERVER["REQUEST_METHOD"] === "GET"){
 
+  if (isset($_GET['action'])) {
+
+    $transactions = $balanceModel->getUserTransaction($userId);
+
+    if ($_GET['action'] === 'getTable') {
+      // Solo se devuelven las transacciones sin cálculos de totales
+      if ($transactions) {
+          foreach ($transactions as $transaction) {
+              if ($transaction['payment'] === 'deuda') {
+                  continue;
+              }
+
+              if ($transaction['source'] === 'buy') {
+                  $type = 'Compra';
+                  $amount = $transaction['amount'] * $transaction['price'];
+              } elseif ($transaction['source'] === 'sell') {
+                  $type = 'Venta';
+                  $amount = $transaction['amount'] * $transaction['price'];
+              } elseif ($transaction['source'] === 'cash') {
+                  $type = ($transaction['mov_type'] == 1) ? 'Ingreso' : 'Retiro';
+                  $amount = $transaction['price'];
+              } else {
+                  $type = 'Desconocido';
+                  $amount = 0;
+              }
+
+              // Mostrar las filas de transacciones
+              echo "<tr>";
+              echo "<td>{$transaction['products']}</td>";
+              echo "<td>{$type}</td>";
+              echo "<td>$" . number_format($amount, 2) . "</td>";
+              echo "<td>{$transaction['payment']}</td>";
+              echo "<td>{$transaction['date']}</td>";
+              echo "</tr>";
+          }
+      } else {
+          echo "<tr><td colspan='5'>No hay transacciones registradas</td></tr>";
+      }
+      exit();
+  } 
+
+  elseif ($_GET['action'] === 'getTableTotal') {
+    $totalEfectivo = 0;
+    $totalTarjeta = 0;
+    $totalTransferencia = 0;
+    $totalGeneral = 0;
+
+    foreach ($transactions as $transaction) {
+      if ($transaction['payment'] === 'deuda') {
+          continue;
+      }
+
+      if ($transaction['source'] === 'buy') {
+        $type = 'Retiro';
+        $amount = $transaction['amount'] * $transaction['price'];
+      } elseif ($transaction['source'] === 'sell') {
+        $type = 'Ingreso';
+        $amount = $transaction['amount'] * $transaction['price'];
+      } elseif ($transaction['source'] === 'cash') {
+        $type = ($transaction['mov_type'] == 1) ? 'Ingreso' : 'Retiro';
+        $amount = $transaction['price'];
+      } else {
+        $type = 'Desconocido';
+        $amount = 0;
+      }
+
+      // Acumular totales según el tipo de pago
+      if ($transaction['payment'] === 'Efectivo') {
+        $totalEfectivo += ($type === 'Ingreso') ? $amount : -$amount;
+      } elseif ($transaction['payment'] === 'Tarjeta') {
+        $totalTarjeta += ($type === 'Ingreso') ? $amount : -$amount;
+      } elseif ($transaction['payment'] === 'Transferencia') {
+        $totalTransferencia += ($type === 'Ingreso') ? $amount : -$amount;
+      }
+
+      $totalGeneral += ($type === 'Ingreso') ? $amount : -$amount;
+  }
+
+      // Mostrar los totales
+      echo "<tr>";
+      echo "<td>" . number_format($totalEfectivo, 2) . "</td>";
+      echo "<td>" . number_format($totalTarjeta, 2) . "</td>";
+      echo "<td>" . number_format($totalTransferencia, 2) . "</td>";
+      echo "<td>----</td>";
+      echo "<td>" . number_format($totalGeneral, 2) . "</td>";
+      echo "</tr>";
+      exit();
+  }
+}
+
+}
 ?>

@@ -25,11 +25,11 @@ $username = $_SESSION['username'];
 
 ?>
 
-
-<link rel="stylesheet" href="src/assets/css/global.css">
 <link rel="stylesheet" href="src/assets/css/icon.css">
 <link rel="stylesheet" href="src/assets/css/stock.css">
 <link rel="stylesheet" href="src/assets/css/cash.css">
+<link rel="stylesheet" href="src/assets/css/global.css">
+
 
 
 
@@ -56,8 +56,8 @@ $username = $_SESSION['username'];
                         <span class="remove icon"></span>
                         <span>Cerrar Caja</span>
                 </button>
-
-                <table class="stock-table">
+                <section class="stock-table-container">
+                <table class="stock-table cash-table">
                     <thead>
                         <tr>
                             <th>Producto</th>
@@ -68,55 +68,8 @@ $username = $_SESSION['username'];
                         </tr>
                     </thead>
 
-                    <tbody>
-                    <?php
-                     $totalEfectivo = 0;
-                     $totalTarjeta = 0;
-                     $totalTransferencia = 0;
-                     $totalGeneral = 0;
-         
-                      if ($transactions) {
-                        foreach ($transactions as $transaction) {
-                          if ($transaction['payment'] === 'deuda') {
-                            continue;
-                          }
-
-                          if ($transaction['source'] === 'buy') {
-                            $type = 'Compra';
-                            $amount = $transaction['amount'] * $transaction['price'];
-                          } elseif ($transaction['source'] === 'sell') {
-                            $type = 'Venta';
-                            $amount = $transaction['amount'] * $transaction['price'];
-                          } elseif ($transaction['source'] === 'cash') {
-                            $type = ($transaction['mov_type'] == 1) ? 'Ingreso' : 'Retiro';
-                            $amount = $transaction['price'];
-                          } else {
-                            $type = 'Desconocido';
-                            $amount = 0;
-                          }
-
-                          if ($transaction['payment'] === 'Efectivo') {
-                            $totalEfectivo += ($type === 'Ingreso') ? $amount : -$amount;
-                        } elseif ($transaction['payment'] === 'Tarjeta') {
-                            $totalTarjeta += ($type === 'Ingreso') ? $amount : -$amount;
-                        } elseif ($transaction['payment'] === 'Transferencia') {
-                            $totalTransferencia += ($type === 'Ingreso') ? $amount : -$amount;
-                        }
-    
-                        $totalGeneral += ($type === 'Ingreso') ? $amount : -$amount;
-
-                          echo "<tr>";
-                          echo "<td>{$transaction['products']}</td>";
-                          echo "<td>{$type}</td>";
-                          echo "<td>$" . number_format($amount, 2) . "</td>";
-                          echo "<td>{$transaction['payment']}</td>";
-                          echo "<td>{$transaction['date']}</td>";
-                          echo "</tr>";
-                        }
-                      } else {
-                        echo "<tr><td colspan='5'>No hay transacciones registradas</td></tr>";
-                      }
-                    ?>
+                    <tbody class="cash-data">
+                    
                     </tbody>
 
 
@@ -130,16 +83,12 @@ $username = $_SESSION['username'];
                       </tr>
                     </thead>
 
-                    <tbody>
-                      <tr>
-                        <td>$<?php echo number_format($totalEfectivo, 2); ?></td>
-                        <td>$<?php echo number_format($totalTarjeta, 2); ?></td>
-                        <td>$<?php echo number_format($totalTransferencia, 2) ?></td>
-            <td>----</td>
-            <td>$<?php echo number_format($totalGeneral, 2); ?></td>
-        </tr>
-</tbody>
+                    <tbody class="cash-total">
+                      
+                    </tbody>
                   </table>
+                  </section>
+
                   </div>
 
                   <div class="cash-menu--balance"> 

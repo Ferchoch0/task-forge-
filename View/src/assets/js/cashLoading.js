@@ -1,6 +1,33 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    reloadTable();
+
+    reloadTableTotal();
+
+    function reloadTable() {
+        fetch('../Controller/cashController.php?action=getTable')
+            .then(response => response.text())
+            .then(html => {
+                document.querySelector('.cash-data').innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error recargando tabla:', error);
+            });
+    }
+
+    function reloadTableTotal() {
+        fetch('../Controller/cashController.php?action=getTableTotal')
+            .then(response => response.text())
+            .then(html => {
+                document.querySelector('.cash-total').innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error recargando tabla:', error);
+            });
+    }
+
+
     // Abrir menu de caja
     const cashModal = document.getElementById("cashModal");
     const openCashModalBtn = document.querySelectorAll(".cash--menu");

@@ -21,6 +21,7 @@ class ClientModel{
         $stmt->bind_param("siissi", $name, $cuit, $contact, $typeInvoice, $address, $userId);
         $stmt->execute();
         $stmt->close();
+        return true;
     }
 
     public function getClientDebt($clientId){
@@ -37,6 +38,7 @@ class ClientModel{
         $stmt->bind_param("i", $clientId);
         $stmt->execute();
         $stmt->close();
+        return true;
     }
 
     

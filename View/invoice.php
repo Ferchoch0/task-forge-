@@ -3,7 +3,6 @@ session_start();
 require_once 'head.php';
 require_once '../Model/userModel.php';
 require_once '../Model/clientModel.php';
-require_once '../Model/invoiceModel.php';
 require_once '../Model/connection.php';
 
 
@@ -14,7 +13,6 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $clientModel = new clientModel($conn);
-$invoiceModel = new InvoiceModel($conn);
 $userModel = new UserModel($conn);
 $userId = $_SESSION['user_id'];
 
@@ -23,9 +21,6 @@ if (!$userModel->isEmailVerified($userId)) {
   exit();
 }
 
-
-
-$invoices = $invoiceModel->getUserInvoice($userId);
 $username = $_SESSION['username'];
 
 
@@ -53,8 +48,8 @@ $username = $_SESSION['username'];
 
             <h1>Facturas</h1>
 
-            <section>
-                <table class="stock-table">
+            <section class="stock-table-container">
+                <table class="stock-table invoice-table">
                     <thead>
                         <tr>
                             <th>Cuit</th>
@@ -66,24 +61,10 @@ $username = $_SESSION['username'];
                         </tr>
                     </thead>
                     <tbody>
-    <?php
-    if ($invoices) {
-        foreach ($invoices as $invoice) {
-            echo "<tr>";
-            echo "<td>{$invoice['cuit']}</td>";
-            echo "<td>{$invoice['address']}</td>" ;
-            echo "<td>{$invoice['name']}</td>" ;
-            echo "<td>{$invoice['contact']}</td>" ;
-            echo "<td>{$invoice['invoice_type']}</td>";
-            echo "<td>{$invoice['fech']}</td>";
-            echo "</tr>"; 
-        }
-    } else {
-        echo "<tr><td colspan='6'>No hay productos registrados</td></tr>";
-    }
-    ?>
-</tbody>
+
+                    </tbody>
                 </table>
+            </section>
         </article>
     </div>
     

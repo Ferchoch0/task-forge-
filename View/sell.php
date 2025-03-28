@@ -39,6 +39,9 @@
     <link rel="stylesheet" href="src/assets/css/buyAndSell.css">
     <link rel="stylesheet" href="src/assets/css/invoice.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
+
 
 
 
@@ -77,7 +80,7 @@
 
 
 
-                <section>
+                <section class="stock-table-container">
                     <table class="stock-table">
                         <thead>
                             <tr>
@@ -91,25 +94,8 @@
                             </tr>
                         </thead>
                         <tbody>
-        <?php
-        if ($sells) {
-            foreach ($sells as $sell) {
-                $invoice = $sell['invoice_type'] ? $sell['invoice_type'] : "No"; 
-                echo "<tr>";
-                echo "<td>{$sell['products']}</td>";
-                echo "<td>{$sell['amount']} {$sell['type_amount']}</td>";
-                echo "<td>$" . number_format($sell['price_sell'], 2) . "</td>";
-                echo "<td>{$sell['payment']}</td>";
-                echo "<td>$" .  number_format($sell['amount'] * $sell['price_sell'], 2) . "</td>";
-                echo "<td>{$invoice}</td>";
-                echo "<td>{$sell['fech']}</td>";
-                echo "</tr>"; 
-            }
-        } else {
-            echo "<tr><td colspan='6'>No hay productos registrados</td></tr>";
-        }
-        ?>
-    </tbody>
+
+                        </tbody>
                     </table>
                 </section>
             </article>
@@ -187,13 +173,8 @@
                     <label class="label-sub-title">
                         <span class="modal-sub-title">Facturas Guardadas</span>
                         <div class="modal-field-container">
-                            <select name="name" class="modal-field" id="name">
-                                <?php
-                                    $clients = $clientModel->getUserClient($userId); // Obtener facturas del usuario
-                                    foreach($clients as $client) {
-                                        echo "<option value='{$client['client_id']}'> {$client['name']} </option>";
-                                    }
-                                ?>
+                            <select name="name" class="modal-field select-client" id="name">
+                                
                             </select>
                         </div>
                     </label>
