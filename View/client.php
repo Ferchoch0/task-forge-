@@ -88,7 +88,7 @@ $clients = $clientModel->getUserClient($userId);
         <span class="close--sub">&times;</span>
         <p class="modal-title">Agregar Cliente</p>
         <form id="addClientForm" method="POST">
-                    <input type="hidden" name="action" value="add">
+                    <input type="hidden" name="action" value="addClient">
                     <label class="label-sub-title">
                         <span class="modal-sub-title">Razon Social</span>
                         <div class="modal-field-container">
@@ -143,7 +143,7 @@ $clients = $clientModel->getUserClient($userId);
         <span class="close close-charge">&times;</span>
         <p class="modal-title"> Cobrar deuda</p>
         <form id="chargeClientForm" method="POST">
-            <input type="hidden" name="action" value="charge">
+            <input type="hidden" name="action" value="chargeClient">
             <input type="hidden" name="chargeClientId" id="chargeClientId">
             <label class="label-sub-title">
                 <span class="modal-sub-title">Deuda Actual</span>

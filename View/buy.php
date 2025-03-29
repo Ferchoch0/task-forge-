@@ -100,7 +100,7 @@ $username = $_SESSION['username'];
         <span class="close">&times;</span>
         <p class="modal-title">Agregar Compra de Stock</p>
         <form id="addBuyForm" action="BuyController.php" method="POST">
-            <input type="hidden" name="action" value="add">
+            <input type="hidden" name="action" value="addBuy">
             
             
             <div class="form-group">
@@ -200,7 +200,7 @@ $username = $_SESSION['username'];
             <span class="close--sub">&times;</span>
             <p class="modal-title">Agregar Proveedor</p>
             <form id="addSupplierForm" method="POST">
-                <input type="hidden" name="action" value="add">
+                <input type="hidden" name="action" value="addSupplier">
                 <label class="label-sub-title">
                     <span class="modal-sub-title">Nombre</span>
                     <div class="modal-field-container">

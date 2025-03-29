@@ -46,6 +46,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("addClientForm").addEventListener("submit", function (e) {
         e.preventDefault();
         const formData = new FormData(this);
+        formData.append("action", "addClient");
+
 
         fetch("../Controller/clientController.php", {
             method: "POST",
@@ -84,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
             e.preventDefault();
 
             const formData = new FormData(this);
-            formData.append("action", "charge");
+            formData.append("action", "chargeClient");
 
         fetch("../Controller/clientController.php", {
             method: "POST",

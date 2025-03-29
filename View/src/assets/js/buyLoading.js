@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("addBuyForm").addEventListener("submit", function (e) {
         e.preventDefault();
         const formData = new FormData(this);
-        formData.append("action", "add");
+        formData.append("action", "addBuy");
         fetch("../Controller/buyController.php", {
             method: "POST",
             body: formData,

@@ -18,70 +18,89 @@ $userId = $_SESSION['user_id'];
 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $action = $_POST['action']
     // Agregar cliente
-    if (isset($_POST['name']) && isset($_POST['cuit']) && isset($_POST['address']) && isset($_POST['contact']) && isset($_POST['typeInvoice'])) {
-        $name = $_POST['name'];
-        $cuit = $_POST['cuit'];
-        $contact = $_POST['contact'];
-        $typeInvoice = $_POST['typeInvoice'];
-        $address = $_POST['address'];
-
-        $result = $clientModel->addClient($name, $cuit, $contact, $typeInvoice, $address, $userId);
-
-        if($result){
-            echo json_encode([
-                "status" => "success",
-                "message" => "Cliente agregado con exito"
-            ]);
-        }else {
-        echo json_encode([
-            "status" => "error",
-            "message" => "Error al agregar Cliente"
-        ]);
-    }    
-    exit();
-
-    } else if (isset($_POST['chargeClientId']) && isset($_POST['clientDebtTotal']) && isset($_POST['clientDebtPaid'])) {
-        $chargeClientId = $_POST['chargeClientId'];
-        $debtPaid = $_POST['clientDebtPaid'];
-        $debtType = 0;
-
-        if ($invoiceModel->addDebt($debtType, $debtPaid, $chargeClientId)) {
-            echo json_encode([
-                "status" => "success",
-                "message" => "Deuda cobrada con exito"
-            ]);
-        } else {
-            echo json_encode([
-                "status" => "error",
-                "message" => "Error al cobrar deuda"
-            ]);
-        }
-        exit();
-    } else if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
-        $data = json_decode(file_get_contents('php://input'), true);
-
-        if (isset($data['action']) && $data['action'] === 'delete' && isset($data['id'])) {
-            $clientId = $data['id'];
-
-            if ($clientModel->deleteClient($clientId)) {
-                echo json_encode([
-                    "status" => "success",
-                    "message" => "Cliente eliminado con exito"
-                ]);
-            } else {
+    switch($action) {
+        case 'addClient':
+            if (isset($_POST['name']) && isset($_POST['cuit']) && isset($_POST['address']) && isset($_POST['contact']) && isset($_POST['typeInvoice'])) {
+                $name = $_POST['name'];
+                $cuit = $_POST['cuit'];
+                $contact = $_POST['contact'];
+                $typeInvoice = $_POST['typeInvoice'];
+                $address = $_POST['address'];
+        
+                $result = $clientModel->addClient($name, $cuit, $contact, $typeInvoice, $address, $userId);
+        
+                if($result){
+                    echo json_encode([
+                        "status" => "success",
+                        "message" => "Cliente agregado con exito"
+                    ]);
+                }else {
                 echo json_encode([
                     "status" => "error",
-                    "message" => "Error al eliminar cliente"
+                    "message" => "Error al agregar Cliente"
                 ]);
+                }
             }
-        exit();
-        }
-    }
+            break;
+        
+        case 'chargeClient':
+            if (isset($_POST['chargeClientId']) && isset($_POST['clientDebtTotal']) && isset($_POST['clientDebtPaid'])) {
+                $chargeClientId = $_POST['chargeClientId'];
+                $debtPaid = $_POST['clientDebtPaid'];
+                $debtType = 0;
+        
+                if ($invoiceModel->addDebt($debtType, $debtPaid, $chargeClientId)) {
+                    echo json_encode([
+                        "status" => "success",
+                        "message" => "Deuda cobrada con exito"
+                    ]);
+                } else {
+                    echo json_encode([
+                        "status" => "error",
+                        "message" => "Error al cobrar deuda"
+                    ]);
+                }
+            } 
+            break;
+        
+        case '':
+            if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
+                $data = json_decode(file_get_contents('php://input'), true);
+        
+                if (isset($data['action']) && $data['action'] === 'delete' && isset($data['id'])) {
+                    $clientId = $data['id'];
+        
+                    if ($clientModel->deleteClient($clientId)) {
+                        echo json_encode([
+                            "status" => "success",
+                            "message" => "Cliente eliminado con exito"
+                        ]);
+                    } else {
+                        echo json_encode([
+                            "status" => "error",
+                            "message" => "Error al eliminar cliente"
+                        ]);
+                    }
+                }
+            }
+            break;
 
-} 
+            default:
+            throw new Exception("Acción no válida");
+    }
+    
+
+}
+
+
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
+
+    $action = $_GET['action'];
+
 
     if (isset($_GET['client_id'])) {
         $clientId = $_GET['client_id'];
@@ -92,21 +111,23 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         exit();
     }
 
-    if($_GET['action'] === 'getTable'){
-        $clients = $clientModel->getUserClient($userId);
+    switch($action){
+        case 'getTable':
+            $clients = $clientModel->getUserClient($userId);
 
-        if ($clients) {
-            foreach ($clients as $client) {
-                $debts = $clientModel->getClientDebt($client['client_id']);
-                $debt_total = 0;
-                foreach ($debts as $debt) {
-                    if ($debt['debt_type'] === 0) {
-                        $debt_total -= $debt['amount'];
-                    } else {
-                    $debt_total += $debt['amount']; }
+            if ($clients) {
+                foreach ($clients as $client) {
+                    $debts = $clientModel->getClientDebt($client['client_id']);
+                    $debt_total = 0;
+                    foreach ($debts as $debt) {
+                        if ($debt['debt_type'] === 0) {
+                            $debt_total -= $debt['amount'];
+                        } else {
+                            $debt_total += $debt['amount']; 
+                        }
     
-    
-                }
+                    }
+                    
                 echo "<tr>";
                 echo "<td>{$client['name']}</td>";
                 echo "<td>$" . number_format($debt_total, 2) . "</td>";
@@ -125,12 +146,15 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                         </div>
                     </td>";
                 echo "</tr>"; 
+                }
+            } else {
+                echo "<tr><td colspan='4'>No hay clientes registrados</td></tr>";
             }
-        } else {
-            echo "<tr><td colspan='4'>No hay clientes registrados</td></tr>";
-        }
+            break;
+
+            default:
+            throw new Exception("Acción no válida");
     }
-    
 }
 
 
