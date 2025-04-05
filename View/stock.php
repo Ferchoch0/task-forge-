@@ -3,6 +3,7 @@ session_start();
 require_once 'head.php';
 require_once '../Model/userModel.php';
 require_once '../Model/connection.php';
+require_once '../Model/stockModel.php';
 
 
 
@@ -21,24 +22,8 @@ if (!$userModel->isEmailVerified($userId)) {
 
 $username = $_SESSION['username'];
 
-require_once '../Model/stockModel.php';
 $stockModel = new StockModel($conn);
 $products = $stockModel->getUserProducts($userId); 
-
-$lowStockCount = 0;
-foreach ($products as $product) {
-    if ($product['stock'] <= $product['stock_min'] && $product['stock'] != 0) {
-        $lowStockCount++;
-    }
-}
-
-$nullStockCount = 0;
-foreach ($products as $product) {
-    if ($product['stock'] == 0) {
-        $nullStockCount++;
-    }
-}
-
 
 
 
@@ -77,7 +62,9 @@ foreach ($products as $product) {
                     <h2>Alertas: Stock bajo</h2>
                     <div class="stock-alert--item">
                         <span class="alert icon"></span>
-                        <p><?= $lowStockCount ?> productos están por debajo del stock mínimo</p>
+                        <div class="low-stock">
+
+                        </div>
                     </div>
                 </button>
 
@@ -85,7 +72,9 @@ foreach ($products as $product) {
                     <h2>Alertas: Falta de stock</h2>
                     <div class="stock-alert--item">
                         <span class="alert icon"></span>
-                        <p><?= $nullStockCount ?> productos están sin stock</p>
+                        <div class="null-stock">
+
+                        </div>
                     </div>
                 </button>
                 
@@ -93,9 +82,13 @@ foreach ($products as $product) {
 
             <section class="stock-menu">
                 <div class="stock-menu--options">
-                    <button class="menu--button">
+                    <button class="submenu--button">
                         <span class="add icon"></span>
                         <span>Agregar producto</span>
+                    </button>
+                    <button class="submenu--button2 success">
+                        <span class="add icon"></span>
+                        <span>Agregar por Excel</span>
                     </button>
                     <div class="stock-menu--search">
                         <input type="text" class="stock-menu--search-input" id="searchInput" placeholder="Buscar producto" onkeyup="filterTable()">
@@ -110,7 +103,7 @@ foreach ($products as $product) {
 
 
             <section class="stock-table-container">
-                <table class="stock-table">
+                <table class="stock-table product-table">
                     <thead>
                         <tr>
                             <th>Producto</th>
@@ -134,9 +127,9 @@ foreach ($products as $product) {
 
 <!-- Agregar Productos -->
   
-  <div id="addModal" class="modal">
+  <div id="addSubModal-1" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
+        <span class="close--sub">&times;</span>
         <p class="modal-title">Agregar Producto</p>
         <form id="addProductForm">
             <input type="hidden" name="action" value="addProduct">
@@ -187,6 +180,28 @@ foreach ($products as $product) {
                 <button type="submit" class="submit-button">Guardar Producto</button>
             </div>
         </form>
+    </div>
+</div>
+
+<!-- Agregar Productos por excel -->
+  
+<div id="addSubModal-2" class="modal">
+    <div class="modal-content">
+        <span class="close--sub2">&times;</span>
+        <p class="modal-title">Agregar Producto</p>
+        
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" id="fileInput" name="file" accept=".csv, .xlsx">
+            <button type="submit">Subir</button>
+        </form>
+
+        <div id="columnMappingContainer" style="display: none;">
+            <h3>Asignar columnas</h3>
+            <form id="mapColumnsForm">
+                <div id="columnMapping"></div>
+                <button type="submit">Importar</button>
+            </form>
+        </div>
     </div>
 </div>
 

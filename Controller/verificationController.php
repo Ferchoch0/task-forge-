@@ -12,9 +12,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($userModel->verifyUser($userId, $verificationCode)) {
         echo "<script>alert('Cuenta verificada exitosamente');</script>";
-        header("Location: ../View/profile.php");
+        session_write_close();
+        header("Location: ../View/business.php");
         exit();
     } else {
+        session_write_close();
         header("Location: ../View/verification.php?error=1");
         exit();
     }

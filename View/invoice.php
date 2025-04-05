@@ -31,8 +31,10 @@ $username = $_SESSION['username'];
 <link rel="stylesheet" href="src/assets/css/global.css">
 <link rel="stylesheet" href="src/assets/css/icon.css">
 <link rel="stylesheet" href="src/assets/css/stock.css">
+<link rel="stylesheet" href="src/assets/css/invoice.css">
 
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css">
+<script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
 
 
 
@@ -58,6 +60,8 @@ $username = $_SESSION['username'];
                             <th>Contacto</th>
                             <th>Tipo</th>
                             <th>Fecha</th>
+                            <th>Facturacion</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>

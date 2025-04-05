@@ -1,0 +1,174 @@
+2025-04-04 22:21:45 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30085208739","topic":"merchant_order"}
+
+2025-04-04 22:21:49 - Webhook recibido:
+{"action":"payment.created","api_version":"v1","data":{"id":"106917250743"},"date_created":"2025-04-04T20:21:44Z","id":120353966926,"live_mode":true,"type":"payment","user_id":"417745876"}
+
+2025-04-04 22:21:49 - Webhook recibido:
+{"resource":"106917250743","topic":"payment"}
+
+2025-04-04 22:21:49 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30085208739","topic":"merchant_order"}
+
+2025-04-04 22:21:50 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30085208739","topic":"merchant_order"}
+
+2025-04-04 22:21:50 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30085208739","topic":"merchant_order"}
+
+2025-04-04 22:22:49 - Webhook recibido:
+{"resource":"106917250743","topic":"payment"}
+
+2025-04-04 22:22:50 - Webhook recibido:
+{"resource":"106917250743","topic":"payment"}
+
+2025-04-04 22:24:53 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30105416302","topic":"merchant_order"}
+
+2025-04-04 22:24:55 - Webhook recibido:
+{"resource":"106917682383","topic":"payment"}
+
+2025-04-04 22:24:55 - Webhook recibido:
+{"action":"payment.created","api_version":"v1","data":{"id":"106917682383"},"date_created":"2025-04-04T20:24:51Z","id":120354102286,"live_mode":true,"type":"payment","user_id":"417745876"}
+
+2025-04-04 22:24:56 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30105416302","topic":"merchant_order"}
+
+2025-04-04 22:24:56 - Respuesta de la API de MP:
+{"message":"Must provide your access_token to proceed","error":"unauthorized","status":401,"cause":[{"code":5,"description":"Must provide your access_token to proceed","data":"04-04-2025T20:24:54UTC;088ff168-34e2-4952-bbdb-df6b715a584a"}]}
+
+2025-04-04 22:24:56 - Respuesta de la API de MP:
+{"message":"Must provide your access_token to proceed","error":"unauthorized","status":401,"cause":[{"code":5,"description":"Must provide your access_token to proceed","data":"04-04-2025T20:24:54UTC;6139c761-f8f6-4c48-a411-c76009381b1b"}]}
+
+2025-04-04 22:26:16 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30085347303","topic":"merchant_order"}
+
+2025-04-04 22:26:19 - Webhook recibido:
+{"action":"payment.created","api_version":"v1","data":{"id":"106917884441"},"date_created":"2025-04-04T20:26:15Z","id":120289040515,"live_mode":true,"type":"payment","user_id":"417745876"}
+
+2025-04-04 22:26:19 - Webhook recibido:
+{"resource":"106917884441","topic":"payment"}
+
+2025-04-04 22:26:20 - Respuesta de la API de MP:
+{"message":"Must provide your access_token to proceed","error":"unauthorized","status":401,"cause":[{"code":5,"description":"Must provide your access_token to proceed","data":"04-04-2025T20:26:18UTC;0dfd527f-2b61-4851-b706-d555da30d092"}]}
+
+2025-04-04 22:26:20 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30085347303","topic":"merchant_order"}
+
+2025-04-04 22:26:20 - Respuesta de la API de MP:
+{"message":"Must provide your access_token to proceed","error":"unauthorized","status":401,"cause":[{"code":5,"description":"Must provide your access_token to proceed","data":"04-04-2025T20:26:18UTC;8b2e167d-32a3-443f-8eb0-15d8136acea2"}]}
+
+2025-04-04 22:30:17 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30104994808","topic":"merchant_order"}
+
+2025-04-04 22:30:25 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30084933233","topic":"merchant_order"}
+
+2025-04-04 22:30:40 - Webhook recibido:
+{"resource":"106916024781","topic":"payment"}
+
+2025-04-04 22:30:41 - Respuesta de la API de MP:
+{"message":"Must provide your access_token to proceed","error":"unauthorized","status":401,"cause":[{"code":5,"description":"Must provide your access_token to proceed","data":"04-04-2025T20:30:39UTC;5d516de7-8299-4b52-810f-433d8c7980af"}]}
+
+2025-04-04 22:31:02 - Webhook recibido:
+{"resource":"107343661082","topic":"payment"}
+
+2025-04-04 22:31:03 - Respuesta de la API de MP:
+{"message":"Must provide your access_token to proceed","error":"unauthorized","status":401,"cause":[{"code":5,"description":"Must provide your access_token to proceed","data":"04-04-2025T20:31:01UTC;e33d1ec8-8c04-4244-ada6-480dea6b7f6d"}]}
+
+2025-04-04 22:31:17 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30084987539","topic":"merchant_order"}
+
+2025-04-04 22:36:52 - Webhook recibido:
+{"resource":"107343919080","topic":"payment"}
+
+2025-04-04 22:36:53 - Respuesta de la API de MP:
+{"message":"Must provide your access_token to proceed","error":"unauthorized","status":401,"cause":[{"code":5,"description":"Must provide your access_token to proceed","data":"04-04-2025T20:36:51UTC;daf466e9-f88b-4f21-a35f-2bdbabcf8215"}]}
+
+2025-04-04 22:40:29 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30085208739","topic":"merchant_order"}
+
+2025-04-04 22:40:46 - Webhook recibido:
+{"resource":"106917250743","topic":"payment"}
+
+2025-04-04 22:40:47 - Respuesta de la API de MP:
+{"message":"Must provide your access_token to proceed","error":"unauthorized","status":401,"cause":[{"code":5,"description":"Must provide your access_token to proceed","data":"04-04-2025T20:40:45UTC;c78a93d8-787f-4550-8f26-ba22deae9f7a"}]}
+
+2025-04-05 01:16:35 - Webhook recibido:
+{"resource":"106891403621","topic":"payment"}
+
+2025-04-05 01:16:36 - Respuesta de la API de MP:
+{"message":"Must provide your access_token to proceed","error":"unauthorized","status":401,"cause":[{"code":5,"description":"Must provide your access_token to proceed","data":"04-04-2025T23:16:35UTC;6ff68324-c8c1-4f92-9557-62611bff60cc"}]}
+
+2025-04-05 01:16:43 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30078923137","topic":"merchant_order"}
+
+2025-04-05 01:16:49 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30099064960","topic":"merchant_order"}
+
+2025-04-05 03:00:27 - Webhook recibido:
+{"resource":"106902296539","topic":"payment"}
+
+2025-04-05 03:00:27 - Respuesta de la API de MP:
+{"message":"Must provide your access_token to proceed","error":"unauthorized","status":401,"cause":[{"code":5,"description":"Must provide your access_token to proceed","data":"05-04-2025T01:00:26UTC;a35d179c-c023-47a4-937e-19aadf205b9d"}]}
+
+2025-04-05 03:00:32 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30101625124","topic":"merchant_order"}
+
+2025-04-05 03:00:34 - Webhook recibido:
+{"resource":"107329762420","topic":"payment"}
+
+2025-04-05 03:00:35 - Respuesta de la API de MP:
+{"message":"Must provide your access_token to proceed","error":"unauthorized","status":401,"cause":[{"code":5,"description":"Must provide your access_token to proceed","data":"05-04-2025T01:00:34UTC;863ddfb4-4131-445b-adef-4467806615e4"}]}
+
+2025-04-05 03:00:37 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30081480481","topic":"merchant_order"}
+
+2025-04-05 03:01:24 - Webhook recibido:
+{"resource":"107329644428","topic":"payment"}
+
+2025-04-05 03:01:25 - Respuesta de la API de MP:
+{"message":"Must provide your access_token to proceed","error":"unauthorized","status":401,"cause":[{"code":5,"description":"Must provide your access_token to proceed","data":"05-04-2025T01:01:24UTC;fd5378c8-5d04-4dba-b77b-30c6a4c837f1"}]}
+
+2025-04-05 16:56:13 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30123259658","topic":"merchant_order"}
+
+2025-04-05 16:56:17 - Webhook recibido:
+{"resource":"107420416016","topic":"payment"}
+
+2025-04-05 16:56:17 - Webhook recibido:
+{"action":"payment.created","api_version":"v1","data":{"id":"107420416016"},"date_created":"2025-04-05T14:56:12Z","id":120373817430,"live_mode":true,"type":"payment","user_id":"417745876"}
+
+2025-04-05 16:56:17 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30123259658","topic":"merchant_order"}
+
+2025-04-05 16:56:17 - Respuesta de la API de MP:
+{"message":"Must provide your access_token to proceed","error":"unauthorized","status":401,"cause":[{"code":5,"description":"Must provide your access_token to proceed","data":"05-04-2025T14:56:16UTC;252ec70d-e56a-45a6-94e6-6473ca0f458a"}]}
+
+2025-04-05 16:56:17 - Respuesta de la API de MP:
+{"message":"Must provide your access_token to proceed","error":"unauthorized","status":401,"cause":[{"code":5,"description":"Must provide your access_token to proceed","data":"05-04-2025T14:56:16UTC;969e5488-03b1-4b90-9c22-36ebd395e07b"}]}
+
+2025-04-05 16:56:18 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30123259658","topic":"merchant_order"}
+
+2025-04-05 17:00:04 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30123362832","topic":"merchant_order"}
+
+2025-04-05 17:00:08 - Webhook recibido:
+{"resource":"107420936604","topic":"payment"}
+
+"data":{"id":"107420936604"},"date_created":"2025-04-05T15:00:03Z","id":120374016122,"live_mode":true,"type":"payment","user_id":"417745876"}
+
+2025-04-05 17:00:08 - Respuesta de la API de MP:
+{"accounts_info":null,"acquirer_reconciliation":[],"additional_info":{"ip_address":"181.47.127.29","items":[{"quantity":"1","title":"Suscripción mensual - Plan Básico","unit_price":"10"}],"tracking_id":"platform:v1-whitelabel,so:ALL,type:N/A,security:none"},"authorization_code":"841124","binary_mode":false,"brand_id":null,"build_version":"3.99.0-rc-12","call_for_authorize_id":null,"captured":true,"card":{"bin":"52585510","cardholder":{"identification":{"number":"44656451","type":"DNI"},"name":"Fernando Daniel Delvalle"},"country":"ARG","date_created":"2025-04-05T11:00:03.000-04:00","date_last_updated":"2025-04-05T11:00:03.000-04:00","expiration_month":10,"expiration_year":2029,"first_six_digits":"525855","id":null,"last_four_digits":"1558","tags":["prepaid"]},"charges_details":[{"accounts":{"from":"collector","to":"mp"},"amounts":{"original":0.41,"refunded":0},"client_id":0,"date_created":"2025-04-05T11:00:03.000-04:00","id":"107420936604-001","last_updated":"2025-04-05T11:00:03.000-04:00","metadata":{"source":"rule-engine"},"name":"mercadopago_fee","refund_charges":[],"reserve_id":null,"type":"fee"}],"charges_execution_info":{"internal_execution":{"date":"2025-04-05T11:00:03.709-04:00","execution_id":"01JR37EJXAMVWKNMDJZZNTHVN9"}},"collector_id":417745876,"corporation_id":null,"counter_currency":null,"coupon_amount":0,"currency_id":"ARS","date_approved":"2025-04-05T11:00:06.000-04:00","date_created":"2025-04-05T11:00:03.000-04:00","date_last_updated":"2025-04-05T11:00:06.000-04:00","date_of_expiration":null,"deduction_schema":null,"description":"Suscripción mensual - Plan Básico","differential_pricing_id":null,"external_reference":null,"fee_details":[{"amount":0.41,"fee_payer":"collector","type":"mercadopago_fee"}],"financing_group":null,"id":107420936604,"installments":1,"integrator_id":null,"issuer_id":"12437","live_mode":true,"marketplace_owner":null,"merchant_account_id":null,"merchant_number":null,"metadata":{"business_id":8},"money_release_date":"2025-04-23T11:00:06.000-04:00","money_release_schema":null,"money_release_status":"pending","notification_url":"https://f22a-2800-810-535-336-4996-5317-89a5-e448.ngrok-free.app/taskforge+/Controller/webhook.php","operation_type":"regular_payment","order":{"id":"30123362832","type":"mercadopago"},"payer":{"email":"delvalle.fernando.d@gmail.com","entity_type":null,"first_name":null,"id":"2369108721","identification":{"number":null,"type":null},"last_name":null,"operator_id":null,"phone":{"number":null,"extension":null,"area_code":null},"type":null},"payment_method":{"data":{"routing_data":{"merchant_account_id":"56"}},"id":"master","issuer_id":"12437","type":"prepaid_card"},"payment_method_id":"master","payment_type_id":"prepaid_card","platform_id":null,"point_of_interaction":{"business_info":{"branch":"Merchant Services","sub_unit":"checkout_pro","unit":"online_payments"},"transaction_data":{"e2e_id":null,"ticket_id":"50534892876_6f77776f7973777e6d77_P"},"type":"CHECKOUT"},"pos_id":null,"processing_mode":"aggregator","refunds":[],"release_info":null,"shipping_amount":0,"sponsor_id":null,"statement_descriptor":"MERPAGO*OTTERTASK","status":"approved","status_detail":"accredited","store_id":null,"tags":null,"taxes_amount":0,"transaction_amount":10,"transaction_amount_refunded":0,"transaction_details":{"acquirer_reference":null,"external_resource_url":null,"financial_institution":null,"installment_amount":10,"net_received_amount":9.59,"overpaid_amount":0,"payable_deferral_period":null,"payment_method_reference_id":null,"total_paid_amount":10}}
+
+2025-04-05 17:00:08 - Respuesta de la API de MP:
+{"accounts_info":null,"acquirer_reconciliation":[],"additional_info":{"ip_address":"181.47.127.29","items":[{"quantity":"1","title":"Suscripción mensual - Plan Básico","unit_price":"10"}],"tracking_id":"platform:v1-whitelabel,so:ALL,type:N/A,security:none"},"authorization_code":"841124","binary_mode":false,"brand_id":null,"build_version":"3.99.0-rc-12","call_for_authorize_id":null,"captured":true,"card":{"bin":"52585510","cardholder":{"identification":{"number":"44656451","type":"DNI"},"name":"Fernando Daniel Delvalle"},"country":"ARG","date_created":"2025-04-05T11:00:03.000-04:00","date_last_updated":"2025-04-05T11:00:03.000-04:00","expiration_month":10,"expiration_year":2029,"first_six_digits":"525855","id":null,"last_four_digits":"1558","tags":["prepaid"]},"charges_details":[{"accounts":{"from":"collector","to":"mp"},"amounts":{"original":0.41,"refunded":0},"client_id":0,"date_created":"2025-04-05T11:00:03.000-04:00","id":"107420936604-001","last_updated":"2025-04-05T11:00:03.000-04:00","metadata":{"source":"rule-engine"},"name":"mercadopago_fee","refund_charges":[],"reserve_id":null,"type":"fee"}],"charges_execution_info":{"internal_execution":{"date":"2025-04-05T11:00:03.709-04:00","execution_id":"01JR37EJXAMVWKNMDJZZNTHVN9"}},"collector_id":417745876,"corporation_id":null,"counter_currency":null,"coupon_amount":0,"currency_id":"ARS","date_approved":"2025-04-05T11:00:06.000-04:00","date_created":"2025-04-05T11:00:03.000-04:00","date_last_updated":"2025-04-05T11:00:06.000-04:00","date_of_expiration":null,"deduction_schema":null,"description":"Suscripción mensual - Plan Básico","differential_pricing_id":null,"external_reference":null,"fee_details":[{"amount":0.41,"fee_payer":"collector","type":"mercadopago_fee"}],"financing_group":null,"id":107420936604,"installments":1,"integrator_id":null,"issuer_id":"12437","live_mode":true,"marketplace_owner":null,"merchant_account_id":null,"merchant_number":null,"metadata":{"business_id":8},"money_release_date":"2025-04-23T11:00:06.000-04:00","money_release_schema":null,"money_release_status":"pending","notification_url":"https://f22a-2800-810-535-336-4996-5317-89a5-e448.ngrok-free.app/taskforge+/Controller/webhook.php","operation_type":"regular_payment","order":{"id":"30123362832","type":"mercadopago"},"payer":{"email":"delvalle.fernando.d@gmail.com","entity_type":null,"first_name":null,"id":"2369108721","identification":{"number":null,"type":null},"last_name":null,"operator_id":null,"phone":{"number":null,"extension":null,"area_code":null},"type":null},"payment_method":{"data":{"routing_data":{"merchant_account_id":"56"}},"id":"master","issuer_id":"12437","type":"prepaid_card"},"payment_method_id":"master","payment_type_id":"prepaid_card","platform_id":null,"point_of_interaction":{"business_info":{"branch":"Merchant Services","sub_unit":"checkout_pro","unit":"online_payments"},"transaction_data":{"e2e_id":null,"ticket_id":"50534892876_6f77776f7973777e6d77_P"},"type":"CHECKOUT"},"pos_id":null,"processing_mode":"aggregator","refunds":[],"release_info":null,"shipping_amount":0,"sponsor_id":null,"statement_descriptor":"MERPAGO*OTTERTASK","status":"approved","status_detail":"accredited","store_id":null,"tags":null,"taxes_amount":0,"transaction_amount":10,"transaction_amount_refunded":0,"transaction_details":{"acquirer_reference":null,"external_resource_url":null,"financial_institution":null,"installment_amount":10,"net_received_amount":9.59,"overpaid_amount":0,"payable_deferral_period":null,"payment_method_reference_id":null,"total_paid_amount":10}}
+
+2025-04-05 17:00:08 - Subscripción actualizada para business_id 8
+
+2025-04-05 17:00:08 - Subscripción actualizada para business_id 8
+
+2025-04-05 17:00:09 - Webhook recibido:
+{"resource":"https://api.mercadolibre.com/merchant_orders/30123362832","topic":"merchant_order"}
+

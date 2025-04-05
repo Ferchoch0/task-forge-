@@ -19,7 +19,8 @@ $userId = $_SESSION['user_id'];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $action = $_POST['action']
+    $data = json_decode(file_get_contents('php://input'), true);
+    $action = isset($data['action']) ? $data['action'] : (isset($_POST['action']) ? $_POST['action'] : '');
     // Agregar cliente
     switch($action) {
         case 'addClient':
@@ -66,11 +67,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             } 
             break;
         
-        case '':
-            if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
-                $data = json_decode(file_get_contents('php://input'), true);
+        case 'delete':
+
         
-                if (isset($data['action']) && $data['action'] === 'delete' && isset($data['id'])) {
+                if (isset($data['id'])) {
                     $clientId = $data['id'];
         
                     if ($clientModel->deleteClient($clientId)) {
@@ -85,7 +85,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         ]);
                     }
                 }
-            }
             break;
 
             default:
@@ -99,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
-    $action = $_GET['action'];
+    $action = isset($_GET['action']) ? $_GET['action'] : '';
 
 
     if (isset($_GET['client_id'])) {

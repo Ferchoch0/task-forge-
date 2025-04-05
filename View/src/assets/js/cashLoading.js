@@ -5,6 +5,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     reloadTableTotal();
 
+    const notyf = new Notyf({
+        duration: 3000,
+        position: {
+          x: 'right',
+          y: 'bottom',
+        },
+        dismissible: true,
+      });
+
     function reloadTable() {
         fetch('../Controller/cashController.php?action=getTable')
             .then(response => response.text())
@@ -69,14 +78,25 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("addCashForm").addEventListener("submit", function(e){
         e.preventDefault();
         const formData = new FormData(this);
+        formData.append("action", "addCash");
 
         fetch("../Controller/cashController.php", {
             method: "POST",
             body: formData,
             })
-            .then(response => response.text())
+            .then(response => response.json())
             .then(data => {
-                location.reload();
+                document.getElementById("addCashForm").reset();
+                cashModal.style.display = "none";
+                
+                reloadTable();
+                reloadTableTotal();
+
+                if (data.status === "success") {
+                    notyf.success(data.message);
+                } else {
+                    notyf.error(data.message);
+                }
             })
             .catch(error => console.error("Error en la solicitud:", error));
     });

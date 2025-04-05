@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(() => {
                 chargeModal.style.display = "none";
                 document.getElementById("chargeClientForm").reset();
-
+                chargeModal.style.display = "none";
                 reloadTable();
 
                 if (data.status === "success") {
@@ -119,13 +119,31 @@ document.addEventListener("DOMContentLoaded", function () {
     const chargeModal = document.getElementById("chargeModal");
     const closeChargeModalBtn = document.querySelector(".close-charge");
     const chargeBtns = document.querySelectorAll(".charge-button");
+    const debtTotalInput = document.getElementById("clientDebtTotal");
+    const debtPaidInput = document.getElementById("clientDebtPaid");
+
+    function validateDebtPaid() {
+        const maxDebt = parseFloat(debtTotalInput.value) || 0;
+        const currentPaid = parseFloat(debtPaidInput.value) || 0;
+
+        if (currentPaid > maxDebt) {
+            debtPaidInput.value = maxDebt;
+        } else if (currentPaid < 0) {
+            debtPaidInput.value = 0;
+        }
+    }
+
+        debtPaidInput.addEventListener("input", validateDebtPaid);
 
         chargeBtns.forEach(button => {
             button.addEventListener('click', (e) => {
                 const clientId = e.target.closest('button').getAttribute('data-id');
                 const clientTotalDebt = e.target.closest('button').getAttribute('data-debt');
                 document.getElementById("chargeClientId").value = clientId;
-                document.getElementById("clientDebtTotal").value = clientTotalDebt;
+                debtTotalInput.value = clientTotalDebt;
+
+                debtPaidInput.value = "";
+                setTimeout(validateDebtPaid, 100);
 
                 chargeModal.style.display = "flex";
                 setTimeout(() => {
@@ -241,3 +259,14 @@ document.addEventListener("DOMContentLoaded", function () {
 }
     
 });
+
+
+function filterTable() {
+    let filter = document.getElementById("searchInput").value.toLowerCase();
+    let rows = document.querySelectorAll(".client-table tbody tr");
+
+    rows.forEach(rows => {
+        let product = rows.cells[0].textContent.toLowerCase();
+        rows.style.display = product.includes(filter) ? "" : "none";
+    });
+}

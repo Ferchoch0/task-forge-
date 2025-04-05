@@ -16,11 +16,11 @@ require_once 'head.php';
     <div class="spinner"></div>
 </div>
 
-<form action="../Controller/loginController.php" method="post">
+<form action="../Controller/loginController.php" method="post" class="income-container">
 
     <div class="title-container">
         <span class="logo--otter icon"> </span> 
-        <h1 class="title">  OtterTask+ </h1>
+        <h1 class="title"><span class="title-desing">Otter</span>Task+</h1>
     </div>
     
 

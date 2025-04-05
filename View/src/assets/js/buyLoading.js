@@ -18,31 +18,12 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.text())
             .then(html => {
                 document.querySelector('.stock-table tbody').innerHTML = html;
+                attachDeleteEvents();
             })
             .catch(error => {
                 console.error('Error recargando tabla:', error);
             });
     }
-
-
-    const productSelect = document.getElementById("product");
-    const priceInput = document.getElementById("priceBuy");
-
-    function updatePrice() {
-        const selectedOption = productSelect.options[productSelect.selectedIndex];
-        const cost = parseFloat(selectedOption.getAttribute("data-price"));
-        priceInput.value = cost ? cost : "";
-    }
-
-    $('#product').select2({
-        placeholder: "Busca un producto...",
-        allowClear: true
-    });
-
-
-    updatePrice();
-
-    $('#product').on('select2:select', updatePrice); 
 
     $('#totalBuy').text('$0.00');
     $('#totalAmount').text('0');
@@ -88,7 +69,12 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(data => {
+            document.getElementById("addBuyForm").reset();
+            document.getElementById("addModal").style.display = "none";
             reloadTable();
+            document.getElementById("changeTableBody").innerHTML = '';
+            $('#totalBuy').text('$0.00');
+            $('#totalAmount').text('0');
             if (data.status === "success") {
                 notyf.success(data.message);
             } else {
@@ -96,4 +82,31 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+
+    function attachDeleteEvents() {
+        // ELIMINACION DE PRODUCTOS
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const productId = e.target.closest('button').getAttribute('data-id');
+                
+                if (confirm("¿Estás seguro de que quieres eliminar esta compra?")) {
+                    // Llamar a la función para eliminar el producto mediante AJAX
+                    fetch("../Controller/buyController.php", {
+                        method: "POST",
+                        body: JSON.stringify({ action: 'delete', id: productId }),
+                        headers: { "Content-Type": "application/json" },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        reloadTable();
+                        if (data.status === "success") {
+                            notyf.success(data.message);
+                        } else {
+                            notyf.error(data.message);
+                        }
+                    });
+                }
+            });
+        });
+    }
 });

@@ -77,6 +77,14 @@ public function addSale($userId, $stockId, $amount, $priceSell, $payment, $invoi
     return true;
 }
 
+public function deleteSell($sellId) {
+    $sql = "DELETE FROM sell WHERE sell_id = ?";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("i", $sellId);
+    return $stmt->execute();
+}
+
+
 
 
 public function getUserBuys($userId) {
@@ -109,6 +117,13 @@ public function addBuy($userId, $stockId, $amount, $priceBuy, $payment, $supplie
 
     $this->conn->commit(); // Confirmar transacción
     return true;
+}
+
+public function deleteBuy($buyId) {
+    $sql = "DELETE FROM buy WHERE buy_id = ?";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("i", $buyId);
+    return $stmt->execute();
 }
 
 public function addQuantityStock($stockId) {

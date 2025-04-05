@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.text())
             .then(html => {
                 document.querySelector('.stock-table tbody').innerHTML = html;
+                attachDeleteEvents();
             })
             .catch(error => {
                 console.error('Error recargando tabla:', error);
@@ -91,6 +92,33 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    function attachDeleteEvents() {
+                // ELIMINACION DE PRODUCTOS
+                document.querySelectorAll('.delete-button').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const productId = e.target.closest('button').getAttribute('data-id');
+                        
+                        if (confirm("¿Estás seguro de que quieres eliminar esta venta?")) {
+                            // Llamar a la función para eliminar el producto mediante AJAX
+                            fetch("../Controller/sellController.php", {
+                                method: "POST",
+                                body: JSON.stringify({ action: 'delete', id: productId }),
+                                headers: { "Content-Type": "application/json" },
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                reloadTable();
+                                if (data.status === "success") {
+                                    notyf.success(data.message);
+                                } else {
+                                    notyf.error(data.message);
+                                }
+                            });
+                        }
+                    });
+                });
+    }
+
 
     const invoiceCheck = document.getElementById("invoice");
     const invoiceGroup = document.getElementById("invoiceGroup");
@@ -124,8 +152,9 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(data => {
+            document.getElementById("addSellForm").reset();
+            document.getElementById("addModal").style.display = "none";
             reloadTable();
-            
             if (data.status === "success") {
                 notyf.success(data.message);
             } else {

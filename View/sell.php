@@ -91,6 +91,7 @@
                                 <th>Precio total</th>
                                 <th>Factura</th>
                                 <th>Fecha</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -211,18 +212,18 @@
             <span class="close--sub">&times;</span>
             <p class="modal-title">Agregar Factura</p>
             <form id="addClientForm" method="POST">
-                    <input type="hidden" name="action" value="add">
+                    <input type="hidden" name="action" value="addClient">
                     <label class="label-sub-title">
                         <span class="modal-sub-title">Razon Social</span>
                         <div class="modal-field-container">
-                            <input type="text" class="modal-field" name="name" id="name" placeholder="Ingresar Razon Social">
+                            <input type="text" class="modal-field" name="name" id="name" placeholder="Ingresar Razon Social" autocomplete="off">
                         </div>   
                     </label>
                     
                     <label class="label-sub-title">
                         <span class="modal-sub-title">Tipo de Factura</span>
                         <div class="modal-field-container">
-                            <select name="typeInvoice" class="modal-field" id="typeInvoice" class="product">
+                            <select name="typeInvoice" class="modal-field" id="typeInvoice" class="product" required>
                                 <option value="" disabled selected>Seleccionar</option>
                                 <option value="A">Tipo A</option>
                                 <option value="B">Tipo B</option>
@@ -234,21 +235,21 @@
                     <label class="label-sub-title">
                         <span class="modal-sub-title">Cuit</span>
                         <div class="modal-field-container">
-                            <input type="text" class="modal-field" name="cuit" id="cuit" placeholder="Ingresar Cuit">
+                            <input type="text" class="modal-field" name="cuit" id="cuit" placeholder="Ingresar Cuit" autocomplete="off">
                         </div>   
                     </label>
 
                     <label class="label-sub-title">
                         <span class="modal-sub-title">Dir. Fiscal</span>
                         <div class="modal-field-container">
-                            <input type="text" class="modal-field" name="address" id="address" placeholder="Ingresar Dirección Fiscal">
+                            <input type="text" class="modal-field" name="address" id="address" placeholder="Ingresar Dirección Fiscal" autocomplete="off">
                         </div>   
                     </label>
 
                     <label class="label-sub-title">
                         <span class="modal-sub-title">Contacto</span>
                         <div class="modal-field-container">
-                            <input type="text" class="modal-field" name="contact" id="contact" placeholder="Ingresar Contacto">
+                            <input type="text" class="modal-field" name="contact" id="contact" placeholder="Ingresar Contacto" autocomplete="off">
                         </div>   
                     </label>
 

@@ -54,9 +54,16 @@ $username = $_SESSION['username'];
 
             <section class="stock-menu">
                 <div class="stock-menu--options">
-                    <button class="submenu--button">
+                    <button class="submenu--button2">
                         <span class="add icon"></span>
                         <span>Agregar Proveedor</span>
+                    </button>
+                </div>
+
+                <div class="stock-menu--search">
+                    <input type="text" class="stock-menu--search-input" id="searchInput" placeholder="Buscar producto" onkeyup="filterTable()">
+                    <button class="stock-menu--search-button">
+                        <span class="search icon"></span>
                     </button>
                 </div>
                 
@@ -82,22 +89,22 @@ $username = $_SESSION['username'];
     
   </div>
 
-<div id="addSubModal-1" class="modal"> 
+<div id="addSubModal-2" class="modal"> 
     <div class="modal-content little">
-        <span class="close--sub">&times;</span>
+        <span class="close--sub2">&times;</span>
         <p class="modal-title">Agregar Proveedor</p>
             <form id="addSupplierForm" method="POST">
-                <input type="hidden" name="action" value="add">
+                <input type="hidden" name="action" value="addSupplier">
                 <label class="label-sub-title">
                     <span class="modal-sub-title">Nombre</span>
                     <div class="modal-field-container">
-                        <input type="text" class="modal-field" name="supplier" id="supplier" placeholder="Ingresar Nombre" required>
+                        <input type="text" class="modal-field" name="supplier" id="supplier" placeholder="Ingresar Nombre" autocomplete="off" required>
                     </div>   
                 </label>
                 <label class="label-sub-title">
                     <span class="modal-sub-title">Contacto</span>
                     <div class="modal-field-container">
-                        <input type="text" class="modal-field" name="contact" id="contact" placeholder="Ingresar Contacto" required>
+                        <input type="text" class="modal-field" name="contact" id="contact" placeholder="Ingresar Contacto" autocomplete="off" required>
                     </div>   
                 </label>
 

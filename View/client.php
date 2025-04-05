@@ -58,6 +58,12 @@ $clients = $clientModel->getUserClient($userId);
                         <span>Agregar Cliente</span>
                     </button>
                 </div>
+                <div class="stock-menu--search">
+                    <input type="text" class="stock-menu--search-input" id="searchInput" placeholder="Buscar producto" onkeyup="filterTable()">
+                    <button class="stock-menu--search-button">
+                        <span class="search icon"></span>
+                    </button>
+                </div>
                 
             </section>
 

@@ -1,4 +1,4 @@
-<?php
+ <?php
 session_start();
 
 require_once '../Model/connection.php';
@@ -11,9 +11,12 @@ require '../PHPMailer/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-$envFile = file('.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-foreach ($envFile as $line) {
-    putenv(trim($line));
+$envPath = realpath('../.env'); 
+if ($envPath && file_exists($envPath)) {
+    $envFile = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($envFile as $line) {
+        putenv(trim($line));
+    }
 }
 
 // Instancia del modelo
@@ -30,11 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     } else {
         // Registrar usuario y obtener el código de verificación
-        $verificationCode = $userModel->registerUser($username, $email, $password);
+        $result = $userModel->registerUser($username, $email, $password);
 
-        if ($verificationCode !== false) {
+        if ($result !== false) {
 
-            $_SESSION['user_id'] = $userModel->getUserIdByEmail($email);
+            $_SESSION['user_id'] = $result['user_id'];
             $_SESSION['username'] = $username;
             $_SESSION['email'] = $email;
 
@@ -44,15 +47,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 // Configuración del servidor
                 $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com'; // Servidor SMTP de Gmail
+                $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'ottertask606@gmail.com'; // Tu correo de Gmail
+                $mail->Username = 'ottertask606@gmail.com';
                 $mail->Password = getenv('SMTP_PASSWORD');
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Habilitar STARTTLS
                 $mail->Port = 587; // Puerto SMTP para STARTTLS
 
 
-                $mail->setFrom('no-reply@tuweb.com', 'OtterTask');
+                $mail->setFrom('ottertask606@gmail.com', 'OtterTask');
                 $mail->addAddress($email, $username);
 
                 // Contenido del correo
@@ -99,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class='email-body'>
                                 <p>Hola, $username,</p>
                                 <p>Gracias por registrarte en OtterTask. Para completar tu registro, por favor utiliza el siguiente código de verificación:</p>
-                                <p class='verification-code'>$verificationCode</p>
+                                <p class='verification-code'>{$result['verification_code']}</p>
                                 <p>Si no solicitaste esta cuenta, puedes ignorar este correo.</p>
                                 <p>Gracias,</p>
                                 <p>El equipo de OtterTask</p>
@@ -110,11 +113,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </body>
                     </html>";
-                $mail->AltBody = "Hola, $username,\n\nGracias por registrarte en OtterTask. Para completar tu registro, por favor utiliza el siguiente código de verificación:\n\n$verificationCode\n\nSi no solicitaste esta cuenta, puedes ignorar este correo.\n\nGracias,\nEl equipo de OtterTask";
+                $mail->AltBody = "Hola, $username,\n\nGracias por registrarte en OtterTask. Para completar tu registro, por favor utiliza el siguiente código de verificación:\n\n{$result['verification_code']}\n\nSi no solicitaste esta cuenta, puedes ignorar este correo.\n\nGracias,\nEl equipo de OtterTask";
 
 
                 $mail->send();
                 // Redirigir a la página de verificación
+                session_write_close();
                 header("Location: ../View/verification.php");
                 exit();
             } catch (Exception $e) {

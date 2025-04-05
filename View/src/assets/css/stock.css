@@ -79,12 +79,6 @@
             align-items: center;
         }
 
-        .success{
-            background-color: var(--success);
-            color: var(--soft-dark);
-            width: 25% !important;
-        }
-
 
 
 .stock-table-container {

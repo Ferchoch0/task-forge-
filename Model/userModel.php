@@ -23,8 +23,14 @@ class UserModel {
         $verificationCode = rand(100000, 999999);
         $stmt->bind_param("ssss", $username, $email, $hashedPassword, $verificationCode);
         $result = $stmt->execute();
-        $stmt->close();
-        return $result ? $verificationCode : false;
+        if ($stmt->execute()) {
+            $userId = $stmt->insert_id;
+            $stmt->close();
+            return ['user_id' => $userId, 'verification_code' => $verificationCode];
+        } else {
+            $stmt->close();
+            return false;
+        }
     }
 
     public function verifyUser($userId, $verificationCode) {

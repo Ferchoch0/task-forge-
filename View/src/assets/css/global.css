@@ -16,6 +16,7 @@
   --success: #6feb8b;
   --dark: #0c0c0c;
   --soft-dark:#181a1b;
+  --sweet-dark: #261e2d;
   --transparent: transparent;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
@@ -48,6 +49,18 @@ a{
   text-decoration: none;
   font-size: 0.84em;
   line-height: 1;
+}
+
+.success{
+    background-color: var(--success) !important;
+}
+
+.danger{
+    background-color: var(--danger) !important;
+}
+
+.info{
+    background-color: var(--blue-white) !important;
 }
 
 #preloader {
@@ -117,7 +130,7 @@ a{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 88%;
 }
 
 nav{
@@ -340,13 +353,13 @@ nav{
 
           
 
-          .close, .close--sub {
+          .close, .close--sub, .close--sub2 {
               float: right;
               font-size: 28px;
               cursor: pointer;
           }
 
-          .menu--button, .submenu--button, .cash--menu{
+          .menu--button, .submenu--button, .submenu--button2, .cash--menu{
             padding: 10px;
                 border-radius: 10px;
             background-color: var(--primary);
@@ -356,7 +369,7 @@ nav{
             transition: 0.3s;
         }
     
-            .menu--button:hover, .submenu--button:hover, .cash--menu:hover{
+            .menu--button:hover, .submenu--button:hover, .submenu--button2:hover, .cash--menu:hover{
                 transform: scale(1.1);
             }
 

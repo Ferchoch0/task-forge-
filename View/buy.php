@@ -83,6 +83,7 @@ $username = $_SESSION['username'];
                             <th>Proveedor</th>
                             <th>Precio total</th>
                             <th>Fecha</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -108,16 +109,14 @@ $username = $_SESSION['username'];
                 <label class="label-sub-title">
                     <span class="modal-sub-title">Producto Adquirido</span>
                     <div class="modal-field-container">
-                        <select name="product_id" class="modal-field" class="product" id="product">
-                            <?php
-                                $products = $stockModel->getUserProducts($userId);
-                                foreach ($products as $product) {
-                                    echo "<option value='{$product['stock_id']}' data-price='{$product['price']}'>{$product['products']}</option>";
-                                }
-                            ?>
+                        <select name="product_id" class="modal-field select-product" class="product" id="product">
+
                         </select> 
                     </div>   
                 </label>
+
+                <button type="button" id="addNewProduct" class="submit-button small-submit submenu--button"  style="margin-right: 1rem;"><span class="plus-button"></span></button>
+
 
                 <label class="label-sub-title">
                     <span class="modal-sub-title">Cantidad</span>
@@ -169,7 +168,7 @@ $username = $_SESSION['username'];
                 </label>
 
 
-                <button type="button" id="addNewSupplier" class="submit-button small-submit submenu--button"><span class="plus-button"></span></button>
+                <button type="button" id="addNewSupplier" class="submit-button small-submit submenu--button2"><span class="plus-button"></span></button>
             </div>
             <label class="label-sub-title">
                 <span class="modal-sub-title">Metodo de Pago</span>
@@ -195,22 +194,72 @@ $username = $_SESSION['username'];
 
 </div>
 
-<div id="addSubModal-1" class="modal"> 
+<div id="addSubModal-1" class="modal">
+    <div class="modal-content">
+        <span class="close--sub">&times;</span>
+        <p class="modal-title">Agregar Producto</p>
+        <form id="addProductForm">
+            <input type="hidden" name="action" value="addProduct">
+            <input type="hidden" id="productStock" name="productStock" value="0">
+            <label class="label-sub-title">
+                <span class="modal-sub-title">Nombre de Producto</span>
+                <div class="modal-field-container">
+                    <input type="text" class="modal-field" id="productName" name="productName" placeholder="Ingresar Nombre" autocomplete="off" required>
+                </div>   
+            </label>
+
+                <label class="label-sub-title">
+                    <span class="modal-sub-title">Stock Minimo</span>
+                    <div class="modal-field-container">
+                        <input type="number" class="modal-field" id="productMinStock" name="productMinStock" placeholder="Ingresa Cantidad" autocomplete="off" required>
+                    </div>
+                </label>
+
+            <label class="label-sub-title">
+                    <span class="modal-sub-title">Tipo de unidad</span>
+                    <div class="modal-field-container">
+                        <select id="productTypeAmount" class="modal-field" name="productTypeAmount" required>
+                            <option value="" disabled selected>Seleccionar</option>
+                            <option value="u.">Unidades</option>
+                            <option value="kg.">Kilogramos</option>
+                        </select>
+                    </div>
+                </label>
+
+            <label class="label-sub-title">
+                    <span class="modal-sub-title">Costo del Producto</span>
+                    <div class="modal-field-container">
+                        <span class="field-signed">$</span>
+                        <input type="number" class="modal-field" step="0.01" id="productPrice" name="productPrice" placeholder="Costo (sin signo)" autocomplete="off" required>
+                    </div>
+            </label>
+
+            <span class="model-separator"></span>
+
+            <div class="modal-submit">
+                <button type="submit" class="submit-button">Guardar Producto</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div id="addSubModal-2" class="modal"> 
         <div class="modal-content">
-            <span class="close--sub">&times;</span>
+            <span class="close--sub2">&times;</span>
             <p class="modal-title">Agregar Proveedor</p>
             <form id="addSupplierForm" method="POST">
                 <input type="hidden" name="action" value="addSupplier">
                 <label class="label-sub-title">
                     <span class="modal-sub-title">Nombre</span>
                     <div class="modal-field-container">
-                        <input type="text" class="modal-field" name="supplier" id="supplier" placeholder="Ingresar Nombre" required>
+                        <input type="text" class="modal-field" name="supplier" id="supplier" placeholder="Ingresar Nombre" autocomplete="off" required>
                     </div>   
                 </label>
                 <label class="label-sub-title">
                     <span class="modal-sub-title">Contacto</span>
                     <div class="modal-field-container">
-                        <input type="text" class="modal-field" name="contact" id="contact" placeholder="Ingresar Contacto" required>
+                        <input type="text" class="modal-field" name="contact" id="contact" placeholder="Ingresar Contacto" autocomplete="off" required>
                     </div>   
                 </label>
 
@@ -227,6 +276,7 @@ $username = $_SESSION['username'];
 </body>
 
 <script src="../View/src/assets/js/buyLoading.js"></script>
+<script src="../View/src/assets/js/stockLoading.js"></script>
 <script src="../View/src/assets/js/supplierLoading.js"></script>
 
 <?php

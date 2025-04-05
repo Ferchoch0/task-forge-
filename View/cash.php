@@ -30,7 +30,8 @@ $username = $_SESSION['username'];
 <link rel="stylesheet" href="src/assets/css/cash.css">
 <link rel="stylesheet" href="src/assets/css/global.css">
 
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css">
+<script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
 
 
 
@@ -113,7 +114,7 @@ $username = $_SESSION['username'];
         <span class="close close-cash">&times;</span>
         <p class="modal-title">Agregar Movimiento</p>
         <form id="addCashForm" method="POST">
-            <input type="hidden" name="action" value="add">
+            <input type="hidden" name="action" value="addCash">
             <input type="hidden" name="typeMov" id="typeMov"> 
             <label class="label-sub-title">
               <span class="modal-sub-title">Descripcion</span>

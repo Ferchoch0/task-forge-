@@ -9,7 +9,7 @@ class InvoiceModel{
 
 public function getUserInvoice($userId) {
         $sql = "SELECT clients.name, clients.cuit,
-                clients.address, clients.contact, clients.invoice_type, invoice.fech
+                clients.address, clients.contact, clients.invoice_type, invoice.invoice_id, invoice.fech, invoice.check_in
                 FROM invoice
                 INNER JOIN clients ON invoice.client_id = clients.client_id
                 WHERE invoice.user_id = ? ORDER BY invoice.fech DESC";
@@ -38,6 +38,20 @@ public function getUserInvoice($userId) {
         return true;
     }
 
+    public function deleteInvoice($invoiceId){
+        $sql = "DELETE FROM invoice WHERE invoice_id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $invoiceId);
+        return $stmt->execute();
+    }
+
+    public function updateCheck($invoiceId, $checkIn){
+        $sql = "UPDATE invoice SET check_in = ? WHERE invoice_id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ii", $checkIn, $invoiceId);
+        return $stmt->execute();
+    }
+
     public function addDebt($debtType, $debtAmount, $clientId) {
         $stmt = $this->conn->prepare("INSERT INTO debts (debt_type, amount, fech, client_id) VALUES (?, ?, NOW(), ?)");
         $stmt->bind_param("iii", $debtType, $debtAmount, $clientId);
@@ -45,6 +59,8 @@ public function getUserInvoice($userId) {
         $stmt->close();
         return true;
     }
+
+
 
 }
 

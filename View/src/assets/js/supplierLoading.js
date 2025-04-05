@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("addSupplierForm").addEventListener("submit", function (e){
         e.preventDefault();
         const formData = new FormData(this);
+        formData.append("action", "addSupplier");
 
         fetch("../Controller/supplierController.php", {
             method: "POST",
@@ -53,7 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(data => {
-            alert(data)
             if(document.querySelector('.select-supplier')){
                 reloadSupplier();
                 document.getElementById("addSupplierForm").reset();
@@ -75,4 +75,16 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Error en la solicitud:", error));
         });
+
+
     });
+
+    function filterTable() {
+        let filter = document.getElementById("searchInput").value.toLowerCase();
+        let rows = document.querySelectorAll(".supplier-table tbody tr");
+    
+        rows.forEach(rows => {
+            let product = rows.cells[0].textContent.toLowerCase();
+            rows.style.display = product.includes(filter) ? "" : "none";
+        });
+    }

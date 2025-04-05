@@ -22,7 +22,8 @@ $userId = $_SESSION['user_id'];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $action = $_POST['action'];
+    $data = json_decode(file_get_contents('php://input'), true);
+    $action = isset($data['action']) ? $data['action'] : (isset($_POST['action']) ? $_POST['action'] : '');
 
     switch($action){
         case 'addSell':
@@ -72,7 +73,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             
             break;
 
-            default:
+        case 'delete':
+            if (isset($data['id'])) {
+                $sellId = $data['id'];
+        
+        
+                if ($stockModel->deleteSell($sellId)) {
+                    echo json_encode([
+                        "status" => "success",
+                        "message" => "Venta eliminada correctamente."
+                    ]);
+                } else {
+                    echo json_encode([
+                        "status" => "error",
+                        "message" => "Error al eliminar la venta."
+                    ]);
+                }
+            } else {
+                echo json_encode([
+                    "status" => "error",
+                    "message" => "Error en la solicitud."
+                ]);
+            }
+            break;
+
+        default:
             throw new Exception("Acción no válida");
 
     }
@@ -98,6 +123,13 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                     echo "<td>$" .  number_format($sell['amount'] * $sell['price_sell'], 2) . "</td>";
                     echo "<td>{$invoice}</td>";
                     echo "<td>{$sell['fech']}</td>";
+                    echo "<td>
+                            <div class='table--buttons'>
+                                <button class='table--button delete-button' data-id='{$sell['sell_id']}' data-amount='{$sell['amount']}'>
+                                    <span class='delete'></span>
+                                </button>
+                            </div>
+                        </td>";
                     echo "</tr>"; 
                     }
             } else {

@@ -8,112 +8,121 @@ if (!isset($_SESSION['user_id'])) {
   exit();
 }
 
-ini_set('display_errors', 1);  // Muestra los errores de PHP
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL); 
-
 $balanceModel = new BalanceModel($conn);
 $userId = $_SESSION['user_id'];
 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  // Agregar saldo
-  if (isset($_POST['description']) && isset($_POST['typeMov']) && isset($_POST['amount']) && isset($_POST['payment'])) {
-    $description = $_POST['description'];
-    $movType = $_POST['typeMov'];
-    $amount = $_POST['amount'];
-    $payment = $_POST['payment'];
+  $action = $_POST['action'];
 
-    if ($balanceModel->addBalance($description, $movType, $amount, $payment, $userId)) {
-      header("Location: ../View/cash.php?success=1");
-    } else {
-      header("Location: ../View/cash.php?error=balance");
-    }
-    exit();
+  switch($action) {
+    case "addCash":
+      if (isset($_POST['description']) && isset($_POST['typeMov']) && isset($_POST['amount']) && isset($_POST['payment'])) {
+        $description = $_POST['description'];
+        $movType = $_POST['typeMov'];
+        $amount = $_POST['amount'];
+        $payment = $_POST['payment'];
+    
+        if ($balanceModel->addBalance($description, $movType, $amount, $payment, $userId)) {
+          echo json_encode([
+            "status" => "success",
+            "message" => "Movimiento Cargado"
+          ]);
+        } else {
+          echo json_encode([
+            "status" => "error",
+            "message" => "Error al intentar realizar movimiento"
+          ]);
+        }
+      }
+      break;
+    case '':
+    
+    default:
+      throw new Exception("Acción no válida");
   }
+  
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "GET"){
 
-  if (isset($_GET['action'])) {
+  $transactions = $balanceModel->getUserTransaction($userId);
+  $action = $_GET['action'];
 
-    $transactions = $balanceModel->getUserTransaction($userId);
-
-    if ($_GET['action'] === 'getTable') {
-      // Solo se devuelven las transacciones sin cálculos de totales
+  switch($action){
+    case 'getTable':
       if ($transactions) {
-          foreach ($transactions as $transaction) {
-              if ($transaction['payment'] === 'deuda') {
-                  continue;
-              }
+        foreach ($transactions as $transaction) {
+            if ($transaction['payment'] === 'deuda') {
+                continue;
+            }
 
-              if ($transaction['source'] === 'buy') {
-                  $type = 'Compra';
-                  $amount = $transaction['amount'] * $transaction['price'];
-              } elseif ($transaction['source'] === 'sell') {
-                  $type = 'Venta';
-                  $amount = $transaction['amount'] * $transaction['price'];
-              } elseif ($transaction['source'] === 'cash') {
-                  $type = ($transaction['mov_type'] == 1) ? 'Ingreso' : 'Retiro';
-                  $amount = $transaction['price'];
-              } else {
-                  $type = 'Desconocido';
-                  $amount = 0;
-              }
+            if ($transaction['source'] === 'buy') {
+                $type = 'Compra';
+                $class = 'danger';
+                $amount = $transaction['amount'] * $transaction['price'];
+            } elseif ($transaction['source'] === 'sell') {
+                $type = 'Venta';
+                $class = 'success';
+                $amount = $transaction['amount'] * $transaction['price'];
+            } elseif ($transaction['source'] === 'cash') {
+                $type = ($transaction['mov_type'] == 1) ? 'Ingreso' : 'Retiro';
+                $class = 'info';
+                $amount = $transaction['price'];
+            } else {
+                $type = 'Desconocido';
+                $amount = 0;
+            }
 
-              // Mostrar las filas de transacciones
-              echo "<tr>";
-              echo "<td>{$transaction['products']}</td>";
-              echo "<td>{$type}</td>";
-              echo "<td>$" . number_format($amount, 2) . "</td>";
-              echo "<td>{$transaction['payment']}</td>";
-              echo "<td>{$transaction['date']}</td>";
-              echo "</tr>";
-          }
+            echo "<tr>";
+            echo "<td>{$transaction['products']}</td>";
+            echo "<td><span class='type-container $class'>{$type}</span></td>";
+            echo "<td>$" . number_format($amount, 2) . "</td>";
+            echo "<td>{$transaction['payment']}</td>";
+            echo "<td>{$transaction['date']}</td>";
+            echo "</tr>";
+        }
       } else {
-          echo "<tr><td colspan='5'>No hay transacciones registradas</td></tr>";
+        echo "<tr><td colspan='5'>No hay transacciones registradas</td></tr>";
       }
-      exit();
-  } 
+      break;
 
-  elseif ($_GET['action'] === 'getTableTotal') {
-    $totalEfectivo = 0;
-    $totalTarjeta = 0;
-    $totalTransferencia = 0;
-    $totalGeneral = 0;
-
-    foreach ($transactions as $transaction) {
-      if ($transaction['payment'] === 'deuda') {
-          continue;
+    case 'getTableTotal':
+      $totalEfectivo = 0;
+      $totalTarjeta = 0;
+      $totalTransferencia = 0;
+      $totalGeneral = 0;
+  
+      foreach ($transactions as $transaction) {
+        if ($transaction['payment'] === 'deuda') {
+            continue;
+        }
+  
+        if ($transaction['source'] === 'buy') {
+          $type = 'Retiro';
+          $amount = $transaction['amount'] * $transaction['price'];
+        } elseif ($transaction['source'] === 'sell') {
+          $type = 'Ingreso';
+          $amount = $transaction['amount'] * $transaction['price'];
+        } elseif ($transaction['source'] === 'cash') {
+          $type = ($transaction['mov_type'] == 1) ? 'Ingreso' : 'Retiro';
+          $amount = $transaction['price'];
+        } else {
+          $type = 'Desconocido';
+          $amount = 0;
+        }
+  
+        if ($transaction['payment'] === 'Efectivo') {
+          $totalEfectivo += ($type === 'Ingreso') ? $amount : -$amount;
+        } elseif ($transaction['payment'] === 'Tarjeta') {
+          $totalTarjeta += ($type === 'Ingreso') ? $amount : -$amount;
+        } elseif ($transaction['payment'] === 'Transferencia') {
+          $totalTransferencia += ($type === 'Ingreso') ? $amount : -$amount;
+        }
+  
+        $totalGeneral += ($type === 'Ingreso') ? $amount : -$amount;
       }
-
-      if ($transaction['source'] === 'buy') {
-        $type = 'Retiro';
-        $amount = $transaction['amount'] * $transaction['price'];
-      } elseif ($transaction['source'] === 'sell') {
-        $type = 'Ingreso';
-        $amount = $transaction['amount'] * $transaction['price'];
-      } elseif ($transaction['source'] === 'cash') {
-        $type = ($transaction['mov_type'] == 1) ? 'Ingreso' : 'Retiro';
-        $amount = $transaction['price'];
-      } else {
-        $type = 'Desconocido';
-        $amount = 0;
-      }
-
-      // Acumular totales según el tipo de pago
-      if ($transaction['payment'] === 'Efectivo') {
-        $totalEfectivo += ($type === 'Ingreso') ? $amount : -$amount;
-      } elseif ($transaction['payment'] === 'Tarjeta') {
-        $totalTarjeta += ($type === 'Ingreso') ? $amount : -$amount;
-      } elseif ($transaction['payment'] === 'Transferencia') {
-        $totalTransferencia += ($type === 'Ingreso') ? $amount : -$amount;
-      }
-
-      $totalGeneral += ($type === 'Ingreso') ? $amount : -$amount;
-  }
-
-      // Mostrar los totales
+  
       echo "<tr>";
       echo "<td>" . number_format($totalEfectivo, 2) . "</td>";
       echo "<td>" . number_format($totalTarjeta, 2) . "</td>";
@@ -121,9 +130,12 @@ if ($_SERVER["REQUEST_METHOD"] === "GET"){
       echo "<td>----</td>";
       echo "<td>" . number_format($totalGeneral, 2) . "</td>";
       echo "</tr>";
-      exit();
-  }
-}
 
+      break;
+    default:
+      throw new Exception("Acción no válida");
+  }
+
+ 
 }
 ?>

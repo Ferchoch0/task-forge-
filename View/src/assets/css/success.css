@@ -1,0 +1,29 @@
+.success-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.success-message {
+    text-align: center;
+    background: #f0fff0;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.success-button {
+    margin-top: 1rem;
+    display: inline-block;
+    background: #4caf50;
+    color: white;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.success-button:hover {
+    background: #43a047;
+}

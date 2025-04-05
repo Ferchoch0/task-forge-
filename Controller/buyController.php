@@ -17,13 +17,13 @@ $userId = $_SESSION['user_id'];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $action = $_POST['action'];
+    $data = json_decode(file_get_contents('php://input'), true);
+    $action = isset($data['action']) ? $data['action'] : (isset($_POST['action']) ? $_POST['action'] : '');
 
     switch($action) {
         case 'addBuy':
             try{
                 if (isset($_POST['product_id'], $_POST['products'], $_POST['payment'])) {
-                    $stockId = $_POST['product_id'];
                     $products = $_POST['products'];
                     $payment = $_POST['payment'];
                     $supplier = $_POST['supplier'];
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 
                     foreach ($products as $product) {
                         list($productId, $amount, $price) = explode('|', $product);
-                        $stockModel->addBuy($userId, $stockId, $amount, $price, $payment, $supplier);
+                        $stockModel->addBuy($userId, $productId, $amount, $price, $payment, $supplier);
                     }
             
                     echo json_encode([
@@ -53,7 +53,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
             break;
 
-            default:
+        case 'delete':
+            if (isset($data['id'])) {
+                $buyId = $data['id'];
+        
+        
+                if ($stockModel->deleteBuy($buyId)) {
+                    echo json_encode([
+                        "status" => "success",
+                        "message" => "Venta eliminada correctamente."
+                    ]);
+                } else {
+                    echo json_encode([
+                        "status" => "error",
+                        "message" => "Error al eliminar la venta."
+                    ]);
+                }
+            } else {
+                echo json_encode([
+                    "status" => "error",
+                    "message" => "Error en la solicitud."
+                ]);
+            }
+            break;
+
+        default:
             throw new Exception("Acción no válida");
     }
 }
@@ -77,10 +101,25 @@ if ($_SERVER["REQUEST_METHOD"] === "GET"){
                     echo "<td>{$buy['name']}</td>";
                     echo "<td>$" . number_format($buy['amount'] * $buy['price_buy'],2) . "</td>";
                     echo "<td>{$buy['fech']}</td>";
+                    echo "<td>
+                            <div class='table--buttons'>
+                                <button class='table--button delete-button' data-id='{$buy['buy_id']}'>
+                                    <span class='delete'></span>
+                                </button>
+                            </div>
+                        </td>";
                     echo "</tr>"; 
                 }
             } else {
                 echo "<tr><td colspan='6'>No hay productos registrados</td></tr>";
+            }
+            break;
+
+        case 'getProduct':
+            $products = $stockModel->getUserProducts($userId);
+            echo "<option value='' disabled selected>Seleccionar</option>";
+            foreach ($products as $product) {
+                echo "<option value='{$product['stock_id']}' data-price='{$product['price']}'>{$product['products']}</option>";
             }
             break;
 
@@ -91,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET"){
             }
             break;
 
-            default:
+        default:
             throw new Exception("Acción no válida");
         }
     

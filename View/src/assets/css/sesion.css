@@ -1,10 +1,45 @@
 body{
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: space-between;
     height: 100vh;
 }
+
+.sesion-nav{
+  position: fixed;
+  width: 100%;
+  height: 150px;
+  background-color: var(--transparent);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  padding: 0 10px;
+  box-shadow: none;
+  border: 1px solid var(--soft-gray);
+  color: var(--text);
+}
+
+  .sesion-nav-menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 150px;
+  }
+
+    .sesion-nav-menu .title{
+      margin: 0 !important;
+    }
+
+    .sesion-nav--title{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
 
 .e-card {
     background: transparent;
@@ -71,17 +106,36 @@ body{
 
 
 
-form{
+.income-container{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 50%;
     height: 100vh;
-    gap: 10px;
+    gap: 40px;
     box-sizing: border-box;
     padding: 15px;
+    
 }
+
+.income--business-container, .income--plans-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  gap: 10px;
+
+}
+
+  .income--plans-container form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   
   .title-container {
     display: flex;
@@ -91,26 +145,20 @@ form{
    
   }
 
-    .title {
+    .title{
       position: relative;
-      color: #7e4ef8;
+      color: var(--primary);
       font-family: sans-serif;
       font-size: 50px;
-      font-weight: 900;
+      font-weight: 800;
+      letter-spacing: 0.25rem;
       margin-bottom: 20px;
+      text-transform: uppercase;
     }
 
-    .title::before {
-      content: "";
-      position: absolute;
-      top: -50px;
-      left: 50%;
-      width: 50%;
-      height: 10px;
-      background-color: var(--primary);
-      border-radius: 80%;
-      transform: translateX(-50%);
-    }
+      .title-desing{
+        color: var(--secondary);
+      }
 
     .title-container .icon{
       width: 100px;
@@ -121,7 +169,6 @@ form{
     height: 50px;
     position: relative;
     width: 85%;
-    margin-top: 40px;
   }
   
   .input {
@@ -135,6 +182,19 @@ form{
     outline: 0;
     padding: 4px 20px 0;
     width: 100%;
+  }
+
+  .select{
+    background-color: #eee;
+    border-radius: 12px;
+    border: 0;
+    box-sizing: border-box;
+    color: #4b4b4b;
+    font-size: 18px;
+    height: 45px;
+    width: 85%;
+    outline: 0;
+    padding: 4px 20px 0;
   }
   
   .cut {
@@ -224,7 +284,7 @@ form{
    button:active {
     transform: scale(0.95);
    }
-
+/* 
    a {
     color: #7e4ef8;
     font-size: 14px;
@@ -239,5 +299,126 @@ form{
 
    a:active {
     transform: scale(0.95);
+   } */
+
+
+  .business-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    gap: 40px;
+    box-sizing: border-box;
+  }
+
+    .business-form-2{
+      background-image: linear-gradient(163deg, var(--violet-white) 0%, var(--secondary) 100%);
+      border-radius: 20px;
+      transition: all .3s;
+    }
+   
+   .business-form-2:hover {
+    box-shadow: 0px 0px 30px 1px rgba(132, 0, 255, 0.3);
    }
+
+  .business-plans{
+    width: 220px;
+    padding: 10px 0px;
+    background: var(--white);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: 0px 0px 30px 1px rgba(132, 0, 255, 0.3);
+    transition: all 0.3s ease-out;
+    text-decoration: none;
+  }
+
+  .business-plans:hover {
+    transform: scale(0.97);
+    border-radius: 20px;
+   }
+
+  .business-select--checkbox:checked ~ .business-plans {
+    transform: scale(1.03);
+    border-radius: 20px;
+    box-shadow: 0px 0px 30px 1px rgba(132, 0, 255, 0.3);
+  }
+
+  
+
+
+    .business-title--container{
+      align-items: center;
+      padding: 20px;
+      padding-top: 40px;
+      background-image: linear-gradient(163deg, var(--secondary) 0%, var(--violet-white) 100%);
+      border-radius: 12px;
+      position: relative;
+    }
+
+      .business-title{
+        color: var(--white);
+        font-size: 1.5rem;
+        font-weight: 800;
+        line-height: 1.5;
+        text-align: center;
+      }
+
+      .business-title--container span{
+        font-size: 1.125rem;
+        font-weight: 800;
+        line-height: 1.5;
+        color: var(--white);
+      }
+
+    .business-plans--container{
+      box-sizing: border-box;
+      padding: 0px 25px;
+      width: 100%;
+    }
+   
+    .business-plans--list{
+      padding: 12.5px 0px;
+      margin: 0px;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(128, 128, 128, 0.4);
+    }
+
+      .business-plans--list:last-child{
+        border: none;
+      }
+
+      .business-plans--attributes{
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+       .default-attributes--title{
+        font-size: 0.8125rem;
+        font-weight: 500;
+        line-height: 1.53846;
+        color: var(--gray);
+       }
+
+       .default-attributes--data{
+        margin: 0px;
+        padding: 0px;
+        color: var(--soft-dark);
+        font-size: 1rem;
+        font-weight: 500;
+       }
+
+       .plans-content{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 80px;
+        box-sizing: border-box;
+       }
 
